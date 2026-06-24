@@ -1,0 +1,40 @@
+# Dependencies
+
+node_modules
+
+# Build files
+
+dist
+build
+.next
+
+# Environment variables
+
+.env
+.env.local
+.env.development.local
+.env.production.local
+
+
+# Logs
+
+logs
+*.log
+
+# OS files
+
+.DS_Store
+Thumbs.db
+
+# IDE
+
+.vscode
+.idea
+
+# Turbo
+
+.turbo
+
+# TypeScript
+
+*.tsbuildinfo
