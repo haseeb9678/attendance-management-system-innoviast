@@ -1,7 +1,8 @@
+import ApiError from "../../shared/utils/ApiError";
 import ApiResponse from "../../shared/utils/ApiResponse";
 import { asyncHandler } from "../../shared/utils/AsyncHandler";
 import { clearAuthCookies, setAccessTokenCookie, setRefreshTokenCookie } from "../../shared/utils/cookie";
-import { getMeService, loginService, logoutService, registerService } from "./auth.service";
+import { getMeService, loginService, logoutService, refreshTokenService, registerService } from "./auth.service";
 
 export const register = asyncHandler(async (req, res) => {
 
@@ -76,6 +77,46 @@ export const me = asyncHandler(
                 200,
                 "User fetched successfully",
                 user
+            )
+        );
+    }
+);
+
+export const refreshToken = asyncHandler(
+    async (req, res) => {
+        const refreshToken =
+            req.cookies.refreshToken;
+
+        if (!refreshToken) {
+            throw new ApiError(
+                401,
+                "Refresh token not found"
+            );
+        }
+
+        const {
+            user,
+            accessToken,
+            refreshToken: newRefreshToken,
+        } = await refreshTokenService(
+            refreshToken
+        );
+
+        setAccessTokenCookie(
+            res,
+            accessToken
+        );
+
+        setRefreshTokenCookie(
+            res,
+            newRefreshToken
+        );
+
+        res.status(200).json(
+            new ApiResponse(
+                200,
+                "Token refreshed successfully",
+                user,
             )
         );
     }

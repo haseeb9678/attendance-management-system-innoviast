@@ -1,9 +1,8 @@
 import { LoginInput, RegisterInput } from "@attendance/shared-zod";
 import ApiError from "../../shared/utils/ApiError";
 import { UserModel } from "../users/user.model";
-import { generateAccessToken, generateRefreshToken } from "../../shared/utils/jwt";
+import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from "../../shared/utils/jwt";
 import { JwtPayload } from "@attendance/shared-types";
-import argon2 from "argon2";
 
 export const registerService = async (data: RegisterInput) => {
 
@@ -24,10 +23,12 @@ export const registerService = async (data: RegisterInput) => {
         password: data.password,
     });
 
-    user.password = undefined;
-
-
-    return user;
+    return {
+        id: user._id.toString(),
+        name: user.name,
+        email: user.email,
+        role: user.role,
+    };
 };
 
 
@@ -71,8 +72,7 @@ export const loginService = async (
     const refreshToken =
         generateRefreshToken(payload);
 
-    user.refreshTokenHash =
-        await argon2.hash(refreshToken);
+    await user.setRefreshToken(refreshToken);
 
     await user.save();
 
@@ -91,10 +91,18 @@ export const loginService = async (
 
 export const logoutService = async (
     userId: string
-) => {
-
-    const user =
-        await UserModel.findById(userId);
+): Promise<void> => {
+    const user = await UserModel.findByIdAndUpdate(
+        userId,
+        {
+            $set: {
+                refreshTokenHash: null,
+            },
+        },
+        {
+            new: false,
+        }
+    );
 
     if (!user) {
         throw new ApiError(
@@ -102,14 +110,7 @@ export const logoutService = async (
             "User not found"
         );
     }
-
-    user.refreshTokenHash = null;
-
-    await user.save();
-
-    return true;
 };
-
 export const getMeService = async (
     userId: string
 ) => {
@@ -131,5 +132,56 @@ export const getMeService = async (
         name: user.name,
         email: user.email,
         role: user.role,
+    };
+};
+
+export const refreshTokenService = async (
+    refreshToken: string
+) => {
+    // 1. Verify JWT signature
+    const payload = verifyRefreshToken(refreshToken);
+
+    // 2. Find user
+    const user = await UserModel.findById(payload.userId)
+        .select("+refreshTokenHash");
+
+    if (!user) {
+        throw new ApiError(401, "Invalid refresh token");
+    }
+
+    // 3. Verify stored refresh token hash
+    const isRefreshTokenValid =
+        await user.verifyRefreshToken(refreshToken);
+
+    if (!isRefreshTokenValid) {
+        throw new ApiError(401, "Invalid refresh token");
+    }
+
+    // 4. Generate new tokens
+    const newPayload: JwtPayload = {
+        userId: user._id.toString(),
+        role: user.role,
+    };
+
+    const accessToken =
+        generateAccessToken(newPayload);
+
+    const newRefreshToken =
+        generateRefreshToken(newPayload);
+
+    // 5. Rotate refresh token
+    await user.setRefreshToken(newRefreshToken);
+
+    await user.save();
+
+    return {
+        user: {
+            id: user._id,
+            name: user.name,
+            email: user.email,
+            role: user.role,
+        },
+        accessToken,
+        refreshToken: newRefreshToken,
     };
 };

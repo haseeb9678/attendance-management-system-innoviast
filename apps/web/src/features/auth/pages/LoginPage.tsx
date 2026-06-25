@@ -1,11 +1,36 @@
-function LoginPage() {
+import AuthShowcase from "../components/AuthShowcase";
+import LoginForm from "../components/LoginForm";
+
+const LoginPage = () => {
     return (
-        <div className="flex min-h-screen items-center justify-center">
-            <h1 className="text-4xl font-bold text-blue-600">
-                Tailwind Working
-            </h1>
-        </div>
+        <section
+            className="
+                flex items-center justify-center
+                 px-4 py-8 flex-1 max-w-7xl mx-auto
+            "
+        >
+            <div
+                className="
+                    flex w-full mx-auto overflow-hidden
+                    rounded-2xl lg:border border-gray-200 bg-background lg:shadow-xl
+                    h-[73vh] max-h-300
+                "
+            >
+                {/* Left Showcase (Desktop Only) */}
+                <AuthShowcase />
+
+                {/* Right Login Form */}
+                <div
+                    className="
+                        flex flex-1 items-center justify-center
+                        p-6 sm:p-8 lg:p-12 lg:min-w-md
+                    "
+                >
+                    <LoginForm />
+                </div>
+            </div>
+        </section>
     );
-}
+};
 
 export default LoginPage;

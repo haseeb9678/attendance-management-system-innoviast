@@ -1,23 +1,33 @@
 import { UserRole } from "@attendance/shared-types";
-import {
-    InferSchemaType,
-    model,
-    Schema,
-} from "mongoose";
 import argon2 from "argon2";
+import {
+    HydratedDocument,
+    Model,
+    Schema,
+    model,
+} from "mongoose";
 
-
-interface UserMethods {
-    comparePassword(
-        candidatePassword: string
-    ): Promise<boolean>;
+export interface User {
+    name: string;
+    email: string;
+    password: string;
+    role: UserRole;
+    refreshTokenHash: string | null;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
-const userSchema = new Schema<
-    InferSchemaType<any>,
-    {},
-    UserMethods
->(
+interface UserMethods {
+    comparePassword(candidatePassword: string): Promise<boolean>;
+    setRefreshToken(refreshToken: string): Promise<void>;
+    verifyRefreshToken(refreshToken: string): Promise<boolean>;
+}
+
+type UserDocument = HydratedDocument<User, UserMethods>;
+
+type UserModel = Model<User, {}, UserMethods>;
+
+const userSchema = new Schema<User, UserModel, UserMethods>(
     {
         name: {
             type: String,
@@ -45,11 +55,12 @@ const userSchema = new Schema<
             enum: Object.values(UserRole),
             default: UserRole.STUDENT,
         },
+
         refreshTokenHash: {
             type: String,
             default: null,
             select: false,
-        }
+        },
     },
     {
         timestamps: true,
@@ -61,22 +72,37 @@ userSchema.pre("save", async function () {
         return;
     }
 
-    this.password =
-        await argon2.hash(this.password as string);
+    this.password = await argon2.hash(this.password);
 });
 
-userSchema.methods.comparePassword =
-    async function (
-        candidatePassword: string
-    ) {
-        return argon2.verify(
-            this.password as string,
-            candidatePassword
-        );
-    };
+userSchema.methods.comparePassword = async function (
+    candidatePassword: string
+): Promise<boolean> {
+    return argon2.verify(this.password, candidatePassword);
+};
 
-export type User =
-    InferSchemaType<typeof userSchema>;
+userSchema.methods.setRefreshToken = async function (
+    refreshToken: string
+): Promise<void> {
+    this.refreshTokenHash = await argon2.hash(refreshToken);
+};
 
-export const UserModel =
-    model("User", userSchema);
+userSchema.methods.verifyRefreshToken = async function (
+    refreshToken: string
+): Promise<boolean> {
+    if (!this.refreshTokenHash) {
+        return false;
+    }
+
+    return argon2.verify(
+        this.refreshTokenHash,
+        refreshToken
+    );
+};
+
+export { type UserDocument };
+
+export const UserModel = model<User, UserModel>(
+    "User",
+    userSchema
+);

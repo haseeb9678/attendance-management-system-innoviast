@@ -11,6 +11,7 @@ import helmet from "helmet";
 const app = express();
 
 // app.use(hpp());
+app.set("trust proxy", 1)
 app.use(helmet());
 app.use(
     cors({

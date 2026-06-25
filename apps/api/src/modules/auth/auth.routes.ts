@@ -5,7 +5,7 @@ import validate from "../../middleware/validate.middleware";
 import { loginSchema, registerSchema }
     from "@attendance/shared-zod";
 
-import { login, logout, me, register }
+import { login, logout, me, refreshToken, register }
     from "./auth.controller";
 import { auth } from "../../middleware/auth.middleware";
 
@@ -32,6 +32,10 @@ authRouter.post(
     "/logout",
     auth,
     logout
+);
+authRouter.post(
+    "/refresh",
+    refreshToken
 );
 
 
