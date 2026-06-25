@@ -1,43 +1,63 @@
-# Attendance Management System
+# 📚 Attendance Management System
 
-A full-stack Attendance Management System developed as part of the InnoViast Full-Stack Product Engineering Internship.
+A modern, scalable full-stack Attendance Management System developed during the **InnoViast Full-Stack Product Engineering Internship**. The project follows a production-oriented monorepo architecture and demonstrates modern web development practices using React, Node.js, TypeScript, MongoDB, and shared packages.
 
-## Overview
+---
 
-The Attendance Management System provides a role-based attendance workflow for educational institutes, bootcamps, and organizations. The platform enables administrators and instructors to manage classes, record attendance, generate reports, and track attendance history.
+## 🚀 Project Overview
 
-## Features
+The Attendance Management System is designed to simplify attendance management for educational institutes, bootcamps, and organizations.
 
-### Authentication & Authorization
+It provides a secure, role-based platform where administrators, instructors, and students can efficiently manage classes, record attendance, and monitor attendance records.
 
-* Role-based access control
-* Admin, Instructor, and Student roles
-* Secure authentication (JWT) *(Planned)*
+This project emphasizes scalability, maintainability, and code reusability by using a monorepo architecture with shared types and validation schemas.
 
-### Attendance Management
+---
 
-* Create classes and sessions
-* Mark attendance (Present, Absent, Late)
-* Attendance history tracking
-* Attendance analytics *(Planned)*
+# ✨ Features
 
-### Reporting
+## Authentication & Authorization
 
-* Filter attendance by date
-* Filter by class
-* Filter by user
-* Filter by attendance status
-* CSV export *(Planned)*
+* JWT-based Authentication
+* Role-Based Access Control (RBAC)
+* Secure Password Hashing
+* Refresh Token Authentication *(Planned)*
 
-### Dashboard
+## Attendance Management
 
-* Admin dashboard *(Planned)*
-* Instructor dashboard *(Planned)*
-* Student dashboard *(Planned)*
+* Create and Manage Classes
+* Create Attendance Sessions
+* Mark Attendance
+* Present, Absent & Late Status
+* Attendance History
+* Attendance Analytics *(Planned)*
 
-## Tech Stack
+## User Management
 
-### Frontend
+* Admin Management
+* Instructor Management
+* Student Management
+* Profile Management *(Planned)*
+
+## Reporting
+
+* Attendance Reports
+* Date Filtering
+* Class Filtering
+* Student Filtering
+* CSV Export *(Planned)*
+
+## Dashboard
+
+* Admin Dashboard
+* Instructor Dashboard
+* Student Dashboard
+
+---
+
+# 🛠 Tech Stack
+
+## Frontend
 
 * React
 * TypeScript
@@ -46,69 +66,82 @@ The Attendance Management System provides a role-based attendance workflow for e
 * React Router
 * React Hook Form
 * Zod
+* Axios
 
-### Backend
+## Backend
 
 * Node.js
 * Express.js
 * TypeScript
 * MongoDB
-* JWT Authentication
-* Zod Validation
+* Mongoose
+* JWT
+* Zod
+* Argon2
 
-### Architecture
+## Architecture
 
-* Monorepo (pnpm Workspaces)
-* Feature-Based Frontend Architecture
-* Shared Validation Schemas
-* Shared Types
+* PNPM Workspaces
+* Monorepo Architecture
+* Feature-Based Folder Structure
+* Shared Type Definitions
+* Shared Zod Validation Schemas
+* REST API
 
-## Project Structure
+---
+
+# 📂 Project Structure
 
 ```text
-apps/
-├── web
-└── api
-
-packages/
-├── shared-types
-└── shared-zod
-
-docs/
+attendance-management-system/
+│
+├── apps/
+│   ├── api/
+│   └── web/
+│
+├── packages/
+│   ├── shared-types/
+│   └── shared-zod/
+│
+└── docs/
 ```
 
-## Setup Instructions
+---
 
-### Clone Repository
+# ⚙️ Getting Started
+
+## Clone Repository
 
 ```bash
 git clone <repository-url>
-cd Attendance-System-InnoViast
+cd AttendanceManagementSystem-InnoViast
 ```
 
-### Install Dependencies
+## Install Dependencies
 
 ```bash
 pnpm install
 ```
 
-### Start Frontend
-
-```bash
-cd apps/web
-pnpm dev
-```
-
-### Start Backend
+## Start Backend
 
 ```bash
 cd apps/api
 pnpm dev
 ```
 
-## Database Schema
+## Start Frontend
 
-### User
+```bash
+cd apps/web
+pnpm dev
+```
+
+---
+
+# 🗄 Database Models
+
+## User
 
 ```ts
 {
@@ -116,10 +149,11 @@ pnpm dev
   email: string;
   password: string;
   role: "admin" | "instructor" | "student";
+  refreshTokenHash: string;
 }
 ```
 
-### Class
+## Class
 
 ```ts
 {
@@ -129,7 +163,7 @@ pnpm dev
 }
 ```
 
-### Attendance
+## Attendance
 
 ```ts
 {
@@ -139,39 +173,57 @@ pnpm dev
 }
 ```
 
-## Screenshots
+---
 
-### Login Page
+# 📌 Current Development Status
+
+## ✅ Completed
+
+* Monorepo Setup (PNPM Workspaces)
+* React + Vite Setup
+* Express.js Backend Setup
+* TypeScript Configuration
+* Shared Types Package
+* Shared Zod Validation Package
+* Project Folder Architecture
+* Environment Configuration
+* Basic Server Configuration
+* Tailwind CSS Setup
+* React Router Setup
+
+## 🚧 In Progress
+
+* Authentication API
+* Authorization Middleware
+* Database Models
+* JWT Authentication
+* User Management
+
+## 📅 Planned
+
+* Attendance Module
+* Dashboard
+* Reports & Analytics
+* File Export
+* Testing
+* Deployment
+
+---
+
+# 📸 Screenshots
+
+Screenshots will be added as development progresses.
+
+---
+
+# 🚀 Deployment
 
 Coming Soon
 
-### Dashboard
+---
 
-Coming Soon
+# 👨‍💻 Author
 
-### Attendance Management
+**Haseeb Ali**
 
-Coming Soon
-
-## Deployment Link
-
-Coming Soon
-
-## Current Progress
-
-### Week 1
-
-* [x] Monorepo setup
-* [x] React + TypeScript setup
-* [x] Tailwind CSS setup
-* [x] React Router setup
-* [ ] Authentication
-* [ ] Backend API
-* [ ] Database Integration
-* [ ] Attendance Module
-* [ ] Reports Module
-* [ ] Deployment
-
-## Author
-
-Haseeb Ali
+Full-Stack Developer Intern @ InnoViast
