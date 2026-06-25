@@ -23,19 +23,32 @@ body {
   --color-text-inverse: #FFFFFF;
 
   /* === Semantic === */
+
+  /* Error */
   --color-error: #EF4444;
+  --color-error-hover: #DC2626;
   --color-error-bg: #FEE2E2;
+  --color-error-bg-hover: #FECACA;
+
+  /* Success */
   --color-success: #10B981;
+  --color-success-hover: #059669;
   --color-success-bg: #D1FAE5;
+  --color-success-bg-hover: #A7F3D0;
+
+  /* Warning */
   --color-warning: #F59E0B;
+  --color-warning-hover: #D97706;
   --color-warning-bg: #FEF3C7;
-  --color-border: #E9D5FF;
+  --color-warning-bg-hover: #FDE68A;
 
   /* === Roles === */
   --color-role-admin: #5B21B6;
   --color-role-admin-bg: #EDE9FE;
+
   --color-role-instructor: #065F46;
   --color-role-instructor-bg: #D1FAE5;
+
   --color-role-student: #92400E;
   --color-role-student-bg: #FEF3C7;
 }

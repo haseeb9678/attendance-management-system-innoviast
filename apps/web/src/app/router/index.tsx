@@ -2,6 +2,8 @@ import { createBrowserRouter } from "react-router-dom";
 import LoginPage from "@/features/auth/pages/LoginPage";
 import AuthLayout from "../layouts/AuthLayout";
 import AdminLayout from "../layouts/AdminLayout";
+import Dashboard from "@/features/admin/pages/Dashboard";
+import Users from "@/features/admin/pages/Users";
 
 const router = createBrowserRouter([
     {
@@ -14,7 +16,13 @@ const router = createBrowserRouter([
     {
         path: "admin", element: <AdminLayout />, children: [
             {
-                index: true, element: <LoginPage />
+                index: true, element: <Dashboard />
+            },
+            {
+                path: "users", element: <Users />
+            },
+            {
+                path: "classes", element: <div>Classes</div>
             }
         ]
     }
