@@ -7,6 +7,7 @@ import errorMiddleware from "./middleware/error.middleware.js";
 import helmet from "helmet";
 import { CLIENT_URL } from "./config/env.js";
 import departmentRouter from "./modules/department/department.routes.js";
+import { connectDB } from "./config/database.js";
 
 
 
@@ -43,6 +44,8 @@ app.get("/", (_req, res) => {
 //Global Error Middleware
 
 app.use(errorMiddleware)
+
+await connectDB();
 
 //Unhandled Rejection
 process.on(
