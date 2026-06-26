@@ -2,14 +2,14 @@ import FormButton from '@/components/common/FormButton'
 import SearchBox from '@/components/common/SearchBox'
 import SelectBox from '@/components/common/SelectBox'
 import DataTable from '@/components/common/Table'
-import { userColumns } from '@/features/users/constants/userColumns'
-import { roleOptions, statusOptions } from '@/shared/constants/filters'
+import { departmentColumns } from '@/features/department/constants/departmentColumns'
+import { statusOptions } from '@/shared/constants/filters'
 import { LucidePlus, LucideUpload } from 'lucide-react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const Users = () => {
-    const [role, setRole] = useState(roleOptions[0])
+const Departments = () => {
+
     const [status, setStatus] = useState(statusOptions[0])
     const [search, setSearch] = useState("")
 
@@ -20,11 +20,11 @@ const Users = () => {
         flex flex-col gap-3
          shadow-sm flex-1 min-w-0">
             <div className='p-6 flex flex-col md:flex-row justify-between gap-5'>
-                <h2 className='text-text-base text-2xl font-bold'>Users</h2>
+                <h2 className='text-text-base text-2xl font-bold'>Departments</h2>
                 <div className='flex flex-col sm:flex-row items-center gap-3'>
                     <FormButton
                         type={"button"}
-                        text={"Add User"}
+                        text={"Add Department"}
                         className='min-w-max h-10! px-5 text-sm bg-success hover:bg-success-hover '
                         Icon={LucidePlus}
                         onClick={() => navigate("add")}
@@ -43,16 +43,9 @@ const Users = () => {
                     <SearchBox
                         value={search}
                         onChange={setSearch}
-                        placeholder="Search by name or email..."
+                        placeholder="Search by name or code..."
                     />
                 </div>
-
-                <SelectBox
-                    label="Role"
-                    option={role}
-                    setOption={setRole}
-                    options={roleOptions}
-                />
 
                 <SelectBox
                     label="Status"
@@ -63,7 +56,7 @@ const Users = () => {
             </div>
 
             <DataTable
-                columns={userColumns}
+                columns={departmentColumns}
 
             />
 
@@ -71,4 +64,4 @@ const Users = () => {
     )
 }
 
-export default Users
+export default Departments

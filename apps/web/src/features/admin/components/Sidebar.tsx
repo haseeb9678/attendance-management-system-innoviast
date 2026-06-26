@@ -1,147 +1,20 @@
 import {
-    BarChart3,
-    CalendarDays,
+
     ChevronDown,
     ChevronRight,
-    ClipboardCheck,
-    GraduationCap,
-    LayoutDashboard,
+
     LucideX,
-    Settings,
-    ShieldCheck,
-    UserCog,
-    Users,
+
 } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { NavLink } from "react-router-dom";
 import { useSidebarStore } from "../store/sidebar.store";
+import { adminSidebarItems } from "@/shared/constants/sidebarItems";
 
 
 
 const Sidebar = () => {
-
-
-    const adminSidebarItems = [
-        {
-            id: 1,
-            label: "Menu",
-            items: [
-                {
-                    id: 1,
-                    label: "Dashboard",
-                    Icon: LayoutDashboard,
-                    href: "/admin",
-                    children: [],
-                },
-            ],
-        },
-
-        {
-            id: 2,
-            label: "Management",
-            items: [
-                {
-                    id: 2,
-                    label: "Users",
-                    Icon: Users,
-                    href: "/admin/users",
-                    children: [],
-                },
-                {
-                    id: 3,
-                    label: "Classes",
-                    Icon: GraduationCap,
-                    href: "/admin/classes",
-                    children: [],
-                },
-                {
-                    id: 4,
-                    label: "Sessions",
-                    Icon: CalendarDays,
-                    href: "/admin/sessions",
-                    children: [],
-                },
-            ],
-        },
-
-        {
-            id: 3,
-            label: "Attendance",
-            items: [
-                {
-                    id: 5,
-                    label: "Attendance",
-                    Icon: ClipboardCheck,
-                    href: "/admin/attendance",
-                    children: [
-                        {
-                            id: 1,
-                            label: "Mark Attendance",
-                            href: "/admin/attendance/mark",
-                        },
-                        {
-                            id: 2,
-                            label: "Attendance History",
-                            href: "/admin/attendance/history",
-                        },
-                        {
-                            id: 3,
-                            label: "Leave Requests",
-                            href: "/admin/attendance/leaves",
-                        },
-                        {
-                            id: 4,
-                            label: "Reports",
-                            href: "/admin/attendance/reports",
-                        }
-                    ],
-                },
-            ],
-        },
-
-        {
-            id: 4,
-            label: "Reports",
-            items: [
-                {
-                    id: 6,
-                    label: "Analytics",
-                    Icon: BarChart3,
-                    href: "/admin/reports",
-                    children: [],
-                },
-            ],
-        },
-
-        {
-            id: 5,
-            label: "Administration",
-            items: [
-                {
-                    id: 7,
-                    label: "Roles & Permissions",
-                    Icon: ShieldCheck,
-                    href: "/admin/roles",
-                    children: [],
-                },
-                {
-                    id: 8,
-                    label: "Profile",
-                    Icon: UserCog,
-                    href: "/admin/profile",
-                    children: [],
-                },
-                {
-                    id: 9,
-                    label: "Settings",
-                    Icon: Settings,
-                    href: "/admin/settings",
-                    children: [],
-                },
-            ],
-        },
-    ];
 
     const [activeItem, setActiveItem] = useState(-1)
     const isOpen = useSidebarStore((s) => s.isOpen)
@@ -271,7 +144,7 @@ const Sidebar = () => {
                                             ) :
                                                 (
                                                     <NavLink
-                                                        end
+
                                                         to={subItem.href}
                                                         className={({ isActive }) => isActive ?
                                                             `flex items-center gap-2 px-3  cursor-default ${isShortSidebar && "justify-center"}

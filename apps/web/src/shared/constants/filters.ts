@@ -8,8 +8,8 @@ export const roleOptions = [
         value: "student"
     },
     {
-        label: "Teacher",
-        value: "teacher"
+        label: "Instructor",
+        value: "instructor"
     },
     {
         label: "Admin",

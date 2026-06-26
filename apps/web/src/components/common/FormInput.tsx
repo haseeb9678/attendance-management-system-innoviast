@@ -53,6 +53,7 @@ const FormInput = <T extends FieldValues>({
 
                 <div
                     className={`flex h-12 items-center gap-2 rounded-3xl border px-4 transition-colors duration-200
+                        text-sm
           ${error
                             ? `border-red-500 focus-within:border-red-500 
                             focus-within:ring-3 focus-within:ring-red-600/15`
@@ -69,7 +70,7 @@ const FormInput = <T extends FieldValues>({
                         {...register(name)}
                         {...props}
                         type={isPassword ? showPassword ? "text" : "password" : type}
-                        className={`w-full bg-transparent outline-none placeholder:text-text-secondary ${className}`}
+                        className={`w-full bg-transparent outline-none placeholder:text-text-secondary/70 ${className}`}
                     />
                     {isPassword && (
                         showPassword ?
