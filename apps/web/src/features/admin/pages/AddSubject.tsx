@@ -1,18 +1,18 @@
 import FormButton from '@/components/common/FormButton'
 import FormInput from '@/components/common/FormInput'
 import SelectBox from '@/components/common/SelectBox'
-import { departmentFields } from '@/features/department/constants/department.fields'
+import { subjectFields } from '@/features/subject/constants/subject.fields'
 import { statusOptions } from '@/shared/constants/filters'
-import { departmentFormSchema } from '@attendance/shared-zod'
+import { subjectFormSchema } from '@attendance/shared-zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ArrowLeft } from 'lucide-react'
 import { Controller, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
-const AddDepartment = () => {
+const AddSubject = () => {
 
     const { register, handleSubmit, formState: { errors }, control } = useForm({
-        resolver: zodResolver(departmentFormSchema),
+        resolver: zodResolver(subjectFormSchema),
         defaultValues: {
             status: statusOptions[1],
         },
@@ -40,7 +40,7 @@ const AddDepartment = () => {
                     />
                 </div>
 
-                <h2 className='text-text-base text-2xl font-bold'>Add Department</h2>
+                <h2 className='text-text-base text-2xl font-bold'>Add Subject</h2>
             </div>
             <div className='border-t border-dashed border-gray-300' />
             <div className='p-6'>
@@ -52,7 +52,7 @@ const AddDepartment = () => {
                         className='grid grid-cols-1 xl:grid-cols-2 gap-8'
                     >
 
-                        {departmentFields
+                        {subjectFields
                             .map((field) => {
                                 if (field.component === "input") {
                                     return (
@@ -109,6 +109,6 @@ const AddDepartment = () => {
     )
 }
 
-export default AddDepartment
+export default AddSubject
 
 

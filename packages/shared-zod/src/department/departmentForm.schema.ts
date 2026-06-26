@@ -1,11 +1,8 @@
 import { z } from "zod";
+import { selectOptionSchema } from "../utils/selectOption.schema";
 
-const selectOptionSchema = z.object({
-    label: z.string(),
-    value: z.string(),
-});
 
-export const departmentSchema = z.object({
+export const departmentFormSchema = z.object({
     name: z
         .string()
         .trim()
@@ -26,7 +23,7 @@ export const departmentSchema = z.object({
         .optional()
         .or(z.literal("")),
 
-    status: selectOptionSchema,
+    status: selectOptionSchema("Status"),
 });
 
-export type DepartmentSchema = z.infer<typeof departmentSchema>;
+export type DepartmentFormInput = z.infer<typeof departmentFormSchema>;

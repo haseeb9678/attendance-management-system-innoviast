@@ -1,4 +1,4 @@
-import { UserRole } from "@attendance/shared-types";
+import { USER_ROLES, UserRole, USER_ROLE } from "@attendance/shared-types";
 import argon2 from "argon2";
 import {
     HydratedDocument,
@@ -52,8 +52,8 @@ const userSchema = new Schema<User, UserModel, UserMethods>(
 
         role: {
             type: String,
-            enum: Object.values(UserRole),
-            default: UserRole.STUDENT,
+            enum: USER_ROLES,
+            default: USER_ROLE.STUDENT,
         },
 
         refreshTokenHash: {

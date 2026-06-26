@@ -1,67 +1,65 @@
 import { z } from "zod";
 
-const selectOptionSchema = z.object({
-    label: z.string(),
-    value: z.string(),
-});
+const objectIdRegex = /^[0-9a-fA-F]{24}$/;
 
-export const userSchema = z
+export const createUserSchema = z
     .object({
         // Personal Information
         name: z
             .string()
             .trim()
-            .min(3, "Name must be at least 3 characters"),
+            .min(3, "Name must be at least 3 characters")
+            .max(100, "Name must not exceed 100 characters"),
 
         email: z
             .email("Invalid email address"),
 
         phoneNumber: z
             .string()
-            .min(11, "Phone number must be 11 digits")
-            .max(11, "Phone number must be 11 digits"),
+            .trim()
+            .regex(/^\d{11}$/, "Phone number must be exactly 11 digits"),
 
         // Account Information
         password: z
             .string()
             .min(8, "Password must be at least 8 characters"),
 
-        confirmPassword: z.string(),
-
         // Role Information
-        role: selectOptionSchema,
+        role: z.enum(["admin", "instructor", "student"], {
+            error: "Please provide a valid role.",
+        }),
 
-        status: selectOptionSchema,
+        status: z.enum(["active", "inactive"], {
+            error: "Please provide a valid status.",
+        }),
 
         // =========================
         // Student Fields
         // =========================
-        registrationNumber: z.string().optional(),
+        registrationNumber: z.string().trim().optional(),
 
-        rollNumber: z.string().optional(),
+        rollNumber: z.string().trim().optional(),
 
-        department: selectOptionSchema.optional(),
+        department: z
+            .string()
+            .trim()
+            .regex(objectIdRegex, "Invalid department ID")
+            .optional(),
 
-        class: selectOptionSchema.optional(),
+        class: z
+            .string()
+            .trim()
+            .regex(objectIdRegex, "Invalid class ID")
+            .optional(),
 
         // =========================
         // Instructor Fields
         // =========================
-        employeeId: z.string().optional(),
+        employeeId: z.string().trim().optional(),
     })
     .superRefine((data, ctx) => {
-        // Password Match
-        if (data.password !== data.confirmPassword) {
-            ctx.addIssue({
-                code: "custom",
-                path: ["confirmPassword"],
-                message: "Passwords do not match",
-            });
-        }
-
-        // Student Validation
-        if (data.role.value === "student") {
-            if (!data.registrationNumber?.trim()) {
+        if (data.role === "student") {
+            if (!data.registrationNumber) {
                 ctx.addIssue({
                     code: "custom",
                     path: ["registrationNumber"],
@@ -69,7 +67,7 @@ export const userSchema = z
                 });
             }
 
-            if (!data.rollNumber?.trim()) {
+            if (!data.rollNumber) {
                 ctx.addIssue({
                     code: "custom",
                     path: ["rollNumber"],
@@ -94,9 +92,8 @@ export const userSchema = z
             }
         }
 
-        // Instructor Validation
-        if (data.role.value === "instructor") {
-            if (!data.employeeId?.trim()) {
+        if (data.role === "instructor") {
+            if (!data.employeeId) {
                 ctx.addIssue({
                     code: "custom",
                     path: ["employeeId"],
@@ -114,4 +111,4 @@ export const userSchema = z
         }
     });
 
-export type UserSchema = z.infer<typeof userSchema>;
+export type CreateUserInput = z.infer<typeof createUserSchema>;

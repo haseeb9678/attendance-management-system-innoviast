@@ -6,6 +6,7 @@ import errorMiddleware from "./middleware/error.middleware.js";
 
 import helmet from "helmet";
 import { CLIENT_URL } from "./config/env.js";
+import departmentRouter from "./modules/department/department.routes.js";
 
 
 
@@ -30,6 +31,7 @@ app.use(cookieParser())
 //Routes
 const api = "/api/v1"
 app.use(`${api}/auth`, authRouter);
+app.use(`${api}/department`, departmentRouter)
 
 app.get("/", (_req, res) => {
     res.status(200).json({

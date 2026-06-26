@@ -4,7 +4,7 @@ import SelectBox from '@/components/common/SelectBox'
 import { divisons, formFields, instructorFields, studentFields }
     from '@/features/users/constants/user.fields'
 import { roleOptions, statusOptions } from '@/shared/constants/filters'
-import { userSchema } from '@attendance/shared-zod'
+import { userFormSchema } from '@attendance/shared-zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ArrowLeft } from 'lucide-react'
 import { Controller, useForm } from 'react-hook-form'
@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom'
 const AddUser = () => {
 
     const { register, handleSubmit, formState: { errors }, control, watch } = useForm({
-        resolver: zodResolver(userSchema),
+        resolver: zodResolver(userFormSchema),
         defaultValues: {
             role: roleOptions[1],
             status: statusOptions[1],
