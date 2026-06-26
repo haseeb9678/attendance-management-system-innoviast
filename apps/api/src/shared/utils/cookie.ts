@@ -6,7 +6,7 @@ const isProduction = NODE_ENV === "production";
 const cookieOptions = {
     httpOnly: true,
     secure: isProduction,
-    sameSite: "strict" as const,
+    sameSite: isProduction ? "none" : "lax" as "none" | "lax"
 };
 
 export const setAccessTokenCookie = (

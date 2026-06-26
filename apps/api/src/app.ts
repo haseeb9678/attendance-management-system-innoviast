@@ -5,6 +5,7 @@ import authRouter from "./modules/auth/auth.routes";
 import errorMiddleware from "./middleware/error.middleware";
 
 import helmet from "helmet";
+import { CLIENT_URL } from "./config/env";
 
 
 
@@ -15,9 +16,7 @@ app.set("trust proxy", 1)
 app.use(helmet());
 app.use(
     cors({
-        origin: [
-            "http://localhost:5173",
-        ],
+        origin: CLIENT_URL,
         credentials: true,
         methods: ["GET", "POST", "PUT", "PATCH", "DELETE"]
     })
