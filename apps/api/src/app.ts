@@ -1,11 +1,11 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import authRouter from "./modules/auth/auth.routes";
-import errorMiddleware from "./middleware/error.middleware";
+import authRouter from "./modules/auth/auth.routes.js";
+import errorMiddleware from "./middleware/error.middleware.js";
 
 import helmet from "helmet";
-import { CLIENT_URL } from "./config/env";
+import { CLIENT_URL } from "./config/env.js";
 
 
 

@@ -1,7 +1,7 @@
 import { RequestHandler } from "express";
 
-import ApiError from "../shared/utils/ApiError";
-import { verifyAccessToken } from "../shared/utils/jwt";
+import ApiError from "../shared/utils/ApiError.js";
+import { verifyAccessToken } from "../shared/utils/jwt.js";
 
 export const auth: RequestHandler =
     async (req, res, next) => {

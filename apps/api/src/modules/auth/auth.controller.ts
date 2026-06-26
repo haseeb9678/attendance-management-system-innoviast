@@ -1,8 +1,8 @@
-import ApiError from "../../shared/utils/ApiError";
-import ApiResponse from "../../shared/utils/ApiResponse";
-import { asyncHandler } from "../../shared/utils/AsyncHandler";
-import { clearAuthCookies, setAccessTokenCookie, setRefreshTokenCookie } from "../../shared/utils/cookie";
-import { getMeService, loginService, logoutService, refreshTokenService, registerService } from "./auth.service";
+import ApiError from "../../shared/utils/ApiError.js";
+import ApiResponse from "../../shared/utils/ApiResponse.js";
+import { asyncHandler } from "../../shared/utils/AsyncHandler.js";
+import { clearAuthCookies, setAccessTokenCookie, setRefreshTokenCookie } from "../../shared/utils/cookie.js";
+import { getMeService, loginService, logoutService, refreshTokenService, registerService } from "./auth.service.js";
 
 export const register = asyncHandler(async (req, res) => {
 
