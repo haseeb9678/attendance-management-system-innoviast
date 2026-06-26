@@ -38,7 +38,9 @@ const DataTable = <T extends { id: string | number }>({
             sticky top-0 z-10
             h-6 border-y border-gray-300 bg-gray-100
             [&_th]:whitespace-nowrap
-            [&_th]:p-4
+            [&_th]:p-5
+            [&_th]:px-8
+          
             [&_th]:font-medium!
             text-text-secondary/80 uppercase 
           "
@@ -74,6 +76,10 @@ const DataTable = <T extends { id: string | number }>({
             [&_tr:hover]:bg-gray-50
             [&_td]:whitespace-nowrap
             [&_td]:p-5
+            [&_td]:px-8
+            [&_td]:text-text-base
+           
+
           "
                 >
                     {loading ? (

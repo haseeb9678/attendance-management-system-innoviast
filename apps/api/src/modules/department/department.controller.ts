@@ -48,7 +48,7 @@ export const getAllDepartments = asyncHandler(async (req, res) => {
             ? "oldest"
             : "newest";
 
-    const departments = await getAllDepartmentsService({
+    const { departments, meta } = await getAllDepartmentsService({
         page,
         limit,
         search,
@@ -60,7 +60,8 @@ export const getAllDepartments = asyncHandler(async (req, res) => {
         new ApiResponse(
             200,
             "Departments fetched successfully.",
-            departments
+            departments,
+            meta
         )
     );
 });

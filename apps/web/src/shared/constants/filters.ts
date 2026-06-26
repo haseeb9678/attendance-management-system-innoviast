@@ -31,3 +31,14 @@ export const statusOptions = [
         value: "inactive"
     }
 ];
+
+export const sortOptions = [
+    {
+        label: "Newest",
+        value: "newest"
+    },
+    {
+        label: "Oldest",
+        value: "oldest"
+    }
+];

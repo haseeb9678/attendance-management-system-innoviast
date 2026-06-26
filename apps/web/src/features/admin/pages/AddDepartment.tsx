@@ -2,12 +2,14 @@ import FormButton from '@/components/common/FormButton'
 import FormInput from '@/components/common/FormInput'
 import SelectBox from '@/components/common/SelectBox'
 import { departmentFields } from '@/features/department/constants/department.fields'
+import { useCreateDepartment } from '@/features/department/hooks/useDepartmentMutation'
 import { statusOptions } from '@/shared/constants/filters'
-import { departmentFormSchema } from '@attendance/shared-zod'
+import { departmentFormSchema, type CreateDepartmentInput, type DepartmentFormInput } from '@attendance/shared-zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ArrowLeft } from 'lucide-react'
 import { Controller, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'sonner'
 
 const AddDepartment = () => {
 
@@ -18,8 +20,26 @@ const AddDepartment = () => {
         },
     })
 
-    const onSubmit = (data) => {
-        console.log(data)
+    const { mutate, isPending } = useCreateDepartment()
+
+    const onSubmit = (data: DepartmentFormInput) => {
+
+        const formattedData: CreateDepartmentInput = {
+            name: data.name,
+            code: data.code,
+            description: data.description,
+            status: data.status.value as "active" | "inactive",
+        }
+
+
+        mutate(formattedData, {
+            onSuccess: (res) => {
+                toast.success(res?.message)
+            },
+            onError: (err) => {
+                toast.error(err?.message)
+            },
+        })
     }
     console.log("errors", errors)
 
@@ -97,6 +117,7 @@ const AddDepartment = () => {
                         <FormButton
                             type={"submit"}
                             text={'Add'}
+                            isLoading={isPending}
                             className='max-w-50'
                         />
                     </div>

@@ -7,7 +7,7 @@ const statusStyles = {
         "bg-success-bg text-success",
 
     inactive:
-        "bg-success-bg text-success",
+        "bg-warning-bg text-warning",
 
     pending:
         "bg-success-bg text-success",

@@ -31,7 +31,7 @@ app.use(cookieParser())
 //Routes
 const api = "/api/v1"
 app.use(`${api}/auth`, authRouter);
-app.use(`${api}/department`, departmentRouter)
+app.use(`${api}/departments`, departmentRouter)
 
 app.get("/", (_req, res) => {
     res.status(200).json({
