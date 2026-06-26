@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "pnpm --filter @attendance/shared-types build && pnpm --filter @attendance/shared-zod build",
     "build": "tsc --noEmit || true && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
