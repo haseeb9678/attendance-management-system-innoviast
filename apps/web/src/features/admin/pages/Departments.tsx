@@ -33,7 +33,7 @@ const Departments = () => {
     })
 
     return (
-        <section className="bg-white border border-gray-200 rounded-md
+        <section className="bg-bg-card border border-border rounded-md
         flex flex-col gap-3
          shadow-sm flex-1 min-w-0">
             <div className='p-6 flex flex-col md:flex-row justify-between gap-5'>
@@ -42,7 +42,8 @@ const Departments = () => {
                     <FormButton
                         type={"button"}
                         text={"Add Department"}
-                        className='min-w-max h-10! px-5 text-sm bg-success hover:bg-success-hover '
+                        className='min-w-max h-10! px-5 text-sm
+                         bg-success hover:bg-success-hover '
                         Icon={LucidePlus}
                         onClick={() => navigate("add")}
                     />
@@ -54,8 +55,10 @@ const Departments = () => {
                     />
                 </div>
             </div>
-            <div className='border-t border-dashed border-gray-300' />
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 p-6 py-4 border-b border-dashed border-gray-300">
+            <div className='border-t border-dashed border-border' />
+            <div className="grid grid-cols-1 md:grid-cols-2
+             lg:grid-cols-4 gap-3 p-6 py-4 border-b border-dashed
+              border-border">
                 <div className="lg:col-span-2">
                     <SearchBox
                         value={search}
@@ -85,7 +88,7 @@ const Departments = () => {
 
             />
 
-            <div className=" px-6">
+            <div className=" p-6">
                 {data?.meta && (
                     <Pagination
                         metaData={data.meta}

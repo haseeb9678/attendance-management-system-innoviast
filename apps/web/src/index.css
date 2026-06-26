@@ -5,82 +5,110 @@ body {
 }
 
 @theme {
-  /* === Core === */
-  --color-primary: #7C3AED;
-  --color-primary-hover: #6D28D9;
-  --color-secondary: #A855F7;
-  --color-accent: #C084FC;
+  /* ========= Brand ========= */
+  --color-primary: #2563EB;
+  --color-primary-hover: #1D4ED8;
+  --color-secondary: #3B82F6;
+  --color-accent: #60A5FA;
 
-  /* === Backgrounds === */
-  --color-bg: #FDFAFF;
+  /* ========= Background ========= */
+  --color-bg: #F8FAFC;
   --color-bg-card: #FFFFFF;
-  --color-surface: #F3E8FF;
+  --color-surface: #F1F5F9;
+  --color-border: #E2E8F0;
+  --color-border-hover: #CBD5E1;
 
-  /* === Text === */
-  --color-text-base: #1E0A3C;
-  --color-text-secondary: #4B5563;
-  --color-text-muted: #9CA3AF;
+  /* ========= Text ========= */
+  --color-text-base: #0F172A;
+  --color-text-secondary: #475569;
+  --color-text-muted: #94A3B8;
   --color-text-inverse: #FFFFFF;
 
-  /* === Semantic === */
+  /* ========= Semantic ========= */
+  --color-success: #16A34A;
+  --color-success-hover: #15803D;
+  --color-success-bg: #DCFCE7;
+  --color-success-bg-hover: #BBF7D0;
 
-  /* Error */
-  --color-error: #EF4444;
-  --color-error-hover: #DC2626;
-  --color-error-bg: #FEE2E2;
-  --color-error-bg-hover: #FECACA;
-
-  /* Success */
-  --color-success: #10B981;
-  --color-success-hover: #059669;
-  --color-success-bg: #D1FAE5;
-  --color-success-bg-hover: #A7F3D0;
-
-  /* Warning */
   --color-warning: #F59E0B;
   --color-warning-hover: #D97706;
   --color-warning-bg: #FEF3C7;
   --color-warning-bg-hover: #FDE68A;
 
-  /* === Roles === */
-  --color-role-admin: #5B21B6;
-  --color-role-admin-bg: #EDE9FE;
+  --color-error: #DC2626;
+  --color-error-hover: #B91C1C;
+  --color-error-bg: #FEE2E2;
+  --color-error-bg-hover: #FECACA;
 
-  --color-role-instructor: #065F46;
-  --color-role-instructor-bg: #D1FAE5;
+  /* ========= Roles ========= */
+  --color-role-admin: #2563EB;
+  --color-role-admin-bg: #DBEAFE;
 
-  --color-role-student: #92400E;
+  --color-role-instructor: #16A34A;
+  --color-role-instructor-bg: #DCFCE7;
+
+  --color-role-student: #F59E0B;
   --color-role-student-bg: #FEF3C7;
 }
 
-/* Dark mode */
+/* ====================================================== */
+/*                     DARK THEME                         */
+/* ====================================================== */
+
 .dark {
-  --color-primary: #A855F7;
-  --color-primary-hover: #C084FC;
-  --color-secondary: #7C3AED;
-  --color-accent: #6D28D9;
 
-  --color-bg: #0D0618;
-  --color-bg-card: #130920;
-  --color-surface: #1A0A2E;
+  /* ========= Brand ========= */
 
-  --color-text-base: #F3E8FF;
-  --color-text-secondary: #9D77C5;
-  --color-text-muted: #4B2A6E;
-  --color-text-inverse: #0D0618;
+  --color-primary: #3B82F6;
+  --color-primary-hover: #2563EB;
+
+  --color-secondary: #60A5FA;
+  --color-accent: #93C5FD;
+
+  /* ========= Background ========= */
+
+  --color-bg: #0F172A;
+  --color-bg-card: #162033;
+  --color-surface: #1E293B;
+  --color-border: #334155;
+  --color-border-hover: #475569;
+
+  /* ========= Text ========= */
+
+  --color-text-base: #F8FAFC;
+  --color-text-secondary: #CBD5E1;
+  --color-text-muted: #94A3B8;
+  --color-text-inverse: #0F172A;
+
+  /* ========= Success ========= */
+
+  --color-success: #22C55E;
+  --color-success-hover: #16A34A;
+  --color-success-bg: #075427;
+  --color-success-bg-hover: #14532D;
+
+  /* ========= Warning ========= */
+
+  --color-warning: #FBBF24;
+  --color-warning-hover: #F59E0B;
+  --color-warning-bg: #78310b;
+  --color-warning-bg-hover: #78350F;
+
+  /* ========= Error ========= */
 
   --color-error: #F87171;
-  --color-error-bg: #3B1515;
-  --color-success: #34D399;
-  --color-success-bg: #022C22;
-  --color-warning: #FCD34D;
-  --color-warning-bg: #2D1E00;
-  --color-border: #2D1B4E;
+  --color-error-hover: #EF4444;
+  --color-error-bg: #6a0909;
+  --color-error-bg-hover: #7F1D1D;
 
-  --color-role-admin: #C084FC;
-  --color-role-admin-bg: #2D1B4E;
-  --color-role-instructor: #34D399;
-  --color-role-instructor-bg: #022C22;
-  --color-role-student: #FCD34D;
-  --color-role-student-bg: #2D1E00;
+  /* ========= Roles ========= */
+
+  --color-role-admin: #60A5FA;
+  --color-role-admin-bg: #172554;
+
+  --color-role-instructor: #4ADE80;
+  --color-role-instructor-bg: #052E16;
+
+  --color-role-student: #FBBF24;
+  --color-role-student-bg: #451A03;
 }

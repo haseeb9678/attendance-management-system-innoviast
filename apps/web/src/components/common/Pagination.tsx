@@ -36,7 +36,7 @@ const Pagination = ({ metaData, onPageChange, loading }: Props) => {
                 {loading ? (
                     <Skeleton className="h-3 w-3/12" />
                 ) : (
-                    <div className="flex gap-1 text-sm text-slate-600">
+                    <div className="flex gap-1 text-sm text-text-secondary">
                         <span>Showing</span>
                         <span>{startEntry}</span>
                         <span>to</span>
@@ -71,7 +71,10 @@ const Pagination = ({ metaData, onPageChange, loading }: Props) => {
                                 type="button"
                                 disabled={!metaData.hasPreviousPage}
                                 onClick={() => onPageChange(metaData.page - 1)}
-                                className="rounded-full bg-gray-100 p-1 text-slate-500 disabled:cursor-not-allowed disabled:text-slate-300"
+                                className="rounded-full bg-surface p-1
+                                 text-text-secondary
+                                  disabled:cursor-not-allowed
+                                   disabled:text-text-muted"
                             >
                                 <ChevronLeft size={21} />
                             </button>
@@ -89,10 +92,10 @@ const Pagination = ({ metaData, onPageChange, loading }: Props) => {
                                         }
                                         className={`rounded-2xl px-5 py-1.5 text-sm font-medium transition-all duration-200
                                             ${metaData.page === page
-                                                ? "cursor-default bg-green-200 text-green-700"
+                                                ? "cursor-default bg-surface text-text-base"
                                                 : page === "..."
-                                                    ? "cursor-default text-slate-400"
-                                                    : "cursor-pointer text-slate-600 hover:bg-gray-100"
+                                                    ? "cursor-default text-text-secondary/60"
+                                                    : "cursor-pointer text-text-secondary hover:bg-surface hover:text-text-base"
                                             }`}
                                     >
                                         {page}
@@ -100,16 +103,20 @@ const Pagination = ({ metaData, onPageChange, loading }: Props) => {
                                 ))}
                             </div>
 
-                            <div className="flex items-center gap-2 text-sm text-slate-500 md:hidden">
+                            <div className="flex items-center gap-2 
+                            text-sm text-slate-500 md:hidden">
                                 <span>Page</span>
 
-                                <span className="rounded-md bg-green-100 px-2 py-0.5 font-medium text-green-700">
+                                <span className="rounded-md
+                                 bg-surface px-2 py-0.5 
+                                 font-medium text-text-base">
                                     {metaData.page}
                                 </span>
 
                                 <span>/</span>
 
-                                <span className="font-medium text-slate-700">
+                                <span className="font-medium
+                                 text-text-secondary">
                                     {metaData.totalPages}
                                 </span>
                             </div>
@@ -118,7 +125,10 @@ const Pagination = ({ metaData, onPageChange, loading }: Props) => {
                                 type="button"
                                 disabled={!metaData.hasNextPage}
                                 onClick={() => onPageChange(metaData.page + 1)}
-                                className="rounded-full bg-gray-100 p-1 text-slate-500 disabled:cursor-not-allowed disabled:text-slate-300"
+                                className="rounded-full bg-surface p-1
+                                 text-text-secondary
+                                  disabled:cursor-not-allowed
+                                   disabled:text-text-muted"
                             >
                                 <ChevronRight size={21} />
                             </button>

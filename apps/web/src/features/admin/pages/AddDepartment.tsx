@@ -46,13 +46,13 @@ const AddDepartment = () => {
     const navigate = useNavigate()
 
     return (
-        <section className="bg-white border border-gray-200 rounded-md
+        <section className="bg-bg-card border border-border rounded-md
         flex flex-col gap-3
          shadow-sm flex-1 min-w-0 h-max">
             <div className='p-4 flex items-center gap-2'>
                 <div className='
                      p-2 backdrop-blur-lg rounded-full cursor-pointer relative
-                      hover:bg-gray-100 transition-all duration-300'>
+                      hover:bg-surface text-text-base transition-all duration-300'>
                     <ArrowLeft
                         size={20}
                         onClick={() => navigate(-1)}
@@ -62,7 +62,7 @@ const AddDepartment = () => {
 
                 <h2 className='text-text-base text-2xl font-bold'>Add Department</h2>
             </div>
-            <div className='border-t border-dashed border-gray-300' />
+            <div className='border-t border-dashed border-border' />
             <div className='p-6'>
                 <form
                     onSubmit={handleSubmit(onSubmit)}

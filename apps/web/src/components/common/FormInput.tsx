@@ -45,7 +45,7 @@ const FormInput = <T extends FieldValues>({
                 {showLabel && label && (
                     <label
                         htmlFor={name}
-                        className="text-xs font-medium text-text-secondary dark:text-gray-200 ml-2"
+                        className="text-xs font-medium text-text-secondary ml-2"
                     >
                         {label}
                     </label>
@@ -53,16 +53,16 @@ const FormInput = <T extends FieldValues>({
 
                 <div
                     className={`flex h-12 items-center gap-2 rounded-3xl border px-4 transition-colors duration-200
-                        text-sm
+                        text-sm text-text-secondary
           ${error
                             ? `border-red-500 focus-within:border-red-500 
                             focus-within:ring-3 focus-within:ring-red-600/15`
-                            : `border-gray-300 focus-within:ring-3
-                             focus-within:ring-primary-hover/15 focus-within:border-primary-hover dark:border-gray-700`
+                            : `border-border focus-within:ring-3
+                             focus-within:ring-primary-hover/15 focus-within:border-primary-hover`
                         }`}
                 >
                     {Icon && (
-                        <Icon className="size-5 shrink-0 text-text-secondary" />
+                        <Icon className="size-5 shrink-0 " />
                     )}
 
                     <input

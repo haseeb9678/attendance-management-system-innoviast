@@ -9,6 +9,7 @@ import {
     autoUpdate,
     size
 } from "@floating-ui/react";
+import DisableUI from "./DisableUI";
 
 interface SelectOption {
     label: string;
@@ -64,21 +65,23 @@ const SelectBox = ({
     });
 
     return (
-        <div className="flex flex-col gap-1 w-full">
-            {showTopLabel && (
-                <label
-                    htmlFor={label}
-                    className="ml-2 text-xs font-medium text-text-secondary dark:text-gray-200"
-                >
-                    {label}
-                </label>
-            )}
+        <>
+            <div className="flex flex-col gap-1 w-full">
+                {showTopLabel && (
+                    <label
+                        htmlFor={label}
+                        className="ml-2 text-xs font-medium
+                         text-text-secondary"
+                    >
+                        {label}
+                    </label>
+                )}
 
-            <div
-                onClick={toggleOpen}
-                ref={refs.setReference}
-                className={`relative flex h-10 min-w-max rounded-md  cursor-pointer items-center 
-                justify-between gap-2 border border-gray-200 px-3 text-text-secondary
+                <div
+                    onClick={toggleOpen}
+                    ref={refs.setReference}
+                    className={`relative flex h-10 min-w-max rounded-md  cursor-pointer items-center 
+                justify-between gap-2 border border-border px-3 text-text-secondary
 
                 ${className}
 
@@ -88,61 +91,70 @@ const SelectBox = ({
       ring-primary-hover/15`}
 
       ${error
-                        ? `border-red-500 focus-within:border-red-500 
+                            ? `border-red-500 focus-within:border-red-500 
                             focus-within:ring-3 focus-within:ring-red-600/15` : ``
-                    }
+                        }
                 
             `}>
-                <span className="text-sm">{option?.label ?? label}</span>
+                    <span className="text-sm">{option?.label ?? label}</span>
 
-                {isOpen ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
+                    {isOpen ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
 
-                {isOpen && (
-                    <div
-                        onClick={(e) => e.stopPropagation()}
-                        ref={refs.setFloating}
-                        style={floatingStyles}
-                        className="
+                    {isOpen && (
+                        <div
+                            onClick={(e) => e.stopPropagation()}
+                            ref={refs.setFloating}
+                            style={floatingStyles}
+                            className="
         z-50
         flex w-full flex-col
         overflow-y-auto
          max-h-60
         rounded-md
-        border border-gray-200
-        bg-white
+        border border-border
+        bg-bg-card
         shadow-lg 
     "
-                    >
-                        <div className="flex h-9 cursor-default! items-center px-3 text-sm font-semibold">
-                            {label}
-                        </div>
+                        >
+                            <div className="flex h-9 cursor-default! items-center px-3 text-sm font-semibold">
+                                {label}
+                            </div>
 
-                        {options.map((item) => (
-                            <button
-                                key={item.value}
-                                type="button"
-                                onClick={() => handleSelect(item)}
-                                className={`flex h-9 w-full items-center
+                            {options.map((item) => (
+                                <button
+                                    key={item.value}
+                                    type="button"
+                                    onClick={() => handleSelect(item)}
+                                    className={`flex h-9 w-full items-center
                 cursor-pointer
                 justify-between px-3 text-left text-sm transition-colors ${option?.value === item.value
-                                        ? "bg-gray-200 cursor-default!"
-                                        : "hover:bg-gray-100"
-                                    }`}
-                            >
-                                <span>{item.label}</span>
+                                            ? "bg-surface cursor-default!"
+                                            : "hover:bg-surface/70"
+                                        }`}
+                                >
+                                    <span>{item.label}</span>
 
-                                {option?.value === item.value && <Check size={16} />}
-                            </button>
-                        ))}
-                    </div>
+                                    {option?.value === item.value && <Check size={16} />}
+                                </button>
+                            ))}
+                        </div>
+                    )}
+                </div>
+                {error && (
+                    <p className="text-xs text-red-500">
+                        {error}
+                    </p>
                 )}
             </div>
-            {error && (
-                <p className="text-xs text-red-500">
-                    {error}
-                </p>
-            )}
-        </div>
+            {
+                isOpen && (
+                    <DisableUI
+                        setDisable={setIsOpen}
+
+                    />
+                )
+            }
+        </>
     );
 };
 

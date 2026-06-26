@@ -6,6 +6,8 @@ import router from '@/app/router/index.tsx'
 import QueryProvider from './app/providers/QueryProvider'
 import { Toaster } from './components/ui/sonner'
 
+
+
 createRoot(document.getElementById('root')!).render(
   <QueryProvider>
     <Toaster

@@ -22,7 +22,7 @@ const FormButton = ({
         <button
             type={type}
             disabled={disabled || isLoading}
-            className={`flex h-12 w-full items-center justify-center 
+            className={`flex h-12 w-full items-center justify-center text-shadow-2xs
                 gap-2 rounded-3xl bg-primary hover:bg-primary-hover px-2 cursor-pointer
                  text-white shadow-sm transition-opacity disabled:cursor-not-allowed disabled:opacity-60 ${className}`}
             {...props}

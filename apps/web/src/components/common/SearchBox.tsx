@@ -21,7 +21,7 @@ const SearchBox = ({
     return (
         <div
             className={`flex h-10 w-full items-center gap-2 rounded-md border
-                 border-gray-200 px-3 text-text-secondary transition-all duration-300
+                 border-border px-3 text-text-secondary transition-all duration-300
       focus-within:border-primary-hover
       focus-within:ring-3
       focus-within:ring-primary-hover/15
@@ -37,7 +37,8 @@ const SearchBox = ({
                 value={value}
                 onChange={handleChange}
                 placeholder={placeholder}
-                className="w-full bg-transparent text-sm outline-none placeholder:text-text-secondary/60"
+                className="w-full bg-transparent text-sm outline-none
+                 placeholder:text-text-secondary/60"
             />
         </div>
     );

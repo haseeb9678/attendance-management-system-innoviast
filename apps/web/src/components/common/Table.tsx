@@ -35,8 +35,8 @@ const DataTable = <T extends { id: string | number }>({
             <table className="w-full text-sm">
                 <thead
                     className="
-            sticky top-0 z-10
-            h-6 border-y border-gray-300 bg-gray-100
+            sticky top-0 z-2
+            h-6 border-y border-border bg-surface
             [&_th]:whitespace-nowrap
             [&_th]:p-5
             [&_th]:px-8
@@ -72,8 +72,8 @@ const DataTable = <T extends { id: string | number }>({
 
                 <tbody
                     className="
-            divide-y divide-gray-300
-            [&_tr:hover]:bg-gray-50
+            divide-y divide-border
+            [&_tr:hover]:bg-surface/70
             [&_td]:whitespace-nowrap
             [&_td]:p-5
             [&_td]:px-8
@@ -102,7 +102,8 @@ const DataTable = <T extends { id: string | number }>({
                         <tr>
                             <td
                                 colSpan={columns.length + (showCheckbox ? 1 : 0)}
-                                className="py-12 text-center text-gray-500"
+                                className="py-12 text-center
+                                 text-text-secondary"
                             >
                                 No data found.
                             </td>

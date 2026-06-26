@@ -1,175 +1,250 @@
 import {
-
     ChevronDown,
     ChevronRight,
-
     LucideX,
-
 } from "lucide-react";
 import { useEffect, useState } from "react";
-
 import { NavLink } from "react-router-dom";
 import { useSidebarStore } from "../store/sidebar.store";
 import { adminSidebarItems } from "@/shared/constants/sidebarItems";
+import DisableUI from "@/components/common/DisableUI";
+import { motion, AnimatePresence } from "framer-motion";
 
+const sidebarVariants = {
+    expanded: (isMobile: boolean) => ({
+        width: isMobile ? "80%" : 300,
+        x: isMobile ? 0 : 0,
+        transition: {
+            type: "spring",
+            stiffness: 280,
+            damping: 28
+        }
+    }),
+    collapsed: (isMobile: boolean) => ({
+        width: isMobile ? "80%" : 80,
+        x: isMobile ? "-100%" : 0,
+        transition: {
+            type: "spring",
+            stiffness: 280,
+            damping: 28
+        }
+    }),
+};
 
+const itemVariants = {
+    hover: {
+        scale: 1.03,
+        x: 4,
+        transition: { type: "spring", stiffness: 300, damping: 20 }
+    },
+    tap: {
+        scale: 0.97
+    }
+};
+
+const textVariants = {
+    hidden: { opacity: 0, x: -10, transition: { duration: 0.2 } },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.2, delay: 0.1 } }
+};
+
+const accordionVariants = {
+    hidden: { opacity: 0, height: 0 },
+    visible: { opacity: 1, height: "auto", transition: { staggerChildren: 0.05 } }
+};
+
+const childLinkVariants = {
+    hidden: { opacity: 0, x: -10 },
+    visible: { opacity: 1, x: 0 }
+};
+
+const overlayVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+    exit: { opacity: 0 }
+};
 
 const Sidebar = () => {
-
-    const [activeItem, setActiveItem] = useState(-1)
-    const isOpen = useSidebarStore((s) => s.isOpen)
-    const closeSidebar = useSidebarStore((s) => s.closeSidebar)
-
-
+    const [activeAccordion, setActiveAccordion] = useState(-1);
+    const { isOpen, closeSidebar, openSidebar, setSidebar } = useSidebarStore();
     const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
-        const checkMobile = () => {
-            setIsMobile(window.innerWidth < 768);
-        };
-
-        checkMobile(); // Set initial value
-
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
         window.addEventListener("resize", checkMobile);
-
-        return () => {
-            window.removeEventListener("resize", checkMobile);
-        };
+        return () => window.removeEventListener("resize", checkMobile);
     }, []);
 
-    const isShortSidebar = !isOpen && !isMobile
-    const openSidebar = useSidebarStore((s) => s.openSidebar)
+    const isShortSidebar = !isOpen && !isMobile;
+
+    const handleAccordionClick = (index: number) => {
+        if (isShortSidebar) {
+            openSidebar();
+        }
+        setActiveAccordion(p => (p === index ? -1 : index));
+    };
 
     return (
-        <aside
-            className={`bg-primary-hover
-            p-5 py-10 h-screen text-white overflow-auto
-            ${isMobile ? "fixed z-50" : ""}
-            ${isOpen ? (
-                    isMobile ? "min-w-75" : "min-w-75"
-                ) : (
-                    isMobile ? " hidden" : "w-20"
-                )}
-            shadow`}
-        >
+        <>
+            <motion.aside
+                layout
+                variants={sidebarVariants}
+                initial={false}
+                animate={isOpen ? "expanded" : "collapsed"}
+                custom={isMobile}
+                className={`bg-primary-hover p-5 py-10 h-screen text-white overflow-y-auto overflow-x-hidden ${isMobile ? "fixed z-50" : "relative"
+                    } shadow-lg`}
+            >
+                <div className='flex flex-col gap-12 flex-1'>
+                    {isMobile && (
+                        <motion.div className="flex justify-end" layout>
+                            <LucideX size={28} onClick={closeSidebar} className="cursor-pointer" />
+                        </motion.div>
+                    )}
+                    <AnimatePresence>
+                        {!isShortSidebar && (
+                            <motion.div
+                                variants={textVariants}
+                                initial="hidden"
+                                animate="visible"
+                                exit="hidden"
+                                layout="position"
+                            >
+                                <h2 className="font-bold text-lg tracking-wider">AMS WEBSITE</h2>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
 
-            <div className='flex flex-col gap-12 flex-1'>
-                {isMobile && <div className="flex justify-end">
-                    <LucideX
-                        size={28}
-                        onClick={closeSidebar}
-                    />
-                </div>}
-                <div>
-                    {!isShortSidebar && <h2 className="font-bold text-lg upperc' tracking-wider">AMS WEBSITE</h2>}
-                </div>
-                <div className="flex flex-col gap-6 text-sm h-full">
-                    {
-                        adminSidebarItems.map((item, index) => (
-                            <div
-                                className="flex flex-col gap-3"
-                                key={item.id}>
-                                {!isShortSidebar ?
-                                    <h2 className="uppercase text-xs tracking-wider text-white/70">{item.label}</h2>
-                                    : (index !== 0 && <h2 className="uppercase text-xs
-                                     tracking-wider text-center text-white/70">{"..."}</h2>)
-                                }
+                    <div className="flex flex-col gap-6 text-sm h-full">
+                        {adminSidebarItems.map((item, index) => (
+                            <motion.div layout className="flex flex-col gap-3" key={item.id}>
+                                <AnimatePresence>
+                                    {!isShortSidebar ? (
+                                        <motion.h2
+                                            variants={textVariants}
+                                            initial="hidden"
+                                            animate="visible"
+                                            exit="hidden"
+                                            className="uppercase text-xs tracking-wider text-white/70"
+                                        >
+                                            {item.label}
+                                        </motion.h2>
+                                    ) : (
+                                        index !== 0 && (
+                                            <motion.h2 layout className="uppercase text-xs tracking-wider text-center text-white/70">
+                                                {"..."}
+                                            </motion.h2>
+                                        )
+                                    )}
+                                </AnimatePresence>
                                 <div className="flex flex-col gap-3">
-                                    {
-                                        item.items.map((subItem, index) =>
-                                            subItem?.children.length > 0 ? (
-                                                <div className="flex flex-col gap-4">
-
-                                                    <div
-                                                        onClick={() => {
-                                                            setActiveItem(p => p === index ? -1 : index)
-                                                            if (isShortSidebar)
-                                                                openSidebar()
-                                                        }}
-                                                        className={activeItem === index ?
-                                                            `flex items-center justify-between gap-2 px-3 
-                                                            ${isShortSidebar && "justify-center"}
-                                                            h-10 bg-gray-100/90 shadow-md backdrop-blur-lg rounded-md text-primary-hover`
-                                                            : `flex items-center
-                                                            ${isShortSidebar && "justify-center"}
-                                                            justify-between cursor-pointer
-                                                            hover:bg-gray-100/80 hover:text-primary
-                                                            backdrop-blur-lg rounded-md
-                                                            px-3 
-                                                            h-10
-                                                            gap-2`}
-                                                        key={subItem.id}>
-                                                        <div className="flex justify-between items-center gap-2 ">
-                                                            <subItem.Icon size={20}
-
-                                                            />
-                                                            {!isShortSidebar && <h2>{subItem.label}</h2>}
-
-                                                        </div>
-                                                        {
-                                                            !isShortSidebar && ((activeItem === index) ?
-                                                                <ChevronDown
-                                                                    size={19}
-
-                                                                /> : <ChevronRight
-                                                                    size={19}
-
-                                                                />)
-                                                        }
-
+                                    {item.items.map((subItem, subIndex) =>
+                                        subItem.children.length > 0 ? (
+                                            <motion.div layout className="flex flex-col" key={subItem.id}>
+                                                <motion.div
+                                                    layout
+                                                    variants={itemVariants}
+                                                    whileHover="hover"
+                                                    whileTap="tap"
+                                                    onClick={() => handleAccordionClick(subIndex)}
+                                                    className={`flex items-center justify-between gap-2 px-3 h-10 rounded-md cursor-pointer ${isShortSidebar && "justify-center"}`}
+                                                >
+                                                    <div className="flex items-center gap-2">
+                                                        <subItem.Icon size={20} />
+                                                        <AnimatePresence>
+                                                            {!isShortSidebar && (
+                                                                <motion.h2 variants={textVariants} initial="hidden" animate="visible" exit="hidden">
+                                                                    {subItem.label}
+                                                                </motion.h2>
+                                                            )}
+                                                        </AnimatePresence>
                                                     </div>
-                                                    {
-
-                                                        !isShortSidebar && (activeItem === index && <div className="flex gap-5 ml-5">
-                                                            <div className="items-stretch w-0.5 bg-white/40" />
-                                                            <div className="flex flex-col gap-4">
-                                                                {
-                                                                    subItem?.children?.map((child) => (
+                                                    {!isShortSidebar && (
+                                                        <motion.div animate={{ rotate: activeAccordion === subIndex ? 90 : 0 }}>
+                                                            <ChevronRight size={19} />
+                                                        </motion.div>
+                                                    )}
+                                                </motion.div>
+                                                <AnimatePresence>
+                                                    {activeAccordion === subIndex && !isShortSidebar && (
+                                                        <motion.div
+                                                            variants={accordionVariants}
+                                                            initial="hidden"
+                                                            animate="visible"
+                                                            exit="hidden"
+                                                            className="flex gap-5 ml-5 overflow-hidden"
+                                                        >
+                                                            <div className="w-0.5 bg-white/40" />
+                                                            <div className="flex flex-col gap-4 py-2">
+                                                                {subItem.children.map((child) => (
+                                                                    <motion.div key={child.id} variants={childLinkVariants}>
                                                                         <NavLink
                                                                             end
                                                                             to={child.href}
-                                                                            className={({ isActive }) => isActive ?
-                                                                                `text-gray-200` : `hover:text-gray-200`}
-
+                                                                            className={({ isActive }) =>
+                                                                                isActive ? "text-gray-200 font-semibold" : "hover:text-gray-200"
+                                                                            }
                                                                         >
                                                                             {child.label}
                                                                         </NavLink>
-                                                                    ))
-                                                                }
+                                                                    </motion.div>
+                                                                ))}
                                                             </div>
-                                                        </div>)
-
-                                                    }
-                                                </div>
-                                            ) :
-                                                (
-                                                    <NavLink
-
-                                                        to={subItem.href}
-                                                        className={({ isActive }) => isActive ?
-                                                            `flex items-center gap-2 px-3  cursor-default ${isShortSidebar && "justify-center"}
-                                                            h-10 bg-gray-100/90 shadow-md backdrop-blur-lg rounded-md text-primary-hover`
-                                                            : `flex items-center
-                                                            ${isShortSidebar && "justify-center"}
-                                                            hover:bg-gray-100/80 hover:text-primary
-                                                            backdrop-blur-lg rounded-md
-                                                            px-3 
-                                                            h-10
-                                                            gap-2`}
-                                                        key={subItem.id}>
+                                                        </motion.div>
+                                                    )}
+                                                </AnimatePresence>
+                                            </motion.div>
+                                        ) : (
+                                            <NavLink
+                                                to={subItem.href}
+                                                end
+                                                className={({ isActive }) =>
+                                                    `flex items-center gap-2 px-3 h-10 rounded-md ${isShortSidebar && "justify-center"
+                                                    } ${isActive ? 'bg-gray-100/90 shadow-md text-primary-hover' : 'hover:bg-gray-100/80 hover:text-primary'}`
+                                                }
+                                                key={subItem.id}
+                                            >
+                                                {(
+                                                    <motion.div
+                                                        layout
+                                                        variants={itemVariants}
+                                                        whileHover="hover"
+                                                        whileTap="tap"
+                                                        className="flex items-center gap-2"
+                                                    >
                                                         <subItem.Icon size={20} />
-                                                        {!isShortSidebar && <h2>{subItem.label}</h2>}
-                                                    </NavLink>))
-                                    }
+                                                        <AnimatePresence>
+                                                            {!isShortSidebar && (
+                                                                <motion.h2 variants={textVariants} initial="hidden" animate="visible" exit="hidden">
+                                                                    {subItem.label}
+                                                                </motion.h2>
+                                                            )}
+                                                        </AnimatePresence>
+                                                    </motion.div>
+                                                )}
+                                            </NavLink>
+                                        )
+                                    )}
                                 </div>
-                            </div>
-                        ))
-                    }
+                            </motion.div>
+                        ))}
+                    </div>
                 </div>
-            </div>
+            </motion.aside>
+            <AnimatePresence>
+                {isMobile && isOpen && (
+                    <motion.div
+                        variants={overlayVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                    >
+                        <DisableUI setDisable={setSidebar} isBlack={true} />
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </>
+    );
+};
 
-        </aside>
-    )
-}
-
-export default Sidebar
+export default Sidebar;

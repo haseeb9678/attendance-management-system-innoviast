@@ -1,6 +1,7 @@
-import { AlignLeftIcon, ArrowRight, Bell, ChevronDown, ChevronUp, Moon } from 'lucide-react'
+import { AlignLeftIcon, ArrowRight, Bell, ChevronDown, ChevronUp, Moon, Sun } from 'lucide-react'
 import React, { useState } from 'react'
 import { useSidebarStore } from '../store/sidebar.store'
+import { useThemeStore } from '../store/theme.store'
 
 const Header = () => {
 
@@ -15,10 +16,14 @@ const Header = () => {
     const closeSidebar = useSidebarStore((s) => s.closeSidebar)
     const isOpen = useSidebarStore((s) => s.isOpen)
 
+    const theme = useThemeStore((s) => s.theme);
+    const toggleTheme = useThemeStore((s) => s.toggleTheme);
+
     return (
         <header
-            className='min-h-17 bg-white text-text-secondary
-            flex items-center justify-between px-5  border-b border-gray-200
+            className='min-h-17 bg-bg-card text-text-secondary
+            flex items-center justify-between px-5  border-b
+             border-border
             '
         >
             <div>
@@ -32,14 +37,20 @@ const Header = () => {
             </div>
             <div>
                 <div className='flex items-center'>
-                    <div className='
+                    <button
+                        onClick={toggleTheme}
+                        className='
                      p-3 backdrop-blur-lg rounded-full cursor-pointer
-                      hover:bg-gray-100 transition-all duration-300'>
-                        <Moon size={21} />
-                    </div>
+                      hover:bg-surface transition-all duration-300'>
+                        {theme === "dark" ? (
+                            <Sun size={20} />
+                        ) : (
+                            <Moon size={20} />
+                        )}
+                    </button>
                     <div className='
                      p-3 backdrop-blur-lg rounded-full cursor-pointer relative
-                      hover:bg-gray-100 transition-all duration-300'>
+                      hover:bg-surface transition-all duration-300'>
                         <Bell size={21} />
                         <div
                             className='bg-orange-500 flex items-center justify-center
@@ -52,8 +63,8 @@ const Header = () => {
                         className='flex items-center gap-3 cursor-pointer mx-5'>
                         <div className='flex items-center gap-3'>
 
-                            <div className='h-8 w-8 rounded-full bg-gray-50 font-bold text-md flex items-center justify-center
-                                border border-gray-300
+                            <div className='h-8 w-8 rounded-full bg-surface font-bold text-md flex items-center justify-center
+                                border border-border
                                 '>
                                 {user.name.charAt(0)}
                             </div>
