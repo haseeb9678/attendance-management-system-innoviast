@@ -7,12 +7,18 @@ export type UserStatus =
     | "suspended";
 
 export interface User {
-    id: string;
+    _id: string;
 
     name: string;
     email: string;
 
     profilePhoto?: string;
+    registrationNumber?: string;
+    rollNumber?: string;
+    employeeId?: string;
+    department?: string;
+    class?: string;
+
 
     role: UserRole;
     status: UserStatus;
@@ -22,4 +28,21 @@ export interface User {
 
     createdAt: string;
     updatedAt: string;
+}
+
+export interface UserFilters {
+    page?: number;
+    limit?: number;
+
+    search?: string;
+
+    role?: "admin" | "instructor" | "student";
+
+    department?: string;
+
+    class?: string;
+
+    status?: "active" | "inactive";
+
+    sort?: "newest" | "oldest";
 }

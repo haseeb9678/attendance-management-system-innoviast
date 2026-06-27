@@ -1,3 +1,4 @@
+import Combobox from '@/components/common/Combobox'
 import FormButton from '@/components/common/FormButton'
 import FormInput from '@/components/common/FormInput'
 import SelectBox from '@/components/common/SelectBox'
@@ -106,7 +107,7 @@ const AddClass = () => {
                                             control={control}
                                             name={field.name}
                                             render={({ field: controllerField }) => (
-                                                <SelectBox
+                                                <Combobox
                                                     showTopLabel
                                                     label={field.label}
                                                     option={controllerField.value}

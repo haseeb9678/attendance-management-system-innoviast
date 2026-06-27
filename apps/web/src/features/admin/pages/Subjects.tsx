@@ -1,14 +1,17 @@
+import Combobox from "@/components/common/Combobox";
+import EntriesSelect from "@/components/common/EnteriesSelect";
 import FormButton from "@/components/common/FormButton";
 import Pagination from "@/components/common/Pagination";
 import SearchBox from "@/components/common/SearchBox";
 import SelectBox from "@/components/common/SelectBox";
 import DataTable from "@/components/common/Table";
+import { useDepartmentOptions } from "@/features/department/hooks/useDepartmentOptions";
 import { subjectColumns } from "@/features/subject/constants/subjectColumns";
 import { useSubjects } from "@/features/subject/hooks/useSubject";
-import { sortOptions, statusOptions } from "@/shared/constants/filters";
+import { limitOptions, sortOptions, statusOptions } from "@/shared/constants/filters";
 import useDebounce from "@/shared/hooks/useDebounce";
 import { LucidePlus, LucideUpload } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Subjects = () => {
@@ -16,24 +19,50 @@ const Subjects = () => {
     const [sort, setSort] = useState(sortOptions[0]);
     const [search, setSearch] = useState("");
     const [page, setPage] = useState(1);
-    const [limit, setLimit] = useState(10);
+    const [limit, setLimit] = useState(limitOptions[0]);
+    const [department, setDepartment] = useState<{ label: string; value: string } | undefined | null>(undefined)
+
 
     const debouncedSearch = useDebounce(search, 500);
 
     const navigate = useNavigate();
 
-    const { data, isLoading } = useSubjects({
+    const { data, isPending: isLoading } = useSubjects({
         search: debouncedSearch,
         status: status.value as "active" | "inactive",
         sort: sort.value as "oldest" | "newest",
+        department: department?.value as string | undefined,
         page,
-        limit,
+        limit: limit.value,
     });
+
+    const { options: departmentOptions, isLoading: isDepartmentLoading } = useDepartmentOptions()
+    const allDepartmentOptions = useMemo(
+        () => [
+            {
+                label: "All Departments",
+                value: "",
+            },
+            ...(departmentOptions ?? []),
+        ],
+        [departmentOptions]
+    );
+
+
+
+    useEffect(() => {
+        if (department) return;
+
+        setDepartment(allDepartmentOptions[0]);
+    }, [allDepartmentOptions, department]);
+
 
     return (
         <section
             className="bg-bg-card border border-border rounded-md
-            flex flex-col gap-3 shadow-sm flex-1 min-w-0"
+            flex flex-col gap-3 shadow-sm flex-1
+            h-max
+            min-w-0"
         >
             <div className="p-6 flex flex-col md:flex-row justify-between gap-5">
                 <h2 className="text-text-base text-2xl font-bold">
@@ -64,7 +93,7 @@ const Subjects = () => {
 
             <div
                 className="grid grid-cols-1 md:grid-cols-2
-                lg:grid-cols-4 gap-3 p-6 py-4
+                lg:grid-cols-5 gap-3 p-6 py-4
                 border-b border-dashed border-border"
             >
                 <div className="lg:col-span-2">
@@ -88,13 +117,28 @@ const Subjects = () => {
                     setOption={setSort}
                     options={sortOptions}
                 />
+                <Combobox
+                    label="Department"
+                    option={department}
+                    setOption={setDepartment}
+                    options={allDepartmentOptions}
+                />
             </div>
+            <div className="px-6 py-3">
 
-            <DataTable
-                columns={subjectColumns}
-                data={data?.data}
-                isLoading={isLoading}
-            />
+                <EntriesSelect
+                    value={limit}
+                    onChange={setLimit}
+                    options={limitOptions}
+                />
+            </div>
+            <div className="min-h-70">
+                <DataTable
+                    columns={subjectColumns}
+                    data={data?.data}
+                    loading={isLoading}
+                />
+            </div>
 
             <div className="p-6">
                 {data?.meta && (

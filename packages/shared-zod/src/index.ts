@@ -16,3 +16,6 @@ export * from "./subject/subjectForm.schema.js";
 
 export * from "./session/createSession.schema.js";
 export * from "./session/sessionForm.schema.js";
+
+export * from "./teacherAssignment/createTeacherAssignment.schema.js";
+export * from "./teacherAssignment/teacherAssignmentForm.schema.js"

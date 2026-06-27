@@ -10,7 +10,7 @@ const roleStyles = {
         "bg-role-instructor-bg text-role-instructor",
 
     student:
-        "bg-role-instructor-bg text-role-instructor",
+        "bg-role-student-bg text-role-student",
 };
 
 const RoleBadge = ({ role }: RoleBadgeProps) => {

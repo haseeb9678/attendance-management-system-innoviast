@@ -1,6 +1,5 @@
 import FormButton from "@/components/common/FormButton";
 import FormInput from "@/components/common/FormInput";
-import SelectBox from "@/components/common/SelectBox";
 import { subjectFields } from "@/features/subject/constants/subject.fields";
 import { useCreateSubject } from "@/features/subject/hooks/useSubjectMutation";
 import { useDepartmentOptions } from "@/features/department/hooks/useDepartmentOptions";
@@ -15,6 +14,7 @@ import { ArrowLeft } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import Combobox from "@/components/common/Combobox";
 
 const AddSubject = () => {
     const navigate = useNavigate();
@@ -120,7 +120,7 @@ const AddSubject = () => {
                                         control={control}
                                         name={field.name}
                                         render={({ field: controllerField }) => (
-                                            <SelectBox
+                                            <Combobox
                                                 showTopLabel
                                                 label={field.label}
                                                 option={controllerField.value}

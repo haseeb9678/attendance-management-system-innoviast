@@ -92,7 +92,8 @@ const Sidebar = () => {
                 initial={false}
                 animate={isOpen ? "expanded" : "collapsed"}
                 custom={isMobile}
-                className={`bg-primary-hover p-5 py-10 h-screen text-white overflow-y-auto overflow-x-hidden ${isMobile ? "fixed z-50" : "relative"
+                className={`bg-primary-hover p-5 py-10 h-screen sidebar-scroll
+                     text-white overflow-y-auto overflow-x-hidden ${isMobile ? "fixed z-50" : "relative"
                     } shadow-lg`}
             >
                 <div className='flex flex-col gap-12 flex-1'>
@@ -125,13 +126,15 @@ const Sidebar = () => {
                                             initial="hidden"
                                             animate="visible"
                                             exit="hidden"
-                                            className="uppercase text-xs tracking-wider text-white/70"
+                                            className="uppercase text-xs tracking-wider
+                                             text-white/70"
                                         >
                                             {item.label}
                                         </motion.h2>
                                     ) : (
                                         index !== 0 && (
-                                            <motion.h2 layout className="uppercase text-xs tracking-wider text-center text-white/70">
+                                            <motion.h2 layout className="uppercase text-xs tracking-wider
+                                             text-center text-white/70">
                                                 {"..."}
                                             </motion.h2>
                                         )
@@ -179,7 +182,7 @@ const Sidebar = () => {
                                                                 {subItem.children.map((child) => (
                                                                     <motion.div key={child.id} variants={childLinkVariants}>
                                                                         <NavLink
-                                                                            end
+
                                                                             to={child.href}
                                                                             className={({ isActive }) =>
                                                                                 isActive ? "text-gray-200 font-semibold" : "hover:text-gray-200"
@@ -197,7 +200,7 @@ const Sidebar = () => {
                                         ) : (
                                             <NavLink
                                                 to={subItem.href}
-                                                end
+
                                                 className={({ isActive }) =>
                                                     `flex items-center gap-2 px-3 h-10 rounded-md ${isShortSidebar && "justify-center"
                                                     } ${isActive ? 'bg-gray-100/90 shadow-md text-primary-hover' : 'hover:bg-gray-100/80 hover:text-primary'}`

@@ -1,7 +1,5 @@
 import {
-    DAYS_OF_WEEK,
     SESSION_STATUS,
-    type DayOfWeek,
     type SessionStatus,
 } from "@attendance/shared-types";
 import {
@@ -13,11 +11,9 @@ import {
 } from "mongoose";
 
 export interface Session {
-    subject: Types.ObjectId;
-    class: Types.ObjectId;
-    teacher: Types.ObjectId;
+    teacherAssignment: Types.ObjectId;
 
-    dayOfWeek: DayOfWeek;
+    date: Date;
 
     startTime: string;
     endTime: string;
@@ -30,37 +26,27 @@ export interface Session {
     updatedAt: Date;
 }
 
-export type SessionDocument = HydratedDocument<Session>;
+export type SessionDocument =
+    HydratedDocument<Session>;
 
 type SessionModel = Model<Session>;
 
-const sessionSchema = new Schema<Session, SessionModel>(
+const sessionSchema = new Schema<
+    Session,
+    SessionModel
+>(
     {
-        subject: {
+        teacherAssignment: {
             type: Schema.Types.ObjectId,
-            ref: "Subject",
+            ref: "TeacherAssignment",
             required: true,
             index: true,
         },
 
-        class: {
-            type: Schema.Types.ObjectId,
-            ref: "Class",
+        date: {
+            type: Date,
             required: true,
             index: true,
-        },
-
-        teacher: {
-            type: Schema.Types.ObjectId,
-            ref: "User",
-            required: true,
-            index: true,
-        },
-
-        dayOfWeek: {
-            type: String,
-            enum: DAYS_OF_WEEK,
-            required: true,
         },
 
         startTime: {
@@ -84,7 +70,7 @@ const sessionSchema = new Schema<Session, SessionModel>(
         status: {
             type: String,
             enum: SESSION_STATUS,
-            default: "active",
+            default: "scheduled",
         },
     },
     {
@@ -93,16 +79,17 @@ const sessionSchema = new Schema<Session, SessionModel>(
 );
 
 /**
- * Prevent duplicate sessions.
+ * Prevent creating the same session twice.
+ *
  * Example:
- * BSCS-A + Web Development + Monday + 09:00
+ * Teacher Assignment #123
+ * 24 Aug 2026
+ * 09:00
  */
 sessionSchema.index(
     {
-        class: 1,
-        subject: 1,
-        teacher: 1,
-        dayOfWeek: 1,
+        teacherAssignment: 1,
+        date: 1,
         startTime: 1,
     },
     {
@@ -110,7 +97,10 @@ sessionSchema.index(
     }
 );
 
-export const SessionModel = model<Session, SessionModel>(
+export const SessionModel = model<
+    Session,
+    SessionModel
+>(
     "Session",
     sessionSchema
 );

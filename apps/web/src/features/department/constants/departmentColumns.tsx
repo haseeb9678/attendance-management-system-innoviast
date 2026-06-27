@@ -8,6 +8,7 @@ export const departmentColumns: TableColumn<Department>[] = [
     {
         key: "name",
         label: "Department Name",
+
     },
     {
         key: "code",

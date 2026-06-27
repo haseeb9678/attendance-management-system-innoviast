@@ -9,6 +9,8 @@ import {
     UserCog,
     Users,
     Building2,
+    UserCheck,
+    CalendarClock,
 } from "lucide-react";
 
 export const adminSidebarItems = [
@@ -58,6 +60,22 @@ export const adminSidebarItems = [
                 href: "/admin/subjects",
                 children: [],
             },
+            {
+                id: 6,
+                label: "Teacher Assignmets",
+                Icon: UserCheck,
+                href: "/admin/teacher-assignments",
+                children: [],
+            },
+
+            {
+                id: 7,
+                label: "Sessions",
+                Icon: CalendarClock,
+                href: "/admin/sessions",
+                children: [],
+            },
+
         ],
     },
 

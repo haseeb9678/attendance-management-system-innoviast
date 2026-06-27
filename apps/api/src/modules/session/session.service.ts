@@ -1,0 +1,262 @@
+import { Types, type SortOrder } from "mongoose";
+import { StatusCodes } from "http-status-codes";
+
+import ApiError from "../../shared/utils/ApiError.js";
+
+import { SessionModel } from "./session.model.js";
+import { TeacherAssignmentModel } from "../teacherAssignment/teacherAssignment.model.js";
+import { CreateSessionInput } from "@attendance/shared-zod";
+
+export const addSessionService = async (
+    data: CreateSessionInput
+) => {
+    const assignmentExists =
+        await TeacherAssignmentModel.exists({
+            _id: data.teacherAssignment,
+        });
+
+    if (!assignmentExists) {
+        throw new ApiError(
+            StatusCodes.NOT_FOUND,
+            "Teacher assignment not found."
+        );
+    }
+
+    const sessionExists =
+        await SessionModel.findOne({
+            teacherAssignment:
+                data.teacherAssignment,
+            date: data.date,
+            startTime: data.startTime,
+        });
+
+    if (sessionExists) {
+        throw new ApiError(
+            StatusCodes.CONFLICT,
+            "Session already exists for this teacher assignment, date and start time."
+        );
+    }
+
+    const session =
+        await SessionModel.create(data);
+
+    return session;
+};
+
+interface GetAllSessionsOptions {
+    page?: number;
+    limit?: number;
+    search?: string;
+    teacherAssignment?: string;
+    status?: CreateSessionInput["status"];
+    date?: string;
+    sort?: "newest" | "oldest";
+}
+
+export const getAllSessionsService = async ({
+    page = 1,
+    limit = 10,
+    search = "",
+    teacherAssignment,
+    status,
+    date,
+    sort = "newest",
+}: GetAllSessionsOptions) => {
+    const filter: Record<string, unknown> = {};
+
+    if (teacherAssignment) {
+        filter.teacherAssignment =
+            new Types.ObjectId(
+                teacherAssignment
+            );
+    }
+
+    if (status) {
+        filter.status = status;
+    }
+
+    if (date) {
+        const start = new Date(date);
+        const end = new Date(date);
+
+        end.setDate(end.getDate() + 1);
+
+        filter.date = {
+            $gte: start,
+            $lt: end,
+        };
+    }
+
+    if (search.trim()) {
+        filter.room = {
+            $regex: search,
+            $options: "i",
+        };
+    }
+
+    const sortOption: Record<
+        string,
+        SortOrder
+    > =
+        sort === "oldest"
+            ? { createdAt: 1 }
+            : { createdAt: -1 };
+
+    const skip = (page - 1) * limit;
+
+    const [sessions, total] =
+        await Promise.all([
+            SessionModel.find(filter)
+                .populate({
+                    path: "teacherAssignment",
+                    populate: [
+                        {
+                            path: "instructor",
+                            select:
+                                "name employeeId",
+                        },
+                        {
+                            path: "subject",
+                            select: "name code",
+                        },
+                        {
+                            path: "class",
+                            select: "name section code",
+                        },
+                    ],
+                })
+                .sort(sortOption)
+                .skip(skip)
+                .limit(limit)
+                .lean(),
+
+            SessionModel.countDocuments(
+                filter
+            ),
+        ]);
+
+    return {
+        sessions,
+        meta: {
+            page,
+            limit,
+            total,
+            totalPages: Math.ceil(
+                total / limit
+            ),
+            hasNextPage:
+                page <
+                Math.ceil(total / limit),
+            hasPreviousPage: page > 1,
+        },
+    };
+};
+
+export const getSessionService = async (
+    sessionId: string
+) => {
+    const session =
+        await SessionModel.findById(
+            new Types.ObjectId(sessionId)
+        )
+            .populate({
+                path: "teacherAssignment",
+                populate: [
+                    {
+                        path: "instructor",
+                        select:
+                            "name employeeId",
+                    },
+                    {
+                        path: "subject",
+                        select: "name code",
+                    },
+                    {
+                        path: "class",
+                        select: "name section code",
+                    },
+                ],
+            })
+            .lean();
+
+    if (!session) {
+        throw new ApiError(
+            StatusCodes.NOT_FOUND,
+            "Session not found."
+        );
+    }
+
+    return session;
+};
+
+export const updateSessionService =
+    async (
+        sessionId: string,
+        data: CreateSessionInput
+    ) => {
+        const session =
+            await SessionModel.findById(
+                sessionId
+            );
+
+        if (!session) {
+            throw new ApiError(
+                StatusCodes.NOT_FOUND,
+                "Session not found."
+            );
+        }
+
+        const assignmentExists =
+            await TeacherAssignmentModel.exists(
+                {
+                    _id: data.teacherAssignment,
+                }
+            );
+
+        if (!assignmentExists) {
+            throw new ApiError(
+                StatusCodes.NOT_FOUND,
+                "Teacher assignment not found."
+            );
+        }
+
+        const duplicateSession =
+            await SessionModel.findOne({
+                _id: { $ne: sessionId },
+                teacherAssignment:
+                    data.teacherAssignment,
+                date: data.date,
+                startTime:
+                    data.startTime,
+            });
+
+        if (duplicateSession) {
+            throw new ApiError(
+                StatusCodes.CONFLICT,
+                "Session already exists for this teacher assignment, date and start time."
+            );
+        }
+
+        Object.assign(session, data);
+
+        await session.save();
+
+        return session;
+    };
+
+export const deleteSessionService =
+    async (sessionId: string) => {
+        const session =
+            await SessionModel.findByIdAndDelete(
+                sessionId
+            );
+
+        if (!session) {
+            throw new ApiError(
+                StatusCodes.NOT_FOUND,
+                "Session not found."
+            );
+        }
+
+        return session;
+    };

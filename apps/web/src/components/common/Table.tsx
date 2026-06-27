@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Checkbox } from "../ui/checkbox";
 import { Skeleton } from "../ui/skeleton";
+import { Inbox } from "lucide-react";
 
 export interface TableColumn<T> {
     key: keyof T | string;
@@ -31,27 +32,26 @@ const DataTable = <T extends { id: string | number }>({
       data-[state=checked]:border-primary data-[state=checked]:text-white`;
 
     return (
-        <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-                <thead
-                    className="
-            sticky top-0 z-2
-            h-6 border-y border-border bg-surface
-            [&_th]:whitespace-nowrap
-            [&_th]:p-5
-            [&_th]:px-8
-          
-            [&_th]:font-medium!
-            text-text-secondary/80 uppercase 
-          "
-                >
+        <div className="w-full overflow-x-auto">
+            <table className="w-full min-w-full text-sm border-collapse ">
+                <thead className="
+                    sticky top-0 z-2
+                    border-y border-border bg-surface
+                    text-text-secondary/80 uppercase
+                    [&_th]:whitespace-nowrap
+                    [&_th]:h-11
+                    [&_th]:px-6
+                    [&_th]:py-3
+                    [&_th]:font-medium!
+                    [&_th]:text-xs
+                    [&_th]:tracking-wide
+                ">
                     <tr>
                         {showCheckbox && (
-                            <th className="w-10">
+                            <th className="w-12 px-4!">
                                 <Checkbox className={checkboxClass} />
                             </th>
                         )}
-
                         {columns.map((column) => (
                             <th
                                 key={String(column.key)}
@@ -70,30 +70,28 @@ const DataTable = <T extends { id: string | number }>({
                     </tr>
                 </thead>
 
-                <tbody
-                    className="
-            divide-y divide-border
-            [&_tr:hover]:bg-surface/70
-            [&_td]:whitespace-nowrap
-            [&_td]:p-5
-            [&_td]:px-8
-            [&_td]:text-text-base
-           
-
-          "
-                >
+                <tbody className={`
+                    divide-y divide-border
+                    [&_tr]:h-14
+                    [&_tr]:min-h-14
+                    ${!loading && "[&_tr:hover]:bg-surface/60 [&_tr]:transition-colors [&_tr]:duration-150"}
+                    [&_td]:whitespace-nowrap
+                    [&_td]:px-6
+                    [&_td]:py-4
+                    [&_td]:text-text-base
+                    [&_td]:align-middle
+                `}>
                     {loading ? (
                         Array.from({ length: skeletonLength }).map((_, index) => (
                             <tr key={index}>
                                 {showCheckbox && (
-                                    <td className="w-10">
-                                        <Skeleton className="h-5 w-5 rounded" />
+                                    <td className="w-12 px-4!">
+                                        <Skeleton className="h-4 w-4 rounded" />
                                     </td>
                                 )}
-
                                 {columns.map((column) => (
                                     <td key={String(column.key)}>
-                                        <Skeleton className="h-4 w-full rounded" />
+                                        <Skeleton className="h-4 w-3/4 rounded" />
                                     </td>
                                 ))}
                             </tr>
@@ -102,34 +100,35 @@ const DataTable = <T extends { id: string | number }>({
                         <tr>
                             <td
                                 colSpan={columns.length + (showCheckbox ? 1 : 0)}
-                                className="py-12 text-center
-                                 text-text-secondary"
+                                className="py-16 text-center"
                             >
-                                No data found.
+                                <div className="flex flex-col items-center justify-center gap-2 text-text-secondary">
+                                    <Inbox className="h-8 w-8 opacity-40" />
+                                    <span className="text-sm">No data found</span>
+                                </div>
                             </td>
                         </tr>
                     ) : (
                         data.map((row) => (
                             <tr key={row.id}>
                                 {showCheckbox && (
-                                    <td className="w-10">
+                                    <td className="w-12 px-4!">
                                         <Checkbox className={checkboxClass} />
                                     </td>
                                 )}
-
                                 {columns.map((column) => (
                                     <td
                                         key={String(column.key)}
                                         className={`
-                      max-w-60 truncate
-                      ${column.cellClassName ?? ""}
-                      ${column.align === "center"
+                                            max-w-60 truncate
+                                            ${column.cellClassName ?? ""}
+                                            ${column.align === "center"
                                                 ? "text-center"
                                                 : column.align === "right"
                                                     ? "text-right"
                                                     : "text-left"
                                             }
-                    `}
+                                        `}
                                     >
                                         {column.render
                                             ? column.render(row)

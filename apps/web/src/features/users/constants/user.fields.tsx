@@ -84,7 +84,7 @@ export const formFields = [
 ]
 
 
-export const divisons = [
+export const divisions = [
     {
         id: 1,
         label: "Personal Information",
@@ -133,6 +133,7 @@ export const studentFields = [
         division: "student",
         component: "select",
         options: [],
+        isApi: true,
     },
     {
         id: 5,
@@ -141,6 +142,7 @@ export const studentFields = [
         division: "student",
         component: "select",
         options: [],
+        isApi: true,
     },
 ];
 
@@ -162,5 +164,6 @@ export const instructorFields = [
         division: "instructor",
         component: "select",
         options: [],
+        isApi: true,
     },
 ];

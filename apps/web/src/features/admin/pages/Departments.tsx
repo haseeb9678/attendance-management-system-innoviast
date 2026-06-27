@@ -1,3 +1,4 @@
+import EntriesSelect from '@/components/common/EnteriesSelect'
 import FormButton from '@/components/common/FormButton'
 import Pagination from '@/components/common/Pagination'
 import SearchBox from '@/components/common/SearchBox'
@@ -5,7 +6,7 @@ import SelectBox from '@/components/common/SelectBox'
 import DataTable from '@/components/common/Table'
 import { departmentColumns } from '@/features/department/constants/departmentColumns'
 import { useDepartments } from '@/features/department/hooks/useDepartment'
-import { sortOptions, statusOptions } from '@/shared/constants/filters'
+import { limitOptions, sortOptions, statusOptions } from '@/shared/constants/filters'
 import useDebounce from '@/shared/hooks/useDebounce'
 import { LucidePlus, LucideUpload } from 'lucide-react'
 import { useState } from 'react'
@@ -17,24 +18,24 @@ const Departments = () => {
     const [sort, setSort] = useState(sortOptions[0])
     const [search, setSearch] = useState("")
     const [page, setPage] = useState(1)
-    const [limit, setLimit] = useState(10)
+    const [limit, setLimit] = useState(limitOptions[0])
 
     const debouncedSearch = useDebounce(search, 500)
 
     const navigate = useNavigate()
 
-    const { data, isLoading } = useDepartments({
+    const { data, isPending: isLoading } = useDepartments({
         search: debouncedSearch,
         status: status.value as "active" | "inactive",
         sort: sort.value as "oldest" | "newest",
         page,
-        limit,
+        limit: limit.value,
 
     })
 
     return (
         <section className="bg-bg-card border border-border rounded-md
-        flex flex-col gap-3
+        flex flex-col gap-3 h-max
          shadow-sm flex-1 min-w-0">
             <div className='p-6 flex flex-col md:flex-row justify-between gap-5'>
                 <h2 className='text-text-base text-2xl font-bold'>Departments</h2>
@@ -80,13 +81,25 @@ const Departments = () => {
                     options={sortOptions}
                 />
             </div>
+            <div className="px-6 py-3">
 
-            <DataTable
-                columns={departmentColumns}
-                data={data?.data}
-                isLoading={isLoading}
+                <EntriesSelect
+                    value={limit}
+                    onChange={setLimit}
+                    options={limitOptions}
+                />
+            </div>
 
-            />
+            <div className="min-h-70">
+                <DataTable
+                    columns={departmentColumns}
+                    data={data?.data}
+                    loading={isLoading}
+
+                />
+            </div>
+
+
 
             <div className=" p-6">
                 {data?.meta && (

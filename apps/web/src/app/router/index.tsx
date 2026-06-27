@@ -11,6 +11,10 @@ import Classess from "@/features/admin/pages/Classes";
 import AddClass from "@/features/admin/pages/AddClass";
 import Subjects from "@/features/admin/pages/Subjects";
 import AddSubject from "@/features/admin/pages/AddSubject";
+import TeacherAssignments from "@/features/admin/pages/TeacherAssignments";
+import AddTeacherAssignment from "@/features/admin/pages/AddTeacherAssignment";
+import Sessions from "@/features/admin/pages/Sessions";
+import AddSession from "@/features/admin/pages/AddSession";
 
 const router = createBrowserRouter([
     {
@@ -54,8 +58,21 @@ const router = createBrowserRouter([
 
             },
             {
+                path: "teacher-assignments", element: <TeacherAssignments />
+            },
+            {
+                path: "teacher-assignments/add", element: <AddTeacherAssignment />
+            },
+            {
                 path: "attendance", element: <div>Attendance</div>
             },
+            {
+                path: "sessions", element: <Sessions />
+            },
+            {
+                path: "sessions/add", element: <AddSession />
+            }
+
 
         ]
     }

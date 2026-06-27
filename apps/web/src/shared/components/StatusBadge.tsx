@@ -1,19 +1,26 @@
 interface StatusBadgeProps {
-    status: "active" | "inactive" | "pending" | "suspended";
+    status:
+    | "active"
+    | "inactive"
+    | "pending"
+    | "suspended"
+    | "scheduled"
+    | "ongoing"
+    | "completed"
+    | "cancelled";
 }
 
 const statusStyles = {
-    active:
-        "bg-success-bg text-success",
+    active: "bg-success-bg text-success",
+    inactive: "bg-warning-bg text-warning",
+    pending: "bg-warning-bg text-warning",
+    suspended: "bg-error/10 text-error",
 
-    inactive:
-        "bg-warning-bg text-warning",
-
-    pending:
-        "bg-success-bg text-success",
-    suspended:
-        "bg-success-bg text-success",
-};
+    scheduled: "bg-primary/10 text-primary",
+    ongoing: "bg-success-bg text-success",
+    completed: "bg-secondary/10 text-secondary",
+    cancelled: "bg-error/10 text-error",
+} satisfies Record<StatusBadgeProps["status"], string>;
 
 const StatusBadge = ({ status }: StatusBadgeProps) => {
     return (

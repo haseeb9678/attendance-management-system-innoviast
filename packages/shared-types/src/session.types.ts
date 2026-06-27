@@ -12,6 +12,12 @@ export const DAYS_OF_WEEK = [
 
 export type DayOfWeek = (typeof DAYS_OF_WEEK)[number];
 
-export const SESSION_STATUS = ["active", "inactive"] as const;
+export const SESSION_STATUS = [
+    "scheduled",
+    "ongoing",
+    "completed",
+    "cancelled",
+] as const;
 
-export type SessionStatus = (typeof SESSION_STATUS)[number];
+export type SessionStatus =
+    (typeof SESSION_STATUS)[number];

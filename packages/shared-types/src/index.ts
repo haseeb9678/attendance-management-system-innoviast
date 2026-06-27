@@ -5,3 +5,4 @@ export * from "./session.types.js";
 export * from "./subject.types.js";
 export * from "./class.types.js";
 export * from "./department.types.js";
+export * from "./teacherAssignment.types.js"

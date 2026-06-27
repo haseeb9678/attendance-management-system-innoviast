@@ -39,9 +39,11 @@ const Header = () => {
                 <div className='flex items-center'>
                     <button
                         onClick={toggleTheme}
-                        className='
+                        className={`
                      p-3 backdrop-blur-lg rounded-full cursor-pointer
-                      hover:bg-surface transition-all duration-300'>
+                      hover:bg-surface transition-all duration-300
+                      ${theme === "dark" && "text-warning"}
+                      `}>
                         {theme === "dark" ? (
                             <Sun size={20} />
                         ) : (
