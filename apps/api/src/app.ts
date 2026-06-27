@@ -8,6 +8,8 @@ import helmet from "helmet";
 import { CLIENT_URL } from "./config/env.js";
 import departmentRouter from "./modules/department/department.routes.js";
 import { connectDB } from "./config/database.js";
+import classRouter from "./modules/class/class.routes.js";
+import subjectRouter from "./modules/subject/subject.routes.js";
 
 
 
@@ -33,6 +35,8 @@ app.use(cookieParser())
 const api = "/api/v1"
 app.use(`${api}/auth`, authRouter);
 app.use(`${api}/departments`, departmentRouter)
+app.use(`${api}/classes`, classRouter)
+app.use(`${api}/subjects`, subjectRouter)
 
 app.get("/", (_req, res) => {
     res.status(200).json({

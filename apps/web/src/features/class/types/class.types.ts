@@ -8,4 +8,23 @@ export interface Class {
     };
     description?: string;
     status: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export interface CreateClassInput {
+    name: string;
+    code: string;
+    department: string;
+    description?: string;
+    status: "active" | "inactive";
+}
+
+export interface ClassFilters {
+    page?: number;
+    limit?: number;
+    search?: string;
+    department?: string;
+    status?: "active" | "inactive";
+    sort?: "newest" | "oldest";
 }

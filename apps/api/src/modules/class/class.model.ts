@@ -35,7 +35,6 @@ const classSchema = new Schema<Class, ClassModel>(
         code: {
             type: String,
             required: true,
-            unique: true,
             uppercase: true,
             trim: true,
         },
@@ -44,7 +43,6 @@ const classSchema = new Schema<Class, ClassModel>(
             type: Schema.Types.ObjectId,
             ref: "Department",
             required: true,
-            index: true,
         },
 
         description: {
@@ -66,23 +64,18 @@ const classSchema = new Schema<Class, ClassModel>(
 
 /**
  * Prevent duplicate class names within the same department.
- * Example:
- * Computer Science -> BSCS-A
- * Software Engineering -> BSCS-A
- * (Allowed)
- *
- * Computer Science -> BSCS-A
- * Computer Science -> BSCS-A
- * (Not allowed)
  */
 classSchema.index(
-    {
-        name: 1,
-        department: 1,
-    },
-    {
-        unique: true,
-    }
+    { name: 1, department: 1 },
+    { unique: true }
+);
+
+/**
+ * Prevent duplicate class codes within the same department.
+ */
+classSchema.index(
+    { code: 1, department: 1 },
+    { unique: true }
 );
 
 export const ClassModel = model<Class, ClassModel>(

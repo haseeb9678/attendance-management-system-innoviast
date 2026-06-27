@@ -1,4 +1,7 @@
-import { SUBJECT_STATUS } from "@attendance/shared-types";
+import {
+    SUBJECT_STATUS,
+    type SubjectStatus,
+} from "@attendance/shared-types";
 import {
     HydratedDocument,
     Model,
@@ -12,7 +15,7 @@ export interface Subject {
     code: string;
     department: Types.ObjectId;
     description?: string;
-    status: (typeof SUBJECT_STATUS)[number];
+    status: SubjectStatus;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -32,7 +35,6 @@ const subjectSchema = new Schema<Subject, SubjectModel>(
         code: {
             type: String,
             required: true,
-            unique: true,
             uppercase: true,
             trim: true,
         },
@@ -41,7 +43,6 @@ const subjectSchema = new Schema<Subject, SubjectModel>(
             type: Schema.Types.ObjectId,
             ref: "Department",
             required: true,
-            index: true,
         },
 
         description: {
@@ -61,14 +62,20 @@ const subjectSchema = new Schema<Subject, SubjectModel>(
     }
 );
 
+/**
+ * Prevent duplicate subject names within the same class.
+ */
 subjectSchema.index(
-    {
-        name: 1,
-        department: 1,
-    },
-    {
-        unique: true,
-    }
+    { name: 1, department: 1 },
+    { unique: true }
+);
+
+/**
+ * Prevent duplicate subject codes within the same class.
+ */
+subjectSchema.index(
+    { code: 1, department: 1 },
+    { unique: true }
 );
 
 export const SubjectModel = model<Subject, SubjectModel>(

@@ -2,6 +2,7 @@ import type { TableColumn } from "@/components/common/Table";
 import StatusBadge from "@/shared/components/StatusBadge";
 import type { Class } from "../types/class.types";
 import ClassActions from "../components/ClassActions";
+import DateTimeCell from "@/components/common/DateTimeCell";
 
 export const classColumns: TableColumn<Class>[] = [
     {
@@ -29,6 +30,13 @@ export const classColumns: TableColumn<Class>[] = [
         render: (row) => (
             <StatusBadge status={row.status} />
         ),
+    },
+    {
+        key: "createdAt",
+        label: "Created Date",
+        render: (row) => <DateTimeCell
+            date={row.createdAt}
+        />
     },
     {
         key: "actions",

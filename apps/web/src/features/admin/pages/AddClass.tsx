@@ -2,12 +2,15 @@ import FormButton from '@/components/common/FormButton'
 import FormInput from '@/components/common/FormInput'
 import SelectBox from '@/components/common/SelectBox'
 import { classFields } from '@/features/class/constants/class.fields'
+import { useCreateClass } from '@/features/class/hooks/useClassMutation'
+import { useDepartmentOptions } from '@/features/department/hooks/useDepartmentOptions'
 import { statusOptions } from '@/shared/constants/filters'
-import { classFormSchema } from '@attendance/shared-zod'
+import { classFormSchema, type ClassFormInput, type CreateClassInput } from '@attendance/shared-zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ArrowLeft } from 'lucide-react'
 import { Controller, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'sonner'
 
 const AddClass = () => {
 
@@ -18,21 +21,47 @@ const AddClass = () => {
         },
     })
 
-    const onSubmit = (data) => {
-        console.log(data)
-    }
-    console.log("errors", errors)
+    const { mutate, isPending } = useCreateClass();
+
+    const onSubmit = (data: ClassFormInput) => {
+        const formattedData: CreateClassInput = {
+            name: data.name,
+            code: data.code,
+            department: data.department.value,
+            description: data.description,
+            status: data.status.value as "active" | "inactive",
+        };
+
+        mutate(formattedData, {
+            onSuccess: (res) => {
+                toast.success(res?.message);
+                navigate(-1)
+            },
+            onError: (err) => {
+                toast.error(err?.message);
+            },
+        });
+    };
+
+
 
     const navigate = useNavigate()
+    const { options: departmentOptions } = useDepartmentOptions()
+
+    const getOptions = (fieldName: unknown) => {
+        if (fieldName === "department")
+            return departmentOptions
+        return []
+    }
 
     return (
-        <section className="bg-white border border-gray-200 rounded-md
+        <section className="bg-bg-card border border-border rounded-md
         flex flex-col gap-3
          shadow-sm flex-1 min-w-0 h-max">
             <div className='p-4 flex items-center gap-2'>
                 <div className='
                      p-2 backdrop-blur-lg rounded-full cursor-pointer relative
-                      hover:bg-gray-100 transition-all duration-300'>
+                      hover:bg-surface text-text-base ransition-all duration-300'>
                     <ArrowLeft
                         size={20}
                         onClick={() => navigate(-1)}
@@ -42,14 +71,15 @@ const AddClass = () => {
 
                 <h2 className='text-text-base text-2xl font-bold'>Add Class</h2>
             </div>
-            <div className='border-t border-dashed border-gray-300' />
+            <div className='border-t border-dashed border-border' />
             <div className='p-6'>
                 <form
                     onSubmit={handleSubmit(onSubmit)}
                     className='flex flex-col gap-8'
                     method="post">
                     <div
-                        className='grid grid-cols-1 xl:grid-cols-2 gap-8'
+                        className='grid grid-cols-1 xl:grid-cols-2 
+                        gap-8'
                     >
 
                         {classFields
@@ -63,7 +93,7 @@ const AddClass = () => {
                                             name={field.name}
                                             label={field.label}
                                             placeholder={field.placeholder}
-                                            type={field.type}
+                                            type={field.type as string}
                                             Icon={field.Icon}
                                         />
                                     );
@@ -81,7 +111,7 @@ const AddClass = () => {
                                                     label={field.label}
                                                     option={controllerField.value}
                                                     setOption={controllerField.onChange}
-                                                    options={field.options}
+                                                    options={field.isApi ? getOptions(field.name) : field.options}
                                                     error={errors[field.name]?.message}
                                                     className="h-12! rounded-3xl!"
                                                 />
@@ -97,6 +127,7 @@ const AddClass = () => {
                         <FormButton
                             type={"submit"}
                             text={'Add'}
+                            isLoading={isPending}
                             className='max-w-50'
                         />
                     </div>

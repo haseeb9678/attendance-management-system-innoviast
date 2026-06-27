@@ -33,6 +33,7 @@ export const subjectFields = [
         component: "select",
         Icon: Building2,
         options: [], // Populate dynamically from API
+        isApi: true,
     },
     {
         id: 4,

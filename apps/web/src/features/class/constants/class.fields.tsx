@@ -1,4 +1,6 @@
 import { statusOptions } from "@/shared/constants/filters";
+import type { FormField } from "@/shared/types/formfield";
+import type { ClassFormInput } from "@attendance/shared-zod";
 import {
     BookOpen,
     Building2,
@@ -6,7 +8,8 @@ import {
     Hash,
 } from "lucide-react";
 
-export const classFields = [
+
+export const classFields: FormField<ClassFormInput>[] = [
     {
         id: 1,
         name: "name",
@@ -33,6 +36,7 @@ export const classFields = [
         component: "select",
         Icon: Building2,
         options: [], // Populate from API
+        isApi: true
     },
     {
         id: 4,
