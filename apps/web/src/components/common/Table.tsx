@@ -32,7 +32,7 @@ const DataTable = <T extends { id: string | number }>({
       data-[state=checked]:border-primary data-[state=checked]:text-white`;
 
     return (
-        <div className="w-full overflow-x-auto">
+        <div className="w-full overflow-x-auto table-scroll">
             <table className="w-full min-w-full text-sm border-collapse ">
                 <thead className="
                     sticky top-0 z-2

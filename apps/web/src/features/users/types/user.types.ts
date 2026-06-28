@@ -26,8 +26,19 @@ export interface User {
     phone?: string;
 
 
-    createdAt: string;
-    updatedAt: string;
+    createdAt: Date;
+    updatedAt: Date;
+
+    lastLoginAt?: Date;
+    currentLoginAt?: Date;
+
+
+    lastLoginIp?: string;
+    currentLoginIp?: string;
+
+
+    lastUserAgent?: string;
+    currentUserAgent?: string;
 }
 
 export interface UserFilters {

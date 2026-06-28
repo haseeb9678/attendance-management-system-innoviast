@@ -18,7 +18,10 @@ export const login = asyncHandler(
     async (req, res) => {
 
         const result =
-            await loginService(req.body);
+            await loginService(req.body, {
+                ip: req.ip,
+                userAgent: req.get("user-agent"),
+            });
 
         const {
             accessToken,

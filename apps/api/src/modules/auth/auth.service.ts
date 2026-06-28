@@ -33,7 +33,11 @@ export const registerService = async (data: RegisterInput) => {
 
 
 export const loginService = async (
-    data: LoginInput
+    data: LoginInput,
+    loginInfo: {
+        ip?: string;
+        userAgent?: string;
+    }
 ) => {
 
     const user = await UserModel
@@ -75,6 +79,19 @@ export const loginService = async (
     await user.setRefreshToken(refreshToken);
 
     await user.save();
+
+    await UserModel.findByIdAndUpdate(user._id, {
+        $set: {
+            lastLoginAt: user.currentLoginAt,
+            currentLoginAt: new Date(),
+
+            lastLoginIp: user.currentLoginIp,
+            currentLoginIp: loginInfo.ip,
+
+            lastUserAgent: user.currentUserAgent,
+            currentUserAgent: loginInfo.userAgent,
+        },
+    });
 
     return {
         user: {

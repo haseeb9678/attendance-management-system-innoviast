@@ -4,6 +4,7 @@ import RoleBadge from "@/shared/components/RoleBadge";
 import StatusBadge from "@/shared/components/StatusBadge";
 import UserActions from "../components/UserActions";
 import type { User } from "../types/user.types";
+import LoginAtCell from "@/components/common/LoginAtCell";
 
 interface UserColumnsProps {
     onView?: (user: User) => void;
@@ -43,6 +44,14 @@ export const getUserColumns = ({
             label: "Status",
             render: (row) => (
                 <StatusBadge status={row.status} />
+            ),
+        },
+        {
+            key: "lastLoginAt",
+            label: "Last Login",
+            render: (row) => (
+
+                <LoginAtCell date={row?.lastLoginAt} />
             ),
         },
         {

@@ -41,6 +41,17 @@ export interface User {
 
     createdAt: Date;
     updatedAt: Date;
+
+    lastLoginAt?: Date;
+    currentLoginAt?: Date;
+
+
+    lastLoginIp?: string;
+    currentLoginIp?: string;
+
+
+    lastUserAgent?: string;
+    currentUserAgent?: string;
 }
 
 interface UserMethods {
@@ -154,6 +165,16 @@ const userSchema = new Schema<User, UserModel, UserMethods>(
             trim: true,
             sparse: true,
         },
+
+        lastLoginAt: Date,
+        currentLoginAt: Date,
+
+        lastLoginIp: String,
+        currentLoginIp: String,
+
+
+        lastUserAgent: String,
+        currentUserAgent: String,
     },
     {
         timestamps: true,

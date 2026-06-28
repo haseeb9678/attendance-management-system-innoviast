@@ -12,7 +12,7 @@ const AdminLayout = () => {
         initializeTheme();
     }, [initializeTheme]);
     return (
-        <div className='flex h-screen w-screen'>
+        <div className='flex h-screen w-screen '>
             <Sidebar
                 sidebarItems={adminSidebarItems}
             />

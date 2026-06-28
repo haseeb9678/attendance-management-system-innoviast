@@ -2,6 +2,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { useLogout } from "@/features/auth/hooks/useAuthMutation";
+import { Spinner } from "../ui/spinner";
 
 const menuVariants = {
     hidden: {
@@ -46,7 +47,7 @@ const HeaderMenu = ({
 }) => {
     const navigate = useNavigate();
 
-    const { mutate: logout } = useLogout();
+    const { mutate: logout, isPending } = useLogout();
 
     const handleAction = (action: string) => {
         switch (action) {
@@ -62,15 +63,17 @@ const HeaderMenu = ({
         }
     };
 
+
     return (
-        <AnimatePresence>
-            {isOpen && (
-                <motion.div
-                    variants={menuVariants}
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                    className="
+        <>
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        variants={menuVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        className="
                         absolute
                         -right-3
                         top-14
@@ -84,26 +87,26 @@ const HeaderMenu = ({
                         overflow-hidden
                         z-50
                     "
-                >
-                    {menu.map((item) => {
-                        const Icon = item.Icon;
+                    >
+                        {menu.map((item) => {
+                            const Icon = item.Icon;
 
-                        if (item.type === "action") {
-                            return (
-                                <motion.button
-                                    key={item.id}
-                                    variants={itemVariants}
-                                    whileHover={{
-                                        x: 0,
-                                        scale: 1.03
-                                    }}
-                                    whileTap={{
-                                        scale: 0.97,
-                                    }}
-                                    onClick={() =>
-                                        handleAction(item.action)
-                                    }
-                                    className={`
+                            if (item.type === "action") {
+                                return (
+                                    <motion.button
+                                        key={item.id}
+                                        variants={itemVariants}
+                                        whileHover={{
+                                            x: 0,
+                                            scale: 1.03
+                                        }}
+                                        whileTap={{
+                                            scale: 0.97,
+                                        }}
+                                        onClick={() =>
+                                            handleAction(item.action)
+                                        }
+                                        className={`
                                         w-full
                                         px-4
                                         py-3
@@ -114,26 +117,26 @@ const HeaderMenu = ({
                                         transition-colors
                                         hover:bg-surface
                                         ${item.danger
-                                            ? "text-red-500 hover:bg-red-500/10"
-                                            : ""
-                                        }
+                                                ? "text-red-500 hover:bg-red-500/10"
+                                                : ""
+                                            }
                                     `}
-                                >
-                                    <Icon size={18} />
-                                    <span>{item.label}</span>
-                                </motion.button>
-                            );
-                        }
+                                    >
+                                        <Icon size={18} />
+                                        <span>{item.label}</span>
+                                    </motion.button>
+                                );
+                            }
 
-                        return (
-                            <motion.div
-                                key={item.id}
-                                variants={itemVariants}
-                            >
-                                <NavLink
-                                    to={item.href}
-                                    className={({ isActive }) =>
-                                        `
+                            return (
+                                <motion.div
+                                    key={item.id}
+                                    variants={itemVariants}
+                                >
+                                    <NavLink
+                                        to={item.href}
+                                        className={({ isActive }) =>
+                                            `
                                         flex
                                         items-center
                                         gap-3
@@ -143,21 +146,34 @@ const HeaderMenu = ({
                                         transition-all
                                         duration-200
                                         ${isActive
-                                            ? "bg-primary/10 text-primary font-medium"
-                                            : "hover:bg-surface"
-                                        }
+                                                ? "bg-primary/10 text-primary font-medium"
+                                                : "hover:bg-surface"
+                                            }
                                     `
-                                    }
-                                >
-                                    <Icon size={18} />
-                                    <span>{item.label}</span>
-                                </NavLink>
-                            </motion.div>
-                        );
-                    })}
-                </motion.div>
-            )}
-        </AnimatePresence>
+                                        }
+                                    >
+                                        <Icon size={18} />
+                                        <span>{item.label}</span>
+                                    </NavLink>
+                                </motion.div>
+                            );
+                        })}
+                    </motion.div>
+                )}
+            </AnimatePresence>
+            {
+                isPending && (
+                    <div
+                        onClick={(e) => e.stopPropagation()}
+                        className="bg-black/20 backdrop-blur-xs inset-0 fixed flex justify-center
+                    cursor-default font-semibold text-text-base text-shadow-2xs
+                    items-center gap-1.5">
+                        <Spinner />
+                        Log out...
+                    </div>
+                )
+            }
+        </>
     );
 };
 

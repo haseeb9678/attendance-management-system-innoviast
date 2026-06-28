@@ -83,6 +83,11 @@ const Sidebar = ({ sidebarItems = [] }) => {
         setActiveAccordion(p => (p === index ? -1 : index));
     };
 
+    useEffect(() => {
+        if (isMobile)
+            closeSidebar();
+    }, [isMobile])
+
     return (
         <>
             <motion.aside
@@ -181,7 +186,7 @@ const Sidebar = ({ sidebarItems = [] }) => {
                                                                 {subItem.children.map((child) => (
                                                                     <motion.div key={child.id} variants={childLinkVariants}>
                                                                         <NavLink
-
+                                                                            onClick={isMobile ? closeSidebar : undefined}
                                                                             to={child.href}
                                                                             className={({ isActive }) =>
                                                                                 isActive ? "text-gray-200 font-semibold" : "hover:text-gray-200"
@@ -199,7 +204,7 @@ const Sidebar = ({ sidebarItems = [] }) => {
                                         ) : (
                                             <NavLink
                                                 to={subItem.href}
-
+                                                onClick={isMobile ? closeSidebar : undefined}
                                                 className={({ isActive }) =>
                                                     `flex items-center gap-2 px-3 h-10 rounded-md ${isShortSidebar && "justify-center"
                                                     } ${isActive ? 'bg-gray-100/90 shadow-md text-primary-hover' : 'hover:bg-gray-100/80 hover:text-primary'}`
