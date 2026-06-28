@@ -1,6 +1,6 @@
 import { LoginInput, RegisterInput } from "@attendance/shared-zod";
 import ApiError from "../../shared/utils/ApiError.js";
-import { UserModel } from "../users/user.model.js";
+import { UserModel } from "../user/user.model.js";
 import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from "../../shared/utils/jwt.js";
 import { JwtPayload } from "@attendance/shared-types";
 

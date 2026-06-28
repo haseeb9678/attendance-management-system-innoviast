@@ -1,5 +1,5 @@
 import { USER_ROLE } from "@attendance/shared-types";
-import { User } from "../../modules/users/user.model.js";
+import { User } from "../../modules/user/user.model.js";
 ;
 
 export const isStudent = (user: User) =>

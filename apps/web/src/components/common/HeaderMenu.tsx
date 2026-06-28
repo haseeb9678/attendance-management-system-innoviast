@@ -165,11 +165,11 @@ const HeaderMenu = ({
                 isPending && (
                     <div
                         onClick={(e) => e.stopPropagation()}
-                        className="bg-black/20 backdrop-blur-xs inset-0 fixed flex justify-center
+                        className="bg-black/20 backdrop-blur-xs inset-0 z-99 fixed flex justify-center
                     cursor-default font-semibold text-text-base text-shadow-2xs
                     items-center gap-1.5">
                         <Spinner />
-                        Log out...
+
                     </div>
                 )
             }

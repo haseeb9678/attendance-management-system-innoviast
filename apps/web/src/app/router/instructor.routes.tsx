@@ -1,4 +1,7 @@
+import InstructorClasses from "@/features/instructor/pages/InstructorClasses";
 import InstructorDashboard from "@/features/instructor/pages/InstructorDashboard";
+import InstructorSessions from "@/features/instructor/pages/InstructorSessions";
+import InstructorSubjects from "@/features/instructor/pages/InstructorSubjects";
 
 export const instructorRoutes = [
     {
@@ -11,15 +14,15 @@ export const instructorRoutes = [
     },
     {
         path: "subjects",
-        element: <div>Subjects</div>,
+        element: <InstructorSubjects />,
     },
     {
         path: "classes",
-        element: <div>Classes</div>,
+        element: <InstructorClasses />
     },
     {
         path: "sessions",
-        element: <div>Sessions</div>,
+        element: <InstructorSessions />,
     },
     {
         path: "attendance",

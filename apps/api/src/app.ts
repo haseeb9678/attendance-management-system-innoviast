@@ -10,9 +10,10 @@ import departmentRouter from "./modules/department/department.routes.js";
 import { connectDB } from "./config/database.js";
 import classRouter from "./modules/class/class.routes.js";
 import subjectRouter from "./modules/subject/subject.routes.js";
-import userRouter from "./modules/users/user.routes.js";
+import userRouter from "./modules/user/user.routes.js";
 import teacherAssignmentRouter from "./modules/teacherAssignment/teacherAssignment.routes.js";
 import sessionRouter from "./modules/session/session.routes.js";
+import instructorRouter from "./modules/instructor/instructor.routes.js";
 
 
 
@@ -43,6 +44,9 @@ app.use(`${api}/classes`, classRouter)
 app.use(`${api}/subjects`, subjectRouter)
 app.use(`${api}/teacher-assignments`, teacherAssignmentRouter)
 app.use(`${api}/sessions`, sessionRouter)
+
+//RBAC Routes
+app.use(`${api}/instructor`, instructorRouter)
 
 app.get("/", (_req, res) => {
     res.status(200).json({

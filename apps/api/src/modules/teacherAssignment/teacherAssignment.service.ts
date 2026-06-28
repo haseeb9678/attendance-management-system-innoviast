@@ -1,6 +1,6 @@
 import { CreateTeacherAssignmentInput } from "@attendance/shared-zod";
 import { TeacherAssignmentModel } from "./teacherAssignment.model.js";
-import { UserModel } from "../users/user.model.js";
+import { UserModel } from "../user/user.model.js";
 import { ClassModel } from "../class/class.model.js";
 import { SubjectModel } from "../subject/subject.model.js";
 import { Types, type SortOrder } from "mongoose";
