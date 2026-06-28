@@ -1,10 +1,56 @@
-import axios from "axios";
-import { LoginSchema } from "../schemas/login.schema";
+// auth.store.ts
 
-export const login = async (payload: LoginSchema) => {
-    const response = await axios.post("/api/v1/auth/login", payload, {
-        withCredentials: true,
-    });
+import { create } from "zustand";
 
-    return response.data;
-};
+interface User {
+    id: string;
+    name: string;
+    email: string;
+    role: "admin" | "instructor" | "student";
+}
+
+interface AuthState {
+    user: User | null;
+    accessToken: string | null;
+
+    isAuthenticated: boolean;
+
+    isInitializing: boolean;
+
+    login: (data: {
+        user: User;
+        accessToken: string;
+    }) => void;
+
+    logout: () => void;
+
+    finishInitialization: () => void;
+}
+
+export const useAuthStore = create<AuthState>((set) => ({
+    user: null,
+    accessToken: null,
+
+    isAuthenticated: false,
+
+    isInitializing: true,
+
+    login: ({ user, accessToken }) =>
+        set({
+            user,
+            accessToken,
+            isAuthenticated: true,
+        }),
+
+    logout: () =>
+        set({
+            user: null,
+            accessToken: null,
+            isAuthenticated: false,
+        }),
+
+    finishInitialization: () =>
+        set({
+            isInitializing: false,
+        }),
+}));

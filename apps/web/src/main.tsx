@@ -5,6 +5,7 @@ import { RouterProvider } from 'react-router-dom'
 import router from '@/app/router/index.tsx'
 import QueryProvider from './app/providers/QueryProvider'
 import { Toaster } from './components/ui/sonner'
+import AuthInitializer from './app/providers/AuthInitializer'
 
 
 
@@ -13,7 +14,11 @@ createRoot(document.getElementById('root')!).render(
     <Toaster
       position='top-right'
     />
-    <RouterProvider router={router} />
+    <AuthInitializer>
+
+      <RouterProvider router={router} />
+    </AuthInitializer>
+
   </QueryProvider>
 
 )

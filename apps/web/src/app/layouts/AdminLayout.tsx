@@ -1,8 +1,9 @@
 import Header from '@/features/admin/components/Header'
-import Sidebar from '@/features/admin/components/Sidebar'
-import { useThemeStore } from '@/features/admin/store/theme.store'
+import Sidebar from '@/components/common/Sidebar'
+import { useThemeStore } from '@/shared/store/theme.store'
 import React, { useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
+import { adminSidebarItems } from '@/shared/constants/sidebarItems'
 
 const AdminLayout = () => {
     const initializeTheme = useThemeStore((s) => s.initializeTheme);
@@ -12,7 +13,9 @@ const AdminLayout = () => {
     }, [initializeTheme]);
     return (
         <div className='flex h-screen w-screen'>
-            <Sidebar />
+            <Sidebar
+                sidebarItems={adminSidebarItems}
+            />
             <div className='flex flex-col flex-1 min-w-0'>
                 <Header />
                 <main

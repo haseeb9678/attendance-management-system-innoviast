@@ -1,39 +1,30 @@
 import { RequestHandler } from "express";
-
 import ApiError from "../shared/utils/ApiError.js";
 import { verifyAccessToken } from "../shared/utils/jwt.js";
 
-export const auth: RequestHandler =
-    async (req, res, next) => {
+export const auth: RequestHandler = (req, res, next) => {
+    const authHeader = req.headers.authorization;
 
-        const token =
-            req.cookies?.accessToken;
+    if (!authHeader?.startsWith("Bearer ")) {
+        return next(
+            new ApiError(401, "Unauthorized")
+        );
+    }
 
-        if (!token) {
-            return next(
-                new ApiError(
-                    401,
-                    "Unauthorized"
-                )
-            );
-        }
+    const token = authHeader.split(" ")[1];
 
-        try {
+    try {
+        const decoded = verifyAccessToken(token);
 
-            const decoded =
-                verifyAccessToken(token);
+        req.user = decoded;
 
-            req.user = decoded;
-
-            next();
-
-        } catch {
-
-            next(
-                new ApiError(
-                    401,
-                    "Invalid or expired token"
-                )
-            );
-        }
-    };
+        next();
+    } catch {
+        next(
+            new ApiError(
+                401,
+                "Invalid or expired token"
+            )
+        );
+    }
+};

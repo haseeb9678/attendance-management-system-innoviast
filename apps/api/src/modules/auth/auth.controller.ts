@@ -1,6 +1,7 @@
 import ApiError from "../../shared/utils/ApiError.js";
 import ApiResponse from "../../shared/utils/ApiResponse.js";
 import { asyncHandler } from "../../shared/utils/AsyncHandler.js";
+
 import { clearAuthCookies, setAccessTokenCookie, setRefreshTokenCookie } from "../../shared/utils/cookie.js";
 import { getMeService, loginService, logoutService, refreshTokenService, registerService } from "./auth.service.js";
 
@@ -39,7 +40,10 @@ export const login = asyncHandler(
             new ApiResponse(
                 200,
                 "Login successful",
-                responseData
+                responseData.user,
+                {
+                    accessToken
+                }
             )
         );
     }
@@ -97,16 +101,12 @@ export const refreshToken = asyncHandler(
         const {
             user,
             accessToken,
-            refreshToken: newRefreshToken,
+            newRefreshToken,
         } = await refreshTokenService(
             refreshToken
         );
 
-        setAccessTokenCookie(
-            res,
-            accessToken
-        );
-
+        // Rotate refresh token cookie
         setRefreshTokenCookie(
             res,
             newRefreshToken
@@ -117,6 +117,9 @@ export const refreshToken = asyncHandler(
                 200,
                 "Token refreshed successfully",
                 user,
+                {
+                    accessToken,
+                }
             )
         );
     }

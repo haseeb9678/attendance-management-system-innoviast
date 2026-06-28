@@ -163,15 +163,13 @@ export const refreshTokenService = async (
         role: user.role,
     };
 
-    const accessToken =
-        generateAccessToken(newPayload);
+    const accessToken = generateAccessToken(newPayload);
 
     const newRefreshToken =
         generateRefreshToken(newPayload);
 
     // 5. Rotate refresh token
     await user.setRefreshToken(newRefreshToken);
-
     await user.save();
 
     return {
@@ -181,7 +179,10 @@ export const refreshTokenService = async (
             email: user.email,
             role: user.role,
         },
+
         accessToken,
-        refreshToken: newRefreshToken,
+
+        // Controller will use this to update the cookie.
+        newRefreshToken,
     };
 };

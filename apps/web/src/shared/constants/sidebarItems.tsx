@@ -156,3 +156,107 @@ export const adminSidebarItems = [
         ],
     },
 ];
+
+export const instructorSidebarItems = [
+    {
+        id: 1,
+        label: "Menu",
+        items: [
+            {
+                id: 1,
+                label: "Dashboard",
+                Icon: LayoutDashboard,
+                href: "/instructor/dashboard",
+                children: [],
+            },
+        ],
+    },
+
+    {
+        id: 2,
+        label: "Teaching",
+        items: [
+            {
+                id: 2,
+                label: "My Subjects",
+                Icon: BookOpen,
+                href: "/instructor/subjects",
+                children: [],
+            },
+            {
+                id: 3,
+                label: "My Classes",
+                Icon: GraduationCap,
+                href: "/instructor/classes",
+                children: [],
+            },
+            {
+                id: 4,
+                label: "My Sessions",
+                Icon: CalendarClock,
+                href: "/instructor/sessions",
+                children: [],
+            },
+        ],
+    },
+
+    {
+        id: 3,
+        label: "Attendance",
+        items: [
+            {
+                id: 5,
+                label: "Attendance",
+                Icon: ClipboardCheck,
+                href: "/instructor/attendance",
+                children: [
+                    {
+                        id: 1,
+                        label: "Mark Attendance",
+                        href: "/instructor/attendance/mark",
+                    },
+                    {
+                        id: 2,
+                        label: "Attendance History",
+                        href: "/instructor/attendance/history",
+                    },
+                ],
+            },
+        ],
+    },
+
+    {
+        id: 4,
+        label: "Reports",
+        items: [
+            {
+                id: 6,
+                label: "Reports",
+                Icon: BarChart3,
+                href: "/instructor/reports",
+                children: [],
+            },
+        ],
+    },
+
+    {
+        id: 5,
+        label: "Account",
+        items: [
+            {
+                id: 7,
+                label: "Profile",
+                Icon: UserCog,
+                href: "/instructor/profile",
+                children: [],
+            },
+            {
+                id: 8,
+                label: "Settings",
+                Icon: Settings,
+                href: "/instructor/settings",
+                children: [],
+            },
+        ],
+    },
+];

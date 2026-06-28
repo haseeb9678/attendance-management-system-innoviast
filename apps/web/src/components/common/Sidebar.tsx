@@ -5,8 +5,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { useSidebarStore } from "../store/sidebar.store";
-import { adminSidebarItems } from "@/shared/constants/sidebarItems";
+import { useSidebarStore } from "../../shared/store/sidebar.store";
 import DisableUI from "@/components/common/DisableUI";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -63,7 +62,7 @@ const overlayVariants = {
     exit: { opacity: 0 }
 };
 
-const Sidebar = () => {
+const Sidebar = ({ sidebarItems = [] }) => {
     const [activeAccordion, setActiveAccordion] = useState(-1);
     const { isOpen, closeSidebar, openSidebar, setSidebar } = useSidebarStore();
     const [isMobile, setIsMobile] = useState(false);
@@ -117,7 +116,7 @@ const Sidebar = () => {
                     </AnimatePresence>
 
                     <div className="flex flex-col gap-6 text-sm h-full">
-                        {adminSidebarItems.map((item, index) => (
+                        {sidebarItems.map((item, index) => (
                             <motion.div layout className="flex flex-col gap-3" key={item.id}>
                                 <AnimatePresence>
                                     {!isShortSidebar ? (
