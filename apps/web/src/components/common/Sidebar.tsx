@@ -56,24 +56,36 @@ const childLinkVariants = {
     visible: { opacity: 1, x: 0 }
 };
 
-const overlayVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1 },
-    exit: { opacity: 0 }
-};
 
 const Sidebar = ({ sidebarItems = [] }) => {
     const [activeAccordion, setActiveAccordion] = useState(-1);
     const { isOpen, closeSidebar, openSidebar, setSidebar } = useSidebarStore();
-    const [isMobile, setIsMobile] = useState(false);
+    const [isMobile, setIsMobile] = useState<boolean | null>(null);
+
 
     useEffect(() => {
-        const checkMobile = () => setIsMobile(window.innerWidth < 768);
-        checkMobile();
-        window.addEventListener("resize", checkMobile);
-        return () => window.removeEventListener("resize", checkMobile);
-    }, []);
+        const handleResize = () => {
+            const mobile = window.innerWidth < 768;
 
+            setIsMobile(mobile);
+
+            if (mobile) {
+                closeSidebar();
+            } else {
+                openSidebar();
+            }
+        };
+
+        handleResize();
+
+        window.addEventListener("resize", handleResize);
+
+        return () =>
+            window.removeEventListener(
+                "resize",
+                handleResize
+            );
+    }, []);
     const isShortSidebar = !isOpen && !isMobile;
 
     const handleAccordionClick = (index: number) => {
@@ -83,10 +95,10 @@ const Sidebar = ({ sidebarItems = [] }) => {
         setActiveAccordion(p => (p === index ? -1 : index));
     };
 
-    useEffect(() => {
-        if (isMobile)
-            closeSidebar();
-    }, [isMobile])
+    if (isMobile === null) {
+        return null;
+        // or <SidebarSkeleton />
+    }
 
     return (
         <>
@@ -238,18 +250,13 @@ const Sidebar = ({ sidebarItems = [] }) => {
                     </div>
                 </div>
             </motion.aside>
-            <AnimatePresence>
-                {isMobile && isOpen && (
-                    <motion.div
-                        variants={overlayVariants}
-                        initial="hidden"
-                        animate="visible"
-                        exit="exit"
-                    >
-                        <DisableUI setDisable={setSidebar} isBlack={true} />
-                    </motion.div>
-                )}
-            </AnimatePresence>
+
+            {isMobile && isOpen && (
+
+                <DisableUI setDisable={setSidebar} isBlack={true} />
+
+            )}
+
         </>
     );
 };

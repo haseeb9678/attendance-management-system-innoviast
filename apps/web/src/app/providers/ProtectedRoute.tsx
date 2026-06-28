@@ -17,11 +17,6 @@ const ProtectedRoute = ({
     const { user, isAuthenticated } =
         useAuthStore();
 
-    console.log(user?.role);
-    console.log(typeof user?.role);
-    console.log(JSON.stringify(user?.role));
-
-
     if (!isAuthenticated) {
         return <Navigate to="/" replace />;
     }
