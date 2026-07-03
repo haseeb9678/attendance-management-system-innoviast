@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createUserSchema } from "@attendance/shared-zod";
+import { createUserSchema, updatePasswordSchema } from "@attendance/shared-zod";
 
 import validate from "../../middleware/validate.middleware.js";
 import {
@@ -7,8 +7,10 @@ import {
     deleteUser,
     getAllUsers,
     getUser,
+    updatePassword,
     updateUser,
 } from "./user.controller.js";
+import { auth } from "../../middleware/auth.middleware.js";
 
 const userRouter = Router();
 
@@ -25,6 +27,12 @@ userRouter.put(
     "/:id",
     validate(createUserSchema),
     updateUser
+);
+
+userRouter.patch(
+    "/change-password",
+    auth,
+    updatePassword
 );
 
 userRouter.delete("/:id", deleteUser);

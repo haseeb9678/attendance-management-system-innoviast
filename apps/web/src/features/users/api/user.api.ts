@@ -51,6 +51,20 @@ export const updateUser = async ({
     return data;
 };
 
+export const updatePassword = async ({
+    body
+}: {
+
+    body: string;
+}) => {
+    const { data } = await api.patch(
+        `/users/change-password`,
+        body
+    );
+
+    return data;
+};
+
 export const deleteUser = async (id: string) => {
     const { data } = await api.delete(`/users/${id}`);
     return data;

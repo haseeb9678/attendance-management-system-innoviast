@@ -1,10 +1,12 @@
 import ApiResponse from "../../shared/utils/ApiResponse.js";
 import { asyncHandler } from "../../shared/utils/AsyncHandler.js";
+import { getClassOverviewService } from "../instructor/instructor.service.js";
 import {
     addUserService,
     deleteUserService,
     getAllUsersService,
     getUserService,
+    updatePasswordService,
     updateUserService,
 } from "./user.service.js";
 
@@ -22,6 +24,50 @@ export const addUser = asyncHandler(async (req, res) => {
         )
     );
 });
+
+/**
+ * Get Instructor Class Overview
+ */
+export const getClassOverview = asyncHandler(
+    async (req, res) => {
+        const page = Number(req.query.page) || 1;
+        const limit = Number(req.query.limit) || 10;
+
+        const search =
+            typeof req.query.search === "string"
+                ? req.query.search
+                : "";
+
+        const sort =
+            req.query.sort === "oldest"
+                ? "oldest"
+                : "newest";
+
+        const overview =
+            await getClassOverviewService({
+                instructorId: req.user.userId as string,
+                classId: req.params.classId as string,
+                page,
+                limit,
+                search,
+                sort,
+            });
+
+        res.status(200).json(
+            new ApiResponse(
+                200,
+                "Class overview fetched successfully.",
+                {
+                    class: overview.class,
+                    subjects: overview.subjects,
+                    stats: overview.stats,
+                    students: overview.students,
+                },
+                overview.meta
+            )
+        );
+    }
+);
 
 /**
  * Get All Users
@@ -116,6 +162,26 @@ export const updateUser = asyncHandler(async (req, res) => {
         )
     );
 });
+
+export const updatePassword = asyncHandler(
+    async (req, res) => {
+        await updatePasswordService({
+            userId: req.user.userId as string,
+            currentPassword:
+                req.body.currentPassword,
+            newPassword:
+                req.body.newPassword,
+        });
+
+        res.status(200).json(
+            new ApiResponse(
+                200,
+                "Password updated successfully.",
+                null
+            )
+        );
+    }
+);
 
 /**
  * Delete User

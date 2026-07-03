@@ -210,13 +210,9 @@ export const instructorSidebarItems = [
                 Icon: ClipboardCheck,
                 href: "/instructor/attendance",
                 children: [
+
                     {
                         id: 1,
-                        label: "Mark Attendance",
-                        href: "/instructor/attendance/mark",
-                    },
-                    {
-                        id: 2,
                         label: "Attendance History",
                         href: "/instructor/attendance/history",
                     },
@@ -227,20 +223,6 @@ export const instructorSidebarItems = [
 
     {
         id: 4,
-        label: "Reports",
-        items: [
-            {
-                id: 6,
-                label: "Reports",
-                Icon: BarChart3,
-                href: "/instructor/reports",
-                children: [],
-            },
-        ],
-    },
-
-    {
-        id: 5,
         label: "Account",
         items: [
             {
@@ -250,13 +232,7 @@ export const instructorSidebarItems = [
                 href: "/instructor/profile",
                 children: [],
             },
-            {
-                id: 8,
-                label: "Settings",
-                Icon: Settings,
-                href: "/instructor/settings",
-                children: [],
-            },
+
         ],
     },
 ];

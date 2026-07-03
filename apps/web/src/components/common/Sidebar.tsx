@@ -4,7 +4,7 @@ import {
     LucideX,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useSidebarStore } from "../../shared/store/sidebar.store";
 import DisableUI from "@/components/common/DisableUI";
 import { motion, AnimatePresence } from "framer-motion";
@@ -61,6 +61,10 @@ const Sidebar = ({ sidebarItems = [] }) => {
     const [activeAccordion, setActiveAccordion] = useState(-1);
     const { isOpen, closeSidebar, openSidebar, setSidebar } = useSidebarStore();
     const [isMobile, setIsMobile] = useState<boolean | null>(null);
+
+    const location = useLocation();
+
+
 
 
     useEffect(() => {
@@ -157,8 +161,14 @@ const Sidebar = ({ sidebarItems = [] }) => {
                                     )}
                                 </AnimatePresence>
                                 <div className="flex flex-col gap-3">
-                                    {item.items.map((subItem, subIndex) =>
-                                        subItem.children.length > 0 ? (
+                                    {item.items.map((subItem, subIndex) => {
+                                        const isParentActive =
+                                            subItem.children.length > 0 &&
+                                            subItem.children.some(
+                                                (child) => location.pathname === child.href
+                                            );
+
+                                        return subItem.children.length > 0 ? (
                                             <motion.div layout className="flex flex-col" key={subItem.id}>
                                                 <motion.div
                                                     layout
@@ -166,7 +176,7 @@ const Sidebar = ({ sidebarItems = [] }) => {
                                                     whileHover="hover"
                                                     whileTap="tap"
                                                     onClick={() => handleAccordionClick(subIndex)}
-                                                    className={`flex items-center justify-between gap-2 px-3 h-10 rounded-md cursor-pointer ${isShortSidebar && "justify-center"}`}
+                                                    className={`flex items-center justify-between gap-2 px-3 h-10 rounded-md cursor-pointer ${isShortSidebar && "justify-center"} ${isParentActive ? 'bg-gray-100/90 shadow-md text-primary-hover' : 'hover:bg-gray-100/80 hover:text-primary'}`}
                                                 >
                                                     <div className="flex items-center gap-2">
                                                         <subItem.Icon size={20} />
@@ -242,8 +252,8 @@ const Sidebar = ({ sidebarItems = [] }) => {
                                                     </motion.div>
                                                 )}
                                             </NavLink>
-                                        )
-                                    )}
+                                        );
+                                    })}
                                 </div>
                             </motion.div>
                         ))}

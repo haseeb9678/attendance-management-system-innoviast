@@ -135,7 +135,7 @@ export const getMeService = async (
     const user =
         await UserModel.findById(
             userId
-        );
+        ).populate("class department");
 
     if (!user) {
         throw new ApiError(
@@ -144,12 +144,15 @@ export const getMeService = async (
         );
     }
 
-    return {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-    };
+    const userObj: any = user.toObject();
+
+    userObj.id = userObj._id.toString();
+
+    userObj._id = undefined;
+    userObj.password = undefined;
+    userObj.refreshTokenHash = undefined;
+
+    return userObj
 };
 
 export const refreshTokenService = async (

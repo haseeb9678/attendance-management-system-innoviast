@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import {
     createUser,
     deleteUser,
+    updatePassword,
     updateUser,
 } from "../api/user.api.js";
 import { queryClient } from "@/lib/queryClient";
@@ -42,3 +43,10 @@ export const useDeleteUser = () => {
         },
     });
 };
+
+export const useUpdatePassword = () => {
+    return useMutation({
+        mutationFn: updatePassword
+    })
+
+}

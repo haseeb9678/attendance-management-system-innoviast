@@ -14,6 +14,7 @@ import userRouter from "./modules/user/user.routes.js";
 import teacherAssignmentRouter from "./modules/teacherAssignment/teacherAssignment.routes.js";
 import sessionRouter from "./modules/session/session.routes.js";
 import instructorRouter from "./modules/instructor/instructor.routes.js";
+import attendanceRouter from "./modules/attendance/attendance.routes.js";
 
 
 
@@ -44,6 +45,7 @@ app.use(`${api}/classes`, classRouter)
 app.use(`${api}/subjects`, subjectRouter)
 app.use(`${api}/teacher-assignments`, teacherAssignmentRouter)
 app.use(`${api}/sessions`, sessionRouter)
+app.use(`${api}/attendance`, attendanceRouter)
 
 //RBAC Routes
 app.use(`${api}/instructor`, instructorRouter)

@@ -25,6 +25,8 @@ const InstructorClasses = () => {
             shadow-sm
             flex flex-col
             flex-1
+            min-w-0
+            h-max
             "
         >
             <div className="p-6 border-b border-dashed border-border">
@@ -171,6 +173,8 @@ const InstructorClasses = () => {
                                     items-center
                                     justify-center
                                     gap-2
+                                    cursor-pointer
+                                    hover:bg-surface
                                     "
                                 >
                                     <Users size={18} />
@@ -194,6 +198,7 @@ const InstructorClasses = () => {
                                     items-center
                                     justify-center
                                     transition
+                                    cursor-pointer
                                     "
                                 >
                                     <ChevronRight size={18} />

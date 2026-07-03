@@ -176,6 +176,7 @@ const Combobox = ({
         bg-bg-card
         shadow-xl
         overflow-hidden
+        min-w-45
     "
                 >
                     <Command

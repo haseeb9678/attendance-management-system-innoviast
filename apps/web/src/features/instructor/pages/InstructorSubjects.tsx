@@ -25,6 +25,8 @@ const InstructorSubjects = () => {
             shadow-sm
             flex flex-col
             flex-1
+             min-w-0
+            h-max
             "
         >
             <div className="p-6 border-b border-dashed border-border">
@@ -142,59 +144,7 @@ const InstructorSubjects = () => {
                                 )}
                             </div>
 
-                            <div
-                                className="
-                                mt-6
-                                flex gap-3
-                                text-text-secondary
-                                "
-                            >
-                                <button
-                                    onClick={() =>
-                                        navigate(
-                                            `/instructor/subjects/${item.subject._id}`
-                                        )
-                                    }
-                                    className="
-                                    flex-1
-                                    h-10
-                                    rounded-lg
-                                    border
-                                    border-border
-                                    hover:bg-bg-secondary
-                                    transition
-                                    flex
-                                    items-center
-                                    justify-center
-                                    gap-2
-                                    "
-                                >
-                                    <GraduationCap size={18} />
-                                    View Details
-                                </button>
 
-                                <button
-                                    onClick={() =>
-                                        navigate(
-                                            `/instructor/subjects/${item.subject._id}`
-                                        )
-                                    }
-                                    className="
-                                    h-10
-                                    w-10
-                                    rounded-lg
-                                    bg-primary
-                                    hover:bg-primary-hover
-                                    text-white
-                                    flex
-                                    items-center
-                                    justify-center
-                                    transition
-                                    "
-                                >
-                                    <ChevronRight size={18} />
-                                </button>
-                            </div>
                         </div>
                     ))}
                 </div>

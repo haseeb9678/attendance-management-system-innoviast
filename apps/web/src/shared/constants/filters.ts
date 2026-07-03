@@ -1,3 +1,6 @@
+
+import { ATTENDANCE_STATUS } from "@attendance/shared-types";
+
 export const roleOptions = [
     {
         label: "All Roles",
@@ -57,3 +60,28 @@ export const limitOptions = [
         value: 50
     },
 ]
+
+
+
+export const attendanceStatusOptions = [
+    {
+        label: "All Status",
+        value: ""
+    },
+    {
+        label: "Present",
+        value: ATTENDANCE_STATUS[0],
+    },
+    {
+        label: "Absent",
+        value: ATTENDANCE_STATUS[1],
+    },
+    {
+        label: "Late",
+        value: ATTENDANCE_STATUS[2],
+    },
+    {
+        label: "Excused",
+        value: ATTENDANCE_STATUS[3],
+    },
+];

@@ -15,4 +15,27 @@ export const instructorKeys = {
 
     studentsByClass: (classId: string) =>
         [...instructorKeys.students(), classId] as const,
+
+    classOverview: ({
+        classId,
+        page,
+        limit,
+        search,
+        sort,
+    }: {
+        classId: string;
+        page: number;
+        limit: number;
+        search: string;
+        sort: "newest" | "oldest";
+    }) =>
+        [
+            ...instructorKeys.all,
+            "class-overview",
+            classId,
+            page,
+            limit,
+            search,
+            sort,
+        ] as const,
 };

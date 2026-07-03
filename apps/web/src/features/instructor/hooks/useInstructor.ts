@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 
 import {
+    getClassOverview,
+    getInstructorDashboard,
     getMyClasses,
     getMySessions,
     getMyStudents,
@@ -8,6 +10,48 @@ import {
 } from "../api/instructor.api.js";
 
 import { instructorKeys } from "../api/instructor.keys.js";
+
+export const useInstructorDashboard = () => {
+    return useQuery({
+        queryKey: ["instructor-dashboard"],
+        queryFn: getInstructorDashboard,
+    });
+};
+
+export const useClassOverview = ({
+    classId,
+    page,
+    limit,
+    search,
+    sort,
+}: {
+    classId: string;
+    page: number;
+    limit: number;
+    search: string;
+    sort: "newest" | "oldest";
+}) => {
+    return useQuery({
+        queryKey: instructorKeys.classOverview({
+            classId,
+            page,
+            limit,
+            search,
+            sort,
+        }),
+
+        queryFn: () =>
+            getClassOverview({
+                classId,
+                page,
+                limit,
+                search,
+                sort,
+            }),
+
+        enabled: !!classId,
+    });
+};
 
 export const useMyClasses = () => {
     return useQuery({

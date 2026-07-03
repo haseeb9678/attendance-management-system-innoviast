@@ -4,13 +4,47 @@ import { auth } from "../../middleware/auth.middleware.js";
 import { authorize } from "../../middleware/authorize.middleware.js";
 
 import {
+    getAttendanceHistory,
+    getAttendanceStats,
+    getClassOverview,
+    getInstructorDashboard,
     getMyClasses,
     getMySessions,
     getMyStudents,
     getMySubjects,
+    updateInstructorProfile,
 } from "./instructor.controller.js";
 
 const instructorRouter = Router();
+
+instructorRouter.get(
+    "/dashboard",
+    auth,
+    authorize("instructor"),
+    getInstructorDashboard
+);
+
+instructorRouter.get(
+    "/classes/:classId",
+    auth,
+    authorize("instructor"),
+    getClassOverview
+);
+
+instructorRouter.get(
+    "/attendance-stats",
+    auth,
+    authorize("instructor"),
+    getAttendanceStats
+);
+
+instructorRouter.get(
+    "/attendance-history",
+    auth,
+    authorize("instructor"),
+    getAttendanceHistory
+);
+
 
 instructorRouter.get(
     "/classes",
@@ -38,6 +72,13 @@ instructorRouter.get(
     auth,
     authorize("instructor"),
     getMyStudents
+);
+
+instructorRouter.put(
+    "/profile",
+    auth,
+    authorize("instructor"),
+    updateInstructorProfile
 );
 
 export default instructorRouter;

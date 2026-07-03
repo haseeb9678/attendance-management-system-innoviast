@@ -374,6 +374,59 @@ export const updateUserService = async (
     return user;
 };
 
+interface UpdatePasswordOptions {
+    userId: string;
+    currentPassword: string;
+    newPassword: string;
+}
+
+export const updatePasswordService = async ({
+    userId,
+    currentPassword,
+    newPassword,
+}: UpdatePasswordOptions) => {
+    const user = await UserModel.findById(
+        new Types.ObjectId(userId)
+    ).select("+password");
+
+    if (!user) {
+        throw new ApiError(
+            StatusCodes.NOT_FOUND,
+            "User not found."
+        );
+    }
+
+    const isPasswordCorrect =
+        await user.comparePassword(
+            currentPassword
+        );
+
+    if (!isPasswordCorrect) {
+        throw new ApiError(
+            StatusCodes.BAD_REQUEST,
+            "Current password is incorrect."
+        );
+    }
+
+    const isSamePassword =
+        await user.comparePassword(
+            newPassword
+        );
+
+    if (isSamePassword) {
+        throw new ApiError(
+            StatusCodes.BAD_REQUEST,
+            "New password must be different from the current password."
+        );
+    }
+
+    user.password = newPassword;
+
+    await user.save();
+
+    return null;
+};
+
 
 export const deleteUserService = async (
     userId: string
