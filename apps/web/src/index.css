@@ -70,6 +70,11 @@ body {
   --color-secondary: #3B82F6;
   --color-accent: #60A5FA;
 
+  --color-sidebar-bg: #2563EB;
+  --color-sidebar-text: #F8FAFC;
+  --color-sidebar-text-hover: #1D4ED8;
+
+
   /* ========= Background ========= */
   --color-bg: #F8FAFC;
   --color-bg-card: #FFFFFF;
@@ -123,6 +128,10 @@ body {
 
   --color-secondary: #60A5FA;
   --color-accent: #93C5FD;
+
+  --color-sidebar-bg: #1E293B;
+  --color-sidebar-text: #F8FAFC;
+  --color-sidebar-text-hover: #0a48aa;
 
   /* ========= Background ========= */
 

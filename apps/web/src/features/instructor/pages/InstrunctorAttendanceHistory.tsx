@@ -95,7 +95,7 @@ const InstructorAttendanceHistory = () => {
 
         status:
             status.value as
-            | "completed"
+            | "marked"
             | "pending",
 
         sort:
@@ -270,15 +270,6 @@ const InstructorAttendanceHistory = () => {
                         placeholder="Search by room..."
                     />
                 </div>
-
-                <SelectBox
-                    label="Status"
-                    option={status}
-                    setOption={setStatus}
-                    options={
-                        attendanceStatusOptions.slice(1)
-                    }
-                />
 
                 <SelectBox
                     label="Sort"

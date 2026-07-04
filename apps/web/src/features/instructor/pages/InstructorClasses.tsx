@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useMyClasses } from "../hooks/useInstructor";
+import { Spinner } from "@/components/ui/spinner";
 
 
 const InstructorClasses = () => {
@@ -14,7 +15,25 @@ const InstructorClasses = () => {
     const {
         data,
         isPending,
+        error,
+        isError
     } = useMyClasses();
+
+    if (isPending)
+        return <section
+            className="flex justify-center items-center gap-2 flex-1 text-primary-hover"
+        >
+            <Spinner className=" size-6" />
+            Loading...
+        </section>
+
+    if (!isPending && isError)
+        return <section
+            className="flex justify-center items-center gap-2 flex-1 text-text-secondary"
+        >
+            {error?.message || "Something went wrong"}
+        </section>
+
 
     return (
         <section
@@ -57,13 +76,9 @@ const InstructorClasses = () => {
                 </div>
             </div>
 
-            {isPending ? (
-                <div className="p-6">
-                    Loading...
-                </div>
-            ) : (
-                <div
-                    className="
+
+            <div
+                className="
                     p-6
                     grid
                     grid-cols-1
@@ -71,11 +86,11 @@ const InstructorClasses = () => {
                     xl:grid-cols-3
                     gap-5
                     "
-                >
-                    {data?.data?.map((item: any) => (
-                        <div
-                            key={item._id}
-                            className="
+            >
+                {data?.data?.map((item: any) => (
+                    <div
+                        key={item._id}
+                        className="
                             border border-border
                             rounded-xl
                             p-5
@@ -86,82 +101,82 @@ const InstructorClasses = () => {
                             transition-all
                             duration-300
                             "
-                        >
-                            <div className="flex justify-between items-start">
-                                <div>
-                                    <h3
-                                        className="
+                    >
+                        <div className="flex justify-between items-start">
+                            <div>
+                                <h3
+                                    className="
                                         text-lg
                                         font-semibold
                                         text-text-base
                                         "
-                                    >
-                                        {item.name}
-                                    </h3>
+                                >
+                                    {item.name}
+                                </h3>
 
-                                    <p className="text-sm text-text-secondary">
-                                        {item.code}
-                                    </p>
-                                </div>
-
-                                <BookOpen
-                                    className="text-primary"
-                                    size={22}
-                                />
+                                <p className="text-sm text-text-secondary">
+                                    {item.code}
+                                </p>
                             </div>
 
-                            <div className="mt-5 space-y-3 text-text-secondary">
-                                <div
-                                    className="
+                            <BookOpen
+                                className="text-primary"
+                                size={22}
+                            />
+                        </div>
+
+                        <div className="mt-5 space-y-3 text-text-secondary">
+                            <div
+                                className="
                                     flex items-center justify-between
                                     "
-                                >
-                                    <span className=" text-sm">
-                                        Department
-                                    </span>
+                            >
+                                <span className=" text-sm">
+                                    Department
+                                </span>
 
-                                    <span className="font-medium text-sm">
-                                        {item.department.name}
-                                    </span>
-                                </div>
-
-                                <div
-                                    className="
-                                    flex items-center justify-between
-                                    "
-                                >
-                                    <span className="text-text-secondary text-sm">
-                                        Status
-                                    </span>
-
-                                    <span
-                                        className={`
-                                            px-2 py-1 rounded-full text-xs font-medium
-                                            ${item.status === "active"
-                                                ? "bg-success/10 text-success"
-                                                : "bg-danger/10 text-danger"
-                                            }
-                                        `}
-                                    >
-                                        {item.status}
-                                    </span>
-                                </div>
+                                <span className="font-medium text-sm">
+                                    {item.department.name}
+                                </span>
                             </div>
 
                             <div
                                 className="
+                                    flex items-center justify-between
+                                    "
+                            >
+                                <span className="text-text-secondary text-sm">
+                                    Status
+                                </span>
+
+                                <span
+                                    className={`
+                                            px-2 py-1 rounded-full text-xs font-medium
+                                            ${item.status === "active"
+                                            ? "bg-success/10 text-success"
+                                            : "bg-danger/10 text-danger"
+                                        }
+                                        `}
+                                >
+                                    {item.status}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div
+                            className="
                                 mt-6
                                 flex gap-3
                                 text-text-secondary
                                 "
-                            >
-                                <button
-                                    onClick={() =>
-                                        navigate(
-                                            `/instructor/classes/${item._id}/students`
-                                        )
-                                    }
-                                    className="
+                        >
+                            <button
+                                onClick={() =>
+                                    navigate(
+                                        `/instructor/classes/${item._id}/students`
+                                    )
+                                }
+                                className="
                                     flex-1
                                     h-10
                                     rounded-lg
@@ -176,18 +191,18 @@ const InstructorClasses = () => {
                                     cursor-pointer
                                     hover:bg-surface
                                     "
-                                >
-                                    <Users size={18} />
-                                    Students
-                                </button>
+                            >
+                                <Users size={18} />
+                                Students
+                            </button>
 
-                                <button
-                                    onClick={() =>
-                                        navigate(
-                                            `/instructor/classes/${item._id}`
-                                        )
-                                    }
-                                    className="
+                            <button
+                                onClick={() =>
+                                    navigate(
+                                        `/instructor/classes/${item._id}`
+                                    )
+                                }
+                                className="
                                     h-10
                                     w-10
                                     rounded-lg
@@ -200,14 +215,14 @@ const InstructorClasses = () => {
                                     transition
                                     cursor-pointer
                                     "
-                                >
-                                    <ChevronRight size={18} />
-                                </button>
-                            </div>
+                            >
+                                <ChevronRight size={18} />
+                            </button>
                         </div>
-                    ))}
-                </div>
-            )}
+                    </div>
+                ))}
+            </div>
+
         </section>
     );
 };

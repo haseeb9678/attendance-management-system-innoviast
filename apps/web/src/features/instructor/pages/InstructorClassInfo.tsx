@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import {
+    ArrowLeft,
+
     LucideBookOpen,
     LucideCalendarCheck,
     LucideGraduationCap,
@@ -25,6 +27,7 @@ import useDebounce from "@/shared/hooks/useDebounce";
 import { useClassOverview } from "@/features/instructor/hooks/useInstructor";
 
 import { classOverviewColumns } from "../constants/classColumns";
+import { Spinner } from "@/components/ui/spinner";
 
 const InstructorClassInfo = () => {
     const navigate = useNavigate();
@@ -81,6 +84,21 @@ const InstructorClassInfo = () => {
     const students =
         data?.data?.students ?? [];
 
+    if (isPending)
+        return <section
+            className="flex justify-center items-center gap-2 flex-1 text-primary-hover"
+        >
+            <Spinner className=" size-6" />
+            Loading...
+        </section>
+
+    if (!isPending && !data?.data)
+        return <section
+            className="flex justify-center items-center gap-2 flex-1 text-text-secondary"
+        >
+            Class not found.
+        </section>
+
     return (
         <section
             className="
@@ -107,17 +125,38 @@ const InstructorClassInfo = () => {
                     gap-6
                 "
             >
+
+
                 <div className="space-y-4">
                     <div>
-                        <h2
-                            className="
+                        <div className="flex gap-2">
+                            <button
+                                onClick={() => navigate(-1)}
+                                className="
+                            h-max w-max
+                    p-2 backdrop-blur-lg rounded-full
+                    cursor-pointer relative
+                    hover:bg-surface
+                    text-text-base
+                    transition-all duration-300"
+                            >
+                                <ArrowLeft
+                                    size={20}
+
+                                    className="cursor-pointer"
+                                />
+                            </button>
+                            <h2
+                                className="
                                 text-2xl
                                 font-bold
                                 text-text-base
                             "
-                        >
-                            {data?.data?.class?.name} Students
-                        </h2>
+                            >
+                                {data?.data?.class?.name} Students
+                            </h2>
+                        </div>
+
 
                         <div
                             className="
@@ -295,14 +334,18 @@ const InstructorClassInfo = () => {
                         <div
                             key={index}
                             className="
-                                rounded-md
+                                rounded-2xl
                                 border
                                 border-border
-                                bg-bg-main
+                                 bg-bg
                                 p-5
                                 flex
                                 justify-between
                                 items-center
+                                transition-all
+                                duration-200
+                                hover:border-primary/30
+                                hover:shadow-sm
                             "
                         >
                             <div>

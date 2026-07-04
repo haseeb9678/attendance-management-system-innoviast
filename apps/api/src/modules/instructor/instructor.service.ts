@@ -27,8 +27,6 @@ interface GetAttendanceHistoryOptions {
 }
 
 
-
-
 export const getAttendanceStatsService = async (
     instructorId: string
 ) => {
@@ -49,7 +47,7 @@ export const getAttendanceStatsService = async (
         },
 
         /**
-         * Instructor
+         * Instructor Filter
          */
         {
             $match: {
@@ -59,7 +57,7 @@ export const getAttendanceStatsService = async (
         },
 
         /**
-         * Attendance
+         * Attendance Records for each Session
          */
         {
             $lookup: {
@@ -71,7 +69,7 @@ export const getAttendanceStatsService = async (
         },
 
         /**
-         * Attendance Summary
+         * Per-session attendance summary
          */
         {
             $addFields: {
@@ -139,17 +137,20 @@ export const getAttendanceStatsService = async (
                     },
                 },
 
+                /**
+                 * Attendance marking status for this session
+                 * marked = at least one attendance record exists
+                 * pending = no attendance record exists
+                 */
                 attendanceStatus: {
                     $cond: [
                         {
                             $gt: [
-                                {
-                                    $size: "$attendance",
-                                },
+                                { $size: "$attendance" },
                                 0,
                             ],
                         },
-                        "completed",
+                        "marked",
                         "pending",
                     ],
                 },
@@ -157,14 +158,47 @@ export const getAttendanceStatsService = async (
         },
 
         /**
-         * Dashboard Stats
+         * Final stats aggregation
          */
         {
             $group: {
                 _id: null,
 
+                /**
+                 * Session lifecycle stats
+                 */
                 totalSessions: {
                     $sum: 1,
+                },
+
+                scheduledSessions: {
+                    $sum: {
+                        $cond: [
+                            {
+                                $eq: [
+                                    "$status",
+                                    "scheduled",
+                                ],
+                            },
+                            1,
+                            0,
+                        ],
+                    },
+                },
+
+                ongoingSessions: {
+                    $sum: {
+                        $cond: [
+                            {
+                                $eq: [
+                                    "$status",
+                                    "ongoing",
+                                ],
+                            },
+                            1,
+                            0,
+                        ],
+                    },
                 },
 
                 completedSessions: {
@@ -172,7 +206,7 @@ export const getAttendanceStatsService = async (
                         $cond: [
                             {
                                 $eq: [
-                                    "$attendanceStatus",
+                                    "$status",
                                     "completed",
                                 ],
                             },
@@ -182,7 +216,40 @@ export const getAttendanceStatsService = async (
                     },
                 },
 
-                pendingSessions: {
+                cancelledSessions: {
+                    $sum: {
+                        $cond: [
+                            {
+                                $eq: [
+                                    "$status",
+                                    "cancelled",
+                                ],
+                            },
+                            1,
+                            0,
+                        ],
+                    },
+                },
+
+                /**
+                 * Attendance marking stats
+                 */
+                markedSessions: {
+                    $sum: {
+                        $cond: [
+                            {
+                                $eq: [
+                                    "$attendanceStatus",
+                                    "marked",
+                                ],
+                            },
+                            1,
+                            0,
+                        ],
+                    },
+                },
+
+                pendingAttendanceSessions: {
                     $sum: {
                         $cond: [
                             {
@@ -197,6 +264,9 @@ export const getAttendanceStatsService = async (
                     },
                 },
 
+                /**
+                 * Student attendance totals
+                 */
                 totalMarked: {
                     $sum: "$totalMarked",
                 },
@@ -222,22 +292,205 @@ export const getAttendanceStatsService = async (
         {
             $project: {
                 _id: 0,
+
+                totalSessions: 1,
+                scheduledSessions: 1,
+                ongoingSessions: 1,
+                completedSessions: 1,
+                cancelledSessions: 1,
+
+                markedSessions: 1,
+                pendingAttendanceSessions: 1,
+
+                totalMarked: 1,
+                present: 1,
+                absent: 1,
+                late: 1,
+                excused: 1,
+
+                /**
+                 * Attendance marking percentage
+                 */
+                attendanceMarkingRate: {
+                    $cond: [
+                        {
+                            $gt: [
+                                "$totalSessions",
+                                0,
+                            ],
+                        },
+                        {
+                            $round: [
+                                {
+                                    $multiply: [
+                                        {
+                                            $divide: [
+                                                "$markedSessions",
+                                                "$totalSessions",
+                                            ],
+                                        },
+                                        100,
+                                    ],
+                                },
+                                2,
+                            ],
+                        },
+                        0,
+                    ],
+                },
+
+                /**
+                 * Student attendance percentages
+                 */
+                presentRate: {
+                    $cond: [
+                        {
+                            $gt: [
+                                "$totalMarked",
+                                0,
+                            ],
+                        },
+                        {
+                            $round: [
+                                {
+                                    $multiply: [
+                                        {
+                                            $divide: [
+                                                "$present",
+                                                "$totalMarked",
+                                            ],
+                                        },
+                                        100,
+                                    ],
+                                },
+                                2,
+                            ],
+                        },
+                        0,
+                    ],
+                },
+
+                absentRate: {
+                    $cond: [
+                        {
+                            $gt: [
+                                "$totalMarked",
+                                0,
+                            ],
+                        },
+                        {
+                            $round: [
+                                {
+                                    $multiply: [
+                                        {
+                                            $divide: [
+                                                "$absent",
+                                                "$totalMarked",
+                                            ],
+                                        },
+                                        100,
+                                    ],
+                                },
+                                2,
+                            ],
+                        },
+                        0,
+                    ],
+                },
+
+                lateRate: {
+                    $cond: [
+                        {
+                            $gt: [
+                                "$totalMarked",
+                                0,
+                            ],
+                        },
+                        {
+                            $round: [
+                                {
+                                    $multiply: [
+                                        {
+                                            $divide: [
+                                                "$late",
+                                                "$totalMarked",
+                                            ],
+                                        },
+                                        100,
+                                    ],
+                                },
+                                2,
+                            ],
+                        },
+                        0,
+                    ],
+                },
+
+                excusedRate: {
+                    $cond: [
+                        {
+                            $gt: [
+                                "$totalMarked",
+                                0,
+                            ],
+                        },
+                        {
+                            $round: [
+                                {
+                                    $multiply: [
+                                        {
+                                            $divide: [
+                                                "$excused",
+                                                "$totalMarked",
+                                            ],
+                                        },
+                                        100,
+                                    ],
+                                },
+                                2,
+                            ],
+                        },
+                        0,
+                    ],
+                },
             },
         },
     ]);
 
     return (
         result[0] ?? {
+            /**
+             * Session lifecycle stats
+             */
             totalSessions: 0,
+            scheduledSessions: 0,
+            ongoingSessions: 0,
             completedSessions: 0,
-            pendingSessions: 0,
+            cancelledSessions: 0,
 
+            /**
+             * Attendance marking stats
+             */
+            markedSessions: 0,
+            pendingAttendanceSessions: 0,
+
+            /**
+             * Student attendance totals
+             */
             totalMarked: 0,
-
             present: 0,
             absent: 0,
             late: 0,
             excused: 0,
+
+            /**
+             * Percentages
+             */
+            attendanceMarkingRate: 0,
+            presentRate: 0,
+            absentRate: 0,
+            lateRate: 0,
+            excusedRate: 0,
         }
     );
 };
@@ -458,7 +711,7 @@ export const getAttendanceHistoryService = async ({
                             0,
                         ],
                     },
-                    "completed",
+                    "marked",
                     "pending",
                 ],
             },
@@ -895,7 +1148,7 @@ export const getMySessionsService = async (
             ],
         })
         .sort({
-            date: 1,
+            date: -1,
             startTime: 1,
         })
         .lean();
@@ -1030,22 +1283,16 @@ export const getInstructorDashboardService = async (
 
             /**
              * Sessions
-             
- */
+             */
             {
                 $lookup: {
                     from: "sessions",
-
                     let: {
                         assignmentId: "$_id",
-
                         subject: "$subject",
-
                         class: "$class",
-
                         department: "$department",
                     },
-
                     pipeline: [
                         {
                             $match: {
@@ -1071,7 +1318,7 @@ export const getInstructorDashboardService = async (
                         },
 
                         /**
-                         * Attendance Summary
+                         * Attendance Summary + embed assignment info into session
                          */
                         {
                             $addFields: {
@@ -1155,7 +1402,7 @@ export const getInstructorDashboardService = async (
                                 },
 
                                 /**
-                                 * Embed Assignment Information
+                                 * Embed Assignment Information inside each session
                                  */
                                 subject: {
                                     _id: "$$subject._id",
@@ -1183,7 +1430,6 @@ export const getInstructorDashboardService = async (
                             },
                         },
                     ],
-
                     as: "sessions",
                 },
             },
@@ -1204,8 +1450,7 @@ export const getInstructorDashboardService = async (
                     completedSessions: {
                         $size: {
                             $filter: {
-                                input:
-                                    "$sessions",
+                                input: "$sessions",
                                 as: "session",
                                 cond: {
                                     $eq: [
@@ -1220,8 +1465,7 @@ export const getInstructorDashboardService = async (
                     pendingSessions: {
                         $size: {
                             $filter: {
-                                input:
-                                    "$sessions",
+                                input: "$sessions",
                                 as: "session",
                                 cond: {
                                     $eq: [
@@ -1250,20 +1494,14 @@ export const getInstructorDashboardService = async (
                     },
 
                     totalAttendance: {
-                        $sum:
-                            "$sessions.totalMarked",
+                        $sum: "$sessions.totalMarked",
                     },
                 },
             },
 
             /**
-             * PART 2 STARTS HERE
-             * ($facet)
+             * Dashboard Response
              */
-
-            /**
- * Dashboard Response
- */
             {
                 $facet: {
                     /**
@@ -1327,31 +1565,20 @@ export const getInstructorDashboardService = async (
                         {
                             $project: {
                                 _id: 0,
-
                                 totalAssignments: 1,
-
                                 totalClasses: {
                                     $size: "$totalClasses",
                                 },
-
                                 totalSubjects: {
                                     $size: "$totalSubjects",
                                 },
-
                                 totalStudents: 1,
-
                                 totalSessions: 1,
-
                                 completedSessions: 1,
-
                                 pendingSessions: 1,
-
                                 present: 1,
-
                                 absent: 1,
-
                                 late: 1,
-
                                 excused: 1,
 
                                 attendanceRate: {
@@ -1392,25 +1619,20 @@ export const getInstructorDashboardService = async (
                         {
                             $group: {
                                 _id: null,
-
                                 present: {
                                     $sum: "$present",
                                 },
-
                                 absent: {
                                     $sum: "$absent",
                                 },
-
                                 late: {
                                     $sum: "$late",
                                 },
-
                                 excused: {
                                     $sum: "$excused",
                                 },
                             },
                         },
-
                         {
                             $project: {
                                 _id: 0,
@@ -1427,56 +1649,38 @@ export const getInstructorDashboardService = async (
                                 sessions: 1,
                             },
                         },
-
                         {
                             $unwind: "$sessions",
                         },
-
                         {
                             $sort: {
                                 "sessions.date": -1,
                                 "sessions.startTime": -1,
                             },
                         },
-
                         {
                             $limit: 5,
                         },
-
                         {
                             $project: {
                                 _id: "$sessions._id",
-
                                 room: "$sessions.room",
-
                                 date: "$sessions.date",
-
                                 startTime:
                                     "$sessions.startTime",
-
                                 endTime:
                                     "$sessions.endTime",
-
                                 attendanceStatus:
                                     "$sessions.attendanceStatus",
 
-                                subject: {
-                                    _id: "$subject._id",
-                                    name: "$subject.name",
-                                    code: "$subject.code",
-                                },
+                                subject:
+                                    "$sessions.subject",
 
-                                class: {
-                                    _id: "$class._id",
-                                    name: "$class.name",
-                                    code: "$class.code",
-                                },
+                                class:
+                                    "$sessions.class",
 
-                                department: {
-                                    _id: "$department._id",
-                                    name: "$department.name",
-                                    code: "$department.code",
-                                },
+                                department:
+                                    "$sessions.department",
                             },
                         },
                     ],
@@ -1490,11 +1694,9 @@ export const getInstructorDashboardService = async (
                                 sessions: 1,
                             },
                         },
-
                         {
                             $unwind: "$sessions",
                         },
-
                         {
                             $match: {
                                 "sessions.date": {
@@ -1502,52 +1704,35 @@ export const getInstructorDashboardService = async (
                                 },
                             },
                         },
-
                         {
                             $sort: {
                                 "sessions.date": 1,
                                 "sessions.startTime": 1,
                             },
                         },
-
                         {
                             $limit: 5,
                         },
-
                         {
                             $project: {
                                 _id: "$sessions._id",
-
                                 room: "$sessions.room",
-
                                 date: "$sessions.date",
-
                                 startTime:
                                     "$sessions.startTime",
-
                                 endTime:
                                     "$sessions.endTime",
-
                                 attendanceStatus:
                                     "$sessions.attendanceStatus",
 
-                                subject: {
-                                    _id: "$subject._id",
-                                    name: "$subject.name",
-                                    code: "$subject.code",
-                                },
+                                subject:
+                                    "$sessions.subject",
 
-                                class: {
-                                    _id: "$class._id",
-                                    name: "$class.name",
-                                    code: "$class.code",
-                                },
+                                class:
+                                    "$sessions.class",
 
-                                department: {
-                                    _id: "$department._id",
-                                    name: "$department.name",
-                                    code: "$department.code",
-                                },
+                                department:
+                                    "$sessions.department",
                             },
                         },
                     ],
@@ -1579,19 +1764,12 @@ export const getInstructorDashboardService = async (
                                 },
 
                                 totalStudents: 1,
-
                                 totalSessions: 1,
-
                                 completedSessions: 1,
-
                                 pendingSessions: 1,
-
                                 present: 1,
-
                                 absent: 1,
-
                                 late: 1,
-
                                 excused: 1,
 
                                 attendanceRate: {
@@ -1623,7 +1801,6 @@ export const getInstructorDashboardService = async (
                                 },
                             },
                         },
-
                         {
                             $sort: {
                                 "class.name": 1,
@@ -1660,15 +1837,11 @@ export const getInstructorDashboardService = async (
 
     return {
         overview,
-
         attendance,
-
         recentSessions:
             dashboard.recentSessions ?? [],
-
         upcomingSessions:
             dashboard.upcomingSessions ?? [],
-
         classSummary:
             dashboard.classSummary ?? [],
     };

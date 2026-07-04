@@ -53,6 +53,9 @@ importers:
       mongoose:
         specifier: ^9.7.2
         version: 9.7.2
+      node-cron:
+        specifier: ^4.5.0
+        version: 4.5.0
       zod:
         specifier: ^4.4.3
         version: 4.4.3
@@ -2886,6 +2889,10 @@ packages:
   node-addon-api@8.8.0:
     resolution: {integrity: sha512-c5Ko1fZJIJmzhFIkhRN76WTq+fC6tWnGy9CXA0fA+XygsWZmEwG8vmbkNqxMyoaa0Tin4djul49NzdVcJJcjeA==}
     engines: {node: ^18 || ^20 || >= 21}
+
+  node-cron@4.5.0:
+    resolution: {integrity: sha512-4Trh+kjvbXokyJkwQumvD5YAgeJfgHLR/sKyu71uSmxfCR5QMO1hldpvmFZOICN5pLgNY+J5Y8+ar3XKo5/4tQ==}
+    engines: {node: '>=20'}
 
   node-domexception@1.0.0:
     resolution: {integrity: sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==}
@@ -6183,6 +6190,8 @@ snapshots:
       react-dom: 19.2.7(react@19.2.7)
 
   node-addon-api@8.8.0: {}
+
+  node-cron@4.5.0: {}
 
   node-domexception@1.0.0: {}
 

@@ -25,6 +25,10 @@ export const formatSessionTime = (
     startTime: string,
     endTime: string
 ) => {
+    if (!startTime || !endTime) {
+        return "--";
+    }
+
     const [startHour, startMinute] = startTime
         .split(":")
         .map(Number);

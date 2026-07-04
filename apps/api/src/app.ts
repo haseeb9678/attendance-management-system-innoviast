@@ -15,6 +15,7 @@ import teacherAssignmentRouter from "./modules/teacherAssignment/teacherAssignme
 import sessionRouter from "./modules/session/session.routes.js";
 import instructorRouter from "./modules/instructor/instructor.routes.js";
 import attendanceRouter from "./modules/attendance/attendance.routes.js";
+import { startSessionStatusCron } from "./modules/session/session.cron.js";
 
 
 
@@ -60,6 +61,8 @@ app.get("/", (_req, res) => {
 //Global Error Middleware
 
 app.use(errorMiddleware)
+
+startSessionStatusCron()
 
 await connectDB();
 

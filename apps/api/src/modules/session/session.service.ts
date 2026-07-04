@@ -6,6 +6,7 @@ import ApiError from "../../shared/utils/ApiError.js";
 import { SessionModel } from "./session.model.js";
 import { TeacherAssignmentModel } from "../teacherAssignment/teacherAssignment.model.js";
 import { CreateSessionInput } from "@attendance/shared-zod";
+import { buildSessionDateTime } from "../../shared/utils/SessionHelpers.js";
 
 export const addSessionService = async (
     data: CreateSessionInput
@@ -259,4 +260,95 @@ export const deleteSessionService =
         }
 
         return session;
+    };
+
+
+export const updateSessionStatusesService =
+    async () => {
+        const now = new Date();
+
+        const sessions =
+            await SessionModel.find({
+                status: { $ne: "cancelled" },
+            });
+
+        if (!sessions.length) {
+            return {
+                totalChecked: 0,
+                updatedCount: 0,
+            };
+        }
+
+        const bulkOperations: Array<{
+            updateOne: {
+                filter: {
+                    _id: typeof sessions[number]["_id"];
+                };
+                update: {
+                    $set: {
+                        status:
+                        | "scheduled"
+                        | "ongoing"
+                        | "completed";
+                    };
+                };
+            };
+        }> = [];
+
+        for (const session of sessions) {
+            const sessionStart =
+                buildSessionDateTime(
+                    session.date,
+                    session.startTime
+                );
+
+            const sessionEnd =
+                buildSessionDateTime(
+                    session.date,
+                    session.endTime
+                );
+
+            let nextStatus:
+                | "scheduled"
+                | "ongoing"
+                | "completed";
+
+            if (now >= sessionEnd) {
+                nextStatus = "completed";
+            } else if (
+                now >= sessionStart &&
+                now < sessionEnd
+            ) {
+                nextStatus = "ongoing";
+            } else {
+                nextStatus = "scheduled";
+            }
+
+            if (session.status !== nextStatus) {
+                bulkOperations.push({
+                    updateOne: {
+                        filter: {
+                            _id: session._id,
+                        },
+                        update: {
+                            $set: {
+                                status: nextStatus,
+                            },
+                        },
+                    },
+                });
+            }
+        }
+
+        if (bulkOperations.length > 0) {
+            await SessionModel.bulkWrite(
+                bulkOperations
+            );
+        }
+
+        return {
+            totalChecked: sessions.length,
+            updatedCount:
+                bulkOperations.length,
+        };
     };

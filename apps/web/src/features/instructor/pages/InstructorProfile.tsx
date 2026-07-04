@@ -14,12 +14,30 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { useUpdateInstructorProfile } from '../hooks/useInstructorMutation'
 import { useUpdatePassword } from '@/features/users/hooks/useUserMutation'
+import { Spinner } from '@/components/ui/spinner'
 
 const InstructorProfile = () => {
-    const { data } = useMe()
+    const { data, isPending, isError, error } = useMe()
     const user = data?.data
     const [isUpdateOpen, setIsUpdateOpen] = React.useState(false)
     const [isChangePasswordOpen, setIsChangePasswordOpen] = React.useState(false)
+
+    if (isPending)
+        return <section
+            className="flex justify-center items-center gap-2 flex-1 text-primary-hover"
+        >
+            <Spinner className=" size-6" />
+            Loading...
+        </section>
+
+    if (!isPending && isError)
+        return <section
+            className="flex justify-center items-center gap-2 flex-1 text-text-secondary"
+        >
+            {error?.message || "Something went wrong"}
+        </section>
+
+
     return (
         <>
             <section
@@ -151,6 +169,9 @@ const UpdateProfile = ({ setIsOpen, user }
             phoneNumber: user?.phoneNumber,
         })
     }, [user])
+
+
+
     return (
         <div
             onClick={() => setIsOpen(false)}
@@ -262,6 +283,7 @@ const ChangePassword = ({ setIsOpen }
     }
 
 
+
     return (
         <div
             onClick={() => setIsOpen(false)}
@@ -337,8 +359,8 @@ const ChangePassword = ({ setIsOpen }
 
                         <FormButton
                             type="submit"
-                            text={"Update"}
-                            className='bg-success text-white hover:bg-success-hover'
+                            text={"Change Password"}
+                            className='bg-warning text-white hover:bg-warning-hover'
                             disabled={isPending}
                             isLoading={isPending}
                             loadingText="Updating"

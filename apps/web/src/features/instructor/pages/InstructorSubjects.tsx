@@ -7,6 +7,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 import { useMySubjects } from "../hooks/useInstructor";
+import { Spinner } from "@/components/ui/spinner";
 
 const InstructorSubjects = () => {
     const navigate = useNavigate();
@@ -14,7 +15,25 @@ const InstructorSubjects = () => {
     const {
         data,
         isPending,
+        error,
+        isError
     } = useMySubjects();
+
+    if (isPending)
+        return <section
+            className="flex justify-center items-center gap-2 flex-1 text-primary-hover"
+        >
+            <Spinner className=" size-6" />
+            Loading...
+        </section>
+
+    if (!isPending && isError)
+        return <section
+            className="flex justify-center items-center gap-2 flex-1 text-text-secondary"
+        >
+            {error?.message || "Something went wrong"}
+        </section>
+
 
     return (
         <section
@@ -57,13 +76,9 @@ const InstructorSubjects = () => {
                 </div>
             </div>
 
-            {isPending ? (
-                <div className="p-6">
-                    Loading...
-                </div>
-            ) : (
-                <div
-                    className="
+
+            <div
+                className="
                     p-6
                     grid
                     grid-cols-1
@@ -71,11 +86,11 @@ const InstructorSubjects = () => {
                     xl:grid-cols-3
                     gap-5
                     "
-                >
-                    {data?.data?.map((item: any) => (
-                        <div
-                            key={item._id}
-                            className="
+            >
+                {data?.data?.map((item: any) => (
+                    <div
+                        key={item._id}
+                        className="
                             border border-border
                             rounded-xl
                             p-5
@@ -86,69 +101,69 @@ const InstructorSubjects = () => {
                             transition-all
                             duration-300
                             "
-                        >
-                            <div className="flex justify-between items-start">
-                                <div>
-                                    <h3
-                                        className="
+                    >
+                        <div className="flex justify-between items-start">
+                            <div>
+                                <h3
+                                    className="
                                         text-lg
                                         font-semibold
                                         text-text-base
                                         "
-                                    >
-                                        {item.subject.name}
-                                    </h3>
+                                >
+                                    {item.subject.name}
+                                </h3>
 
-                                    <p className="text-sm text-text-secondary">
-                                        {item.subject.code}
-                                    </p>
-                                </div>
-
-                                <Layers
-                                    className="text-primary"
-                                    size={22}
-                                />
+                                <p className="text-sm text-text-secondary">
+                                    {item.subject.code}
+                                </p>
                             </div>
 
-                            <div className="mt-5 space-y-3 text-text-secondary">
-                                <div className="flex items-center justify-between">
-                                    <span className="text-sm">
-                                        Class
-                                    </span>
-
-                                    <span className="font-medium text-sm">
-                                        {item.class.name}
-                                    </span>
-                                </div>
-
-                                <div className="flex items-center justify-between">
-                                    <span className="text-sm">
-                                        Department
-                                    </span>
-
-                                    <span className="font-medium text-sm">
-                                        {item.department.name}
-                                    </span>
-                                </div>
-
-                                {item.subject.creditHours && (
-                                    <div className="flex items-center justify-between">
-                                        <span className="text-sm">
-                                            Credit Hours
-                                        </span>
-
-                                        <span className="font-medium text-sm">
-                                            {item.subject.creditHours}
-                                        </span>
-                                    </div>
-                                )}
-                            </div>
-
-
+                            <Layers
+                                className="text-primary"
+                                size={22}
+                            />
                         </div>
-                    ))}
-                </div>
-            )}
+
+                        <div className="mt-5 space-y-3 text-text-secondary">
+                            <div className="flex items-center justify-between">
+                                <span className="text-sm">
+                                    Class
+                                </span>
+
+                                <span className="font-medium text-sm">
+                                    {item.class.name}
+                                </span>
+                            </div>
+
+                            <div className="flex items-center justify-between">
+                                <span className="text-sm">
+                                    Department
+                                </span>
+
+                                <span className="font-medium text-sm">
+                                    {item.department.name}
+                                </span>
+                            </div>
+
+                            {item.subject.creditHours && (
+                                <div className="flex items-center justify-between">
+                                    <span className="text-sm">
+                                        Credit Hours
+                                    </span>
+
+                                    <span className="font-medium text-sm">
+                                        {item.subject.creditHours}
+                                    </span>
+                                </div>
+                            )}
+                        </div>
+
+
+                    </div>
+                ))}
+            </div>
+
         </section>
     );
 };

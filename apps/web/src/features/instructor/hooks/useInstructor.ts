@@ -57,6 +57,10 @@ export const useMyClasses = () => {
     return useQuery({
         queryKey: instructorKeys.classes(),
         queryFn: getMyClasses,
+        refetchOnWindowFocus: true,
+        refetchOnMount: true,
+        refetchOnReconnect: true,
+        refetchInterval: 5000,
     });
 };
 
@@ -64,6 +68,10 @@ export const useMySubjects = () => {
     return useQuery({
         queryKey: instructorKeys.subjects(),
         queryFn: getMySubjects,
+        refetchOnWindowFocus: true,
+        refetchOnMount: true,
+        refetchOnReconnect: true,
+        refetchInterval: 5000,
     });
 };
 
@@ -71,6 +79,10 @@ export const useMySessions = () => {
     return useQuery({
         queryKey: instructorKeys.sessions(),
         queryFn: getMySessions,
+        refetchOnWindowFocus: true,
+        refetchOnMount: true,
+        refetchOnReconnect: true,
+        refetchInterval: 5000,
     });
 };
 
@@ -79,5 +91,9 @@ export const useMyStudents = (classId: string) => {
         queryKey: instructorKeys.studentsByClass(classId),
         queryFn: () => getMyStudents(classId),
         enabled: !!classId,
+        refetchOnWindowFocus: true,
+        refetchOnMount: true,
+        refetchOnReconnect: true,
+        refetchInterval: 5000,
     });
 };

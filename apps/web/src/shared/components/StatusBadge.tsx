@@ -6,6 +6,7 @@ interface StatusBadgeProps {
     | "suspended"
     | "scheduled"
     | "ongoing"
+    | "marked"
     | "completed"
     | "cancelled";
 }
@@ -17,8 +18,9 @@ const statusStyles = {
     suspended: "bg-error/10 text-error",
 
     scheduled: "bg-primary/10 text-primary",
-    ongoing: "bg-success-bg text-success",
-    completed: "bg-secondary/10 text-secondary",
+    ongoing: "bg-warning/10 text-warning",
+    completed: "bg-success/10 text-success",
+    marked: "bg-secondary/10 text-secondary",
     cancelled: "bg-error/10 text-error",
 } satisfies Record<StatusBadgeProps["status"], string>;
 

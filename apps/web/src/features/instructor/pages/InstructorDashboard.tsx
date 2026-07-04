@@ -128,60 +128,53 @@ const DashboardCard = ({
     return (
         <div
             className="
-                bg-surface/60
-                backdrop-blur-md
-                border border-border
-                rounded-md
-                p-5
+        border border-border
+        rounded-2xl
+        bg-bg
+        p-5
+        transition-all
+        hover:border-primary/30
+        hover:shadow-sm
+    "
+        >
+            <div className="flex items-start justify-between gap-4">
+                <div className="min-w-0">
+                    <p
+                        className="
+                    text-text-secondary
+                    text-sm
+                    font-medium
+                "
+                    >
+                        {title}
+                    </p>
 
+                    <h2
+                        className="
+                    mt-2
+                    text-3xl
+                    font-bold
+                    text-text-base
+                "
+                    >
+                        {value}
+                    </h2>
+                </div>
+
+                <div
+                    className={`
+                h-14
+                w-14
+                rounded-2xl
                 flex
                 items-center
-                justify-between
-              
-                shadow-sm
-            "
-        >
-            <div>
-
-                <p
-                    className="
-                        text-text-secondary
-                        text-sm
-                    "
+                justify-center
+                shrink-0
+                ${color}
+            `}
                 >
-                    {title}
-                </p>
-
-                <h2
-                    className="
-                        mt-2
-                        text-3xl
-                        font-bold
-                        text-text-base
-                    "
-                >
-                    {value}
-                </h2>
-
-            </div>
-
-            <div
-                className={`
-                    h-14
-                    w-14
-
-                    rounded-xl
-
-                    flex
-                    items-center
-                    justify-center
-
-                    ${color}
-                `}
-            >
-                <Icon
-                    className="h-7 w-7 text-white"
-                />
+                    <Icon className="h-7 w-7" />
+                </div>
             </div>
         </div>
     );
@@ -222,6 +215,8 @@ const InstructorDashboard = () => {
                     key: "room",
 
                     label: "Room",
+                    render: (row) =>
+                        row.room || "--",
                 },
 
                 {
@@ -339,7 +334,7 @@ const InstructorDashboard = () => {
                                 .totalAssignments ?? 0
                         }
                         Icon={BookOpen}
-                        color="bg-primary"
+                        color="bg-primary/20 text-primary"
                     />
 
                     <DashboardCard
@@ -349,7 +344,7 @@ const InstructorDashboard = () => {
                                 .totalClasses ?? 0
                         }
                         Icon={GraduationCap}
-                        color="bg-success"
+                        color="bg-success/20 text-success"
                     />
 
                     <DashboardCard
@@ -359,7 +354,7 @@ const InstructorDashboard = () => {
                                 .totalStudents ?? 0
                         }
                         Icon={Users}
-                        color="bg-warning"
+                        color="bg-warning/20 text-warning"
                     />
 
                     <DashboardCard
@@ -369,7 +364,7 @@ const InstructorDashboard = () => {
                                 .totalSubjects ?? 0
                         }
                         Icon={BookOpen}
-                        color="bg-error"
+                        color="bg-error/20 text-error"
                     />
 
 
@@ -387,90 +382,40 @@ const InstructorDashboard = () => {
 
                     <div
                         className="
-                            mt-5
-
-                            grid
-                            grid-cols-2
-                            lg:grid-cols-4
-
-                            gap-5
-                        "
+        mt-5
+        grid
+        grid-cols-2
+        lg:grid-cols-4
+        gap-5
+    "
                     >
-                        <div
-                            className="
-                                border
-                                border-border
-                                rounded-md
-                                p-5
+                        <MiniStatCard
+                            title="Present"
+                            value={dashboard?.attendance.present ?? 0}
+                            valueClassName="text-success"
+                            className="bg-success/5 hover:border-success/30 hover:shadow-sm"
+                        />
 
-                                bg-success/5
-                            "
-                        >
-                            <p className="text-sm text-text-secondary">
-                                Present
-                            </p>
+                        <MiniStatCard
+                            title="Absent"
+                            value={dashboard?.attendance.absent ?? 0}
+                            valueClassName="text-error"
+                            className="bg-error/5 hover:border-error/30 hover:shadow-sm"
+                        />
 
-                            <h3 className="mt-2 text-3xl font-bold text-success">
-                                {dashboard?.attendance.present ?? 0}
-                            </h3>
-                        </div>
+                        <MiniStatCard
+                            title="Late"
+                            value={dashboard?.attendance.late ?? 0}
+                            valueClassName="text-warning"
+                            className="bg-warning/5 hover:border-warning/30 hover:shadow-sm"
+                        />
 
-                        <div
-                            className="
-                                border
-                                border-border
-                                rounded-md
-                                p-5
-
-                                bg-error/5
-                            "
-                        >
-                            <p className="text-sm text-text-secondary">
-                                Absent
-                            </p>
-
-                            <h3 className="mt-2 text-3xl font-bold text-error">
-                                {dashboard?.attendance.absent ?? 0}
-                            </h3>
-                        </div>
-
-                        <div
-                            className="
-                                border
-                                border-border
-                                rounded-md
-                                p-5
-
-                                bg-warning/5
-                            "
-                        >
-                            <p className="text-sm text-text-secondary">
-                                Late
-                            </p>
-
-                            <h3 className="mt-2 text-3xl font-bold text-warning">
-                                {dashboard?.attendance.late ?? 0}
-                            </h3>
-                        </div>
-
-                        <div
-                            className="
-                                border
-                                border-border
-                                rounded-md
-                                p-5
-
-                                bg-info/5
-                            "
-                        >
-                            <p className="text-sm text-text-secondary">
-                                Excused
-                            </p>
-
-                            <h3 className="mt-2 text-3xl font-bold text-text-secondary">
-                                {dashboard?.attendance.excused ?? 0}
-                            </h3>
-                        </div>
+                        <MiniStatCard
+                            title="Excused"
+                            value={dashboard?.attendance.excused ?? 0}
+                            valueClassName="text-primary"
+                            className="bg-primary/5 hover:border-primary/30 hover:shadow-sm"
+                        />
                     </div>
                 </div>
 
@@ -499,211 +444,63 @@ const InstructorDashboard = () => {
                     </div>
                 </div>
 
-                <div className="mt-8 border-t border-dashed border-border" />
 
-                <div className="mt-8 hidden">
-                    <div className="mb-5">
-                        <h3 className="text-xl font-semibold text-text-base">
-                            My Classes
-                        </h3>
-
-                        <p className="mt-1 text-sm text-text-secondary">
-                            Summary of classes currently assigned to you.
-                        </p>
-                    </div>
-
-                    {dashboard?.classSummary.length ? (
-                        <div
-                            className="
-                                grid
-                                grid-cols-1
-                                md:grid-cols-2
-                                xl:grid-cols-3
-                                gap-5
-                            "
-                        >
-                            {dashboard.classSummary.map(
-                                (item) => (
-                                    <div
-                                        key={`${item.class._id}-${item.subject._id}`}
-                                        className="
-                                            bg-surface
-                                            border border-border
-                                            rounded-md
-                                            p-5
-
-                                            flex
-                                            flex-col
-                                            gap-5
-
-                                            transition-all
-                                            duration-200
-
-                                            hover:border-primary/30
-                                            hover:shadow-md
-                                        "
-                                    >
-                                        <div>
-                                            <h4
-                                                className="
-                                                    text-lg
-                                                    font-semibold
-                                                    text-text-base
-                                                "
-                                            >
-                                                {item.class.name}
-                                            </h4>
-
-                                            <p
-                                                className="
-                                                    mt-1
-                                                    text-sm
-                                                    text-text-secondary
-                                                "
-                                            >
-                                                {item.department.name}
-                                            </p>
-                                        </div>
-
-                                        <div
-                                            className="
-                                                flex
-                                                items-center
-                                                justify-between
-                                                text-sm
-                                            "
-                                        >
-                                            <span className="text-text-secondary">
-                                                Subject
-                                            </span>
-
-                                            <span className="font-medium text-text-base">
-                                                {item.subject.name}
-                                            </span>
-                                        </div>
-
-                                        <div
-                                            className="
-                                                grid
-                                                grid-cols-2
-                                                gap-4
-                                            "
-                                        >
-                                            <div>
-                                                <p className="text-xs text-text-secondary">
-                                                    Students
-                                                </p>
-
-                                                <p className="mt-1 text-xl font-bold text-text-base">
-                                                    {item.totalStudents}
-                                                </p>
-                                            </div>
-
-                                            <div>
-                                                <p className="text-xs text-text-secondary">
-                                                    Sessions
-                                                </p>
-
-                                                <p className="mt-1 text-xl font-bold text-text-base">
-                                                    {item.totalSessions}
-                                                </p>
-                                            </div>
-
-                                            <div>
-                                                <p className="text-xs text-text-secondary">
-                                                    Completed
-                                                </p>
-
-                                                <p className="mt-1 font-semibold text-success">
-                                                    {item.completedSessions}
-                                                </p>
-                                            </div>
-
-                                            <div>
-                                                <p className="text-xs text-text-secondary">
-                                                    Pending
-                                                </p>
-
-                                                <p className="mt-1 font-semibold text-warning">
-                                                    {item.pendingSessions}
-                                                </p>
-                                            </div>
-                                        </div>
-
-                                        <div>
-                                            <div
-                                                className="
-                                                    flex
-                                                    items-center
-                                                    justify-between
-                                                    mb-2
-                                                "
-                                            >
-                                                <span
-                                                    className="
-                                                        text-sm
-                                                        text-text-secondary
-                                                    "
-                                                >
-                                                    Attendance
-                                                </span>
-
-                                                <span
-                                                    className="
-                                                        text-sm
-                                                        font-semibold
-                                                        text-primary
-                                                    "
-                                                >
-                                                    {item.attendanceRate}%
-                                                </span>
-                                            </div>
-
-                                            <div
-                                                className="
-                                                    h-2
-                                                    rounded-full
-                                                    bg-border
-                                                    overflow-hidden
-                                                "
-                                            >
-                                                <div
-                                                    className="
-                                                        h-full
-                                                        rounded-full
-                                                        bg-primary
-                                                        transition-all
-                                                    "
-                                                    style={{
-                                                        width: `${item.attendanceRate}%`,
-                                                    }}
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                )
-                            )}
-                        </div>
-                    ) : (
-                        <div
-                            className="
-                                border
-                                border-dashed
-                                border-border
-                                rounded-md
-                                py-16
-
-                                text-center
-                                text-text-secondary
-                            "
-                        >
-                            No classes assigned.
-                        </div>
-                    )}
-                </div>
             </section>
         </div>
     );
 };
+
+interface MiniStatCardProps {
+    title: string;
+    value: string | number;
+    valueClassName?: string;
+    className?: string;
+    subtitle?: string;
+}
+
+const MiniStatCard = ({
+    title,
+    value,
+    valueClassName = "text-text-base",
+    className = "",
+    subtitle,
+}: MiniStatCardProps) => {
+    return (
+        <div
+            className={`
+                border border-border
+                rounded-2xl
+                bg-bg
+                p-5
+                transition-all
+              
+               
+                ${className}
+            `}
+        >
+            <p className="text-sm font-medium text-text-secondary">
+                {title}
+            </p>
+
+            <h3
+                className={`
+                    mt-2
+                    text-3xl
+                    font-bold
+                    ${valueClassName}
+                `}
+            >
+                {value}
+            </h3>
+
+            {subtitle && (
+                <p className="mt-2 text-xs text-text-muted">
+                    {subtitle}
+                </p>
+            )}
+        </div>
+    );
+};
+
 
 export default InstructorDashboard;

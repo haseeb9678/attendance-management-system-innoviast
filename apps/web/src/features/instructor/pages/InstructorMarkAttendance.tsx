@@ -36,6 +36,8 @@ const InstructorMarkAttendance = () => {
     const {
         data: sessionResponse,
         isPending: isSessionLoading,
+        error: sessionError,
+        isError: isSessionError,
     } = useSession(id as string);
 
     const session = sessionResponse?.data;
@@ -156,11 +158,36 @@ const InstructorMarkAttendance = () => {
                 "
             >
                 <p className="text-text-base font-semibold">
-                    Invalid Session Id.
+                    Invalid Session Id or Session not found.
                 </p>
             </section>
         );
     }
+
+    if (sessionError || isSessionError || (!loading && session?.status !== "ongoing")) {
+        return (
+            <section
+                className="
+                bg-bg-card
+                border border-border
+                rounded-md
+                shadow-sm
+                flex-1
+                flex
+                items-center
+                justify-center
+                min-h-max
+                p-5
+                "
+            >
+                <p className="text-text-secondary text-center font-semibold text-lg">
+                    {"Invalid Session Id or Session not found."}
+                </p>
+
+            </section>
+        );
+    }
+
 
     return (
         <section
@@ -389,17 +416,19 @@ const InstructorMarkAttendance = () => {
                                 className="flex flex-col gap-5"
                                 onSubmit={handleSubmit(onSubmit)}
                                 method="post">
-                                {attendanceData?.data
-                                    .length ? <div className="flex justify-end">
-                                    <FormButton
-                                        type="submit"
-                                        text="Save"
-                                        isLoading={isUpdating}
-                                        loadingText="Saving"
-                                        Icon={Save}
-                                        className=" max-w-40 px-5"
-                                    />
-                                </div> : null}
+                                {tableData
+                                    .length > 0 && (
+                                        <div className="flex justify-end">
+                                            <FormButton
+                                                type="submit"
+                                                text="Save"
+                                                isLoading={isUpdating}
+                                                loadingText="Saving"
+                                                Icon={Save}
+                                                className=" max-w-40 px-5"
+                                            />
+                                        </div>)
+                                }
                                 {/* DataTable goes here */}
                                 <DataTable
                                     data={tableData}
@@ -413,9 +442,9 @@ const InstructorMarkAttendance = () => {
 
                         </div>
                     </div>
-                </div>
+                </div >
             )}
-        </section>
+        </section >
     );
 };
 

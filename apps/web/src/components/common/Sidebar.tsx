@@ -112,8 +112,8 @@ const Sidebar = ({ sidebarItems = [] }) => {
                 initial={false}
                 animate={isOpen ? "expanded" : "collapsed"}
                 custom={isMobile}
-                className={`bg-primary-hover p-5 py-10 h-screen sidebar-scroll
-                     text-white overflow-y-auto overflow-x-hidden ${isMobile ? "fixed z-50" : "relative"
+                className={`bg-sidebar-bg  p-5 py-10 h-screen sidebar-scroll
+                     text-sidebar-text overflow-y-auto overflow-x-hidden ${isMobile ? "fixed z-50" : "relative"
                     } shadow-lg`}
             >
                 <div className='flex flex-col gap-12 flex-1'>
@@ -176,7 +176,8 @@ const Sidebar = ({ sidebarItems = [] }) => {
                                                     whileHover="hover"
                                                     whileTap="tap"
                                                     onClick={() => handleAccordionClick(subIndex)}
-                                                    className={`flex items-center justify-between gap-2 px-3 h-10 rounded-md cursor-pointer ${isShortSidebar && "justify-center"} ${isParentActive ? 'bg-gray-100/90 shadow-md text-primary-hover' : 'hover:bg-gray-100/80 hover:text-primary'}`}
+                                                    className={`flex items-center justify-between gap-2 px-3 h-10 rounded-md cursor-pointer ${isShortSidebar && "justify-center"}
+                                                     ${isParentActive ? 'bg-gray-100/90 shadow-md text-sidebar-text-hover' : 'hover:bg-gray-100/80 hover:text-sidebar-text-hover'}`}
                                                 >
                                                     <div className="flex items-center gap-2">
                                                         <subItem.Icon size={20} />
@@ -229,7 +230,7 @@ const Sidebar = ({ sidebarItems = [] }) => {
                                                 onClick={isMobile ? closeSidebar : undefined}
                                                 className={({ isActive }) =>
                                                     `flex items-center gap-2 px-3 h-10 rounded-md ${isShortSidebar && "justify-center"
-                                                    } ${isActive ? 'bg-gray-100/90 shadow-md text-primary-hover' : 'hover:bg-gray-100/80 hover:text-primary'}`
+                                                    } ${isActive ? 'bg-gray-100/90 shadow-md text-sidebar-text-hover' : 'hover:bg-gray-100/80 hover:text-sidebar-text-hover'}`
                                                 }
                                                 key={subItem.id}
                                             >
