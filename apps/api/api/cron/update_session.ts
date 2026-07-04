@@ -1,6 +1,8 @@
 
 import { updateSessionStatusesService } from "../../src/modules/session/session.service.js";
 import { CRON_SECRET } from "../../src/config/env.js";
+import { connectDB } from "../../src/config/database.js";
+
 
 export default async function handler(req: any, res: any) {
     try {
@@ -14,6 +16,8 @@ export default async function handler(req: any, res: any) {
                 message: "Unauthorized",
             });
         }
+
+        await connectDB();
 
         const result = await updateSessionStatusesService();
 
