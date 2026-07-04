@@ -7,26 +7,25 @@ export default async function handler(
     res: any
 ) {
     try {
-        /**
-         * Optional security:
-         * only allow Vercel cron or your secret
-         */
-        const authHeader =
-            req.headers.authorization;
+        const authHeader = req.headers.authorization;
+        const vercelCronHeader = req.headers["x-vercel-cron"];
+        const hasValidBearerToken =
+            Boolean(CRON_SECRET) &&
+            authHeader === `Bearer ${CRON_SECRET}`;
 
         if (
             CRON_SECRET &&
-            authHeader !==
-            `Bearer ${CRON_SECRET}`
+            !vercelCronHeader &&
+            !hasValidBearerToken
         ) {
             return res.status(401).json({
                 success: false,
                 message: "Unauthorized",
             });
         }
+
         console.log("[Cron Init Check], in VERCEL CRON");
-        const result =
-            await updateSessionStatusesService();
+        const result = await updateSessionStatusesService();
 
         return res.status(200).json({
             success: true,

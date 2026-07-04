@@ -2,37 +2,34 @@ import cron from "node-cron";
 import { updateSessionStatusesService } from "./session.service.js";
 
 export const startSessionStatusCron = () => {
+    const isVercel = Boolean(process.env.VERCEL);
+    const isProduction =
+        process.env.NODE_ENV === "production" ||
+        process.env.VERCEL_ENV === "production";
 
-    const isVercel = !!process.env.VERCEL;
-    const isProduction = process.env.NODE_ENV === "production";
-
-    console.log("[Cron Init Check-LOCAL]", {
+    console.log("[Cron Init Check]", {
         isProduction,
         isVercel,
+        nodeEnv: process.env.NODE_ENV,
+        vercelEnv: process.env.VERCEL_ENV,
     });
 
     if (isVercel || isProduction) {
-        console.log("[Local Cron] Skipped on Vercel/production.");
+        console.log("[Cron] Skipping local cron in serverless/production environment.");
         return;
     }
 
     cron.schedule("*/1 * * * *", async () => {
         try {
-            console.log(
-                "[Local Cron] Updating session statuses..."
-            );
+            console.log("[Local Cron] Updating session statuses...");
 
-            const result =
-                await updateSessionStatusesService();
+            const result = await updateSessionStatusesService();
 
             console.log(
                 `[Local Cron] Done. Checked: ${result.totalChecked}, Updated: ${result.updatedCount}`
             );
         } catch (error) {
-            console.error(
-                "[Local Cron] Failed to update session statuses:",
-                error
-            );
+            console.error("[Local Cron] Failed to update session statuses:", error);
         }
     });
 };
