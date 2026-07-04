@@ -1,5 +1,6 @@
 import { useThemeStore } from '@/shared/store/theme.store';
 import { Moon, Sun } from 'lucide-react';
+import Logo from "/logo.png"
 
 
 const Header = () => {
@@ -12,9 +13,17 @@ const Header = () => {
             className='min-h-16 bg-bg-card text-text-secondary
              border-b border-border flex items-center'
         >
+
             <div
-                className='flex items-center justify-end px-5 flex-1 h-full'
+                className='flex items-center justify-between px-5 flex-1 h-full'
             >
+                <div
+                    className='h-12 w-max overflow-hidden'
+                >
+                    <img
+                        className='h-full w-full'
+                        src={Logo} alt="logo" />
+                </div>
                 <button
                     onClick={toggleTheme}
                     className={`
