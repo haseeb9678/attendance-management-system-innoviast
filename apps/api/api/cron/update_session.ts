@@ -24,7 +24,7 @@ export default async function handler(
                 message: "Unauthorized",
             });
         }
-
+        console.log("[Cron Init Check], in VERCEL CRON");
         const result =
             await updateSessionStatusesService();
 

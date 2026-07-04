@@ -6,6 +6,11 @@ export const startSessionStatusCron = () => {
     const isVercel = !!process.env.VERCEL;
     const isProduction = process.env.NODE_ENV === "production";
 
+    console.log("[Cron Init Check-LOCAL]", {
+        isProduction,
+        isVercel,
+    });
+
     if (isVercel || isProduction) {
         console.log("[Local Cron] Skipped on Vercel/production.");
         return;
