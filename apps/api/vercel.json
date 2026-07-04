@@ -1,6 +1,10 @@
 {
     "rewrites": [
         {
+            "source": "/api/cron/update-session",
+            "destination": "/api/cron/update-session"
+        },
+        {
             "source": "/(.*)",
             "destination": "/api/index"
         }
@@ -8,7 +12,7 @@
     "crons": [
         {
             "path": "/api/cron/update-session",
-            "schedule": "*/1 * * * *"
+            "schedule": "* * * * *"
         }
     ]
 }
