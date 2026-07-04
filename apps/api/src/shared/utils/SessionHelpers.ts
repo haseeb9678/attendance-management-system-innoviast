@@ -4,15 +4,18 @@ export const buildSessionDateTime = (
     sessionDate: Date,
     time: string
 ): Date => {
-    const datePart = DateTime.fromJSDate(sessionDate, {
-        zone: "Asia/Karachi",
-    }).toFormat("yyyy-MM-dd");
+    const [hours, minutes] = time.split(":").map(Number);
 
-    const sessionDateTime = DateTime.fromFormat(
-        `${datePart} ${time}`,
-        "yyyy-MM-dd HH:mm",
-        { zone: "Asia/Karachi" }
-    );
+    const sessionDateTime = DateTime.fromJSDate(sessionDate, {
+        zone: "Asia/Karachi",
+    })
+        .startOf("day")
+        .set({
+            hour: hours,
+            minute: minutes,
+            second: 0,
+            millisecond: 0,
+        });
 
     return sessionDateTime.toUTC().toJSDate();
 };

@@ -31,8 +31,6 @@ const Sessions = () => {
     const [sort, setSort] = useState(sortOptions[0]);
     const [limit, setLimit] = useState(limitOptions[0]);
 
-    const [teacherAssignment, setTeacherAssignment] =
-        useState<{ label: string; value: string } | null>();
 
     const [search, setSearch] = useState("");
     const [page, setPage] = useState(1);

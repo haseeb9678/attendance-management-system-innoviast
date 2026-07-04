@@ -8,6 +8,8 @@ import { TeacherAssignmentModel } from "../teacherAssignment/teacherAssignment.m
 import { CreateSessionInput } from "@attendance/shared-zod";
 import { buildSessionDateTime } from "../../shared/utils/SessionHelpers.js";
 
+import { DateTime } from "luxon";
+
 export const addSessionService = async (
     data: CreateSessionInput
 ) => {
@@ -23,11 +25,20 @@ export const addSessionService = async (
         );
     }
 
+    // Normalize the selected session date to the Karachi day start,
+    // then store as UTC Date so it stays consistent on localhost + Vercel
+    const normalizedSessionDate = DateTime.fromJSDate(
+        new Date(data.date),
+        { zone: "Asia/Karachi" }
+    )
+        .startOf("day")
+        .toUTC()
+        .toJSDate();
+
     const sessionExists =
         await SessionModel.findOne({
-            teacherAssignment:
-                data.teacherAssignment,
-            date: data.date,
+            teacherAssignment: data.teacherAssignment,
+            date: normalizedSessionDate,
             startTime: data.startTime,
         });
 
@@ -38,8 +49,10 @@ export const addSessionService = async (
         );
     }
 
-    const session =
-        await SessionModel.create(data);
+    const session = await SessionModel.create({
+        ...data,
+        date: normalizedSessionDate,
+    });
 
     return session;
 };
@@ -263,92 +276,70 @@ export const deleteSessionService =
     };
 
 
-export const updateSessionStatusesService =
-    async () => {
-        const now = new Date();
+export const updateSessionStatusesService = async () => {
+    const now = new Date();
 
-        const sessions =
-            await SessionModel.find({
-                status: { $ne: "cancelled" },
-            });
+    const sessions = await SessionModel.find({
+        status: { $ne: "cancelled" },
+    });
 
-        if (!sessions.length) {
-            return {
-                totalChecked: 0,
-                updatedCount: 0,
-            };
-        }
-
-        const bulkOperations: Array<{
-            updateOne: {
-                filter: {
-                    _id: typeof sessions[number]["_id"];
-                };
-                update: {
-                    $set: {
-                        status:
-                        | "scheduled"
-                        | "ongoing"
-                        | "completed";
-                    };
-                };
-            };
-        }> = [];
-
-        for (const session of sessions) {
-            const sessionStart =
-                buildSessionDateTime(
-                    session.date,
-                    session.startTime
-                );
-
-            const sessionEnd =
-                buildSessionDateTime(
-                    session.date,
-                    session.endTime
-                );
-
-            let nextStatus:
-                | "scheduled"
-                | "ongoing"
-                | "completed";
-
-            if (now >= sessionEnd) {
-                nextStatus = "completed";
-            } else if (
-                now >= sessionStart &&
-                now < sessionEnd
-            ) {
-                nextStatus = "ongoing";
-            } else {
-                nextStatus = "scheduled";
-            }
-
-            if (session.status !== nextStatus) {
-                bulkOperations.push({
-                    updateOne: {
-                        filter: {
-                            _id: session._id,
-                        },
-                        update: {
-                            $set: {
-                                status: nextStatus,
-                            },
-                        },
-                    },
-                });
-            }
-        }
-
-        if (bulkOperations.length > 0) {
-            await SessionModel.bulkWrite(
-                bulkOperations
-            );
-        }
-
+    if (!sessions.length) {
         return {
-            totalChecked: sessions.length,
-            updatedCount:
-                bulkOperations.length,
+            totalChecked: 0,
+            updatedCount: 0,
         };
+    }
+
+    const bulkOperations: Array<{
+        updateOne: {
+            filter: { _id: typeof sessions[number]["_id"] };
+            update: {
+                $set: {
+                    status: "scheduled" | "ongoing" | "completed";
+                };
+            };
+        };
+    }> = [];
+
+    for (const session of sessions) {
+        const sessionStart = buildSessionDateTime(
+            session.date,
+            session.startTime
+        );
+
+        const sessionEnd = buildSessionDateTime(
+            session.date,
+            session.endTime
+        );
+
+        let nextStatus: "scheduled" | "ongoing" | "completed";
+
+        if (now >= sessionEnd) {
+            nextStatus = "completed";
+        } else if (now >= sessionStart && now < sessionEnd) {
+            nextStatus = "ongoing";
+        } else {
+            nextStatus = "scheduled";
+        }
+
+        if (session.status !== nextStatus) {
+            bulkOperations.push({
+                updateOne: {
+                    filter: { _id: session._id },
+                    update: {
+                        $set: { status: nextStatus },
+                    },
+                },
+            });
+        }
+    }
+
+    if (bulkOperations.length > 0) {
+        await SessionModel.bulkWrite(bulkOperations);
+    }
+
+    return {
+        totalChecked: sessions.length,
+        updatedCount: bulkOperations.length,
     };
+};
