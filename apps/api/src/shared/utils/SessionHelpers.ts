@@ -1,15 +1,18 @@
+import { DateTime } from "luxon";
+
 export const buildSessionDateTime = (
     sessionDate: Date,
     time: string
 ): Date => {
-    // Expected time format: "HH:mm" e.g. "09:30", "14:45"
-    const [hours, minutes] = time
-        .split(":")
-        .map(Number);
+    const datePart = DateTime.fromJSDate(sessionDate, {
+        zone: "Asia/Karachi",
+    }).toFormat("yyyy-MM-dd");
 
-    const date = new Date(sessionDate);
+    const sessionDateTime = DateTime.fromFormat(
+        `${datePart} ${time}`,
+        "yyyy-MM-dd HH:mm",
+        { zone: "Asia/Karachi" }
+    );
 
-    date.setHours(hours, minutes, 0, 0);
-
-    return date;
+    return sessionDateTime.toUTC().toJSDate();
 };

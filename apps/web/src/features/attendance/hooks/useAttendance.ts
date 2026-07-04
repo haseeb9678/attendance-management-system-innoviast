@@ -16,6 +16,10 @@ export const useAttendanceStats = () => {
     return useQuery({
         queryKey: attendanceKeys.stats(),
         queryFn: getAttendanceStats,
+        refetchOnWindowFocus: true,
+        refetchOnMount: true,
+        refetchOnReconnect: true,
+        refetchInterval: 5000,
     });
 };
 
@@ -29,6 +33,10 @@ export const useAttendanceHistory = (
         queryKey: attendanceKeys.history(filters),
         queryFn: () =>
             getAttendanceHistory(filters),
+        refetchOnWindowFocus: true,
+        refetchOnMount: true,
+        refetchOnReconnect: true,
+        refetchInterval: 5000,
     });
 };
 
@@ -40,6 +48,10 @@ export const useSessionAttendance = (
         queryFn: () =>
             getSessionAttendance(sessionId),
         enabled: !!sessionId,
+        refetchOnWindowFocus: true,
+        refetchOnMount: true,
+        refetchOnReconnect: true,
+        refetchInterval: 5000,
     });
 };
 
@@ -51,5 +63,9 @@ export const useStudentAttendance = (
         queryFn: () =>
             getStudentAttendance(studentId),
         enabled: !!studentId,
+        refetchOnWindowFocus: true,
+        refetchOnMount: true,
+        refetchOnReconnect: true,
+        refetchInterval: 5000,
     });
 };
