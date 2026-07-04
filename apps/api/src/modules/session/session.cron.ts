@@ -7,12 +7,6 @@ export const startSessionStatusCron = () => {
         process.env.NODE_ENV === "production" ||
         process.env.VERCEL_ENV === "production";
 
-    console.log("[Cron Init Check]", {
-        isProduction,
-        isVercel,
-        nodeEnv: process.env.NODE_ENV,
-        vercelEnv: process.env.VERCEL_ENV,
-    });
 
     if (isVercel || isProduction) {
         console.log("[Cron] Skipping local cron in serverless/production environment.");

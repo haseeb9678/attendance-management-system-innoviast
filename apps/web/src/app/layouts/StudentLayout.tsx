@@ -2,7 +2,7 @@
 import Sidebar from '@/components/common/Sidebar'
 import { Outlet } from 'react-router-dom'
 import { studentSidebarItems } from '@/shared/constants/sidebarItems'
-import Header from '@/features/instructor/components/Header'
+import Header from '@/features/student/components/Header'
 
 const StudentLayout = () => {
 

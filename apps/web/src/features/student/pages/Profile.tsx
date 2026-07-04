@@ -4,7 +4,7 @@ import { Spinner } from "@/components/ui/spinner";
 
 import { useMe } from "@/features/auth/hooks/useAuth";
 import { useUpdatePassword } from "@/features/users/hooks/useUserMutation";
-import { useUpdateInstructorProfile } from "../hooks/useInstructorMutation";
+import { useUpdateStudentProfile } from "@/features/student/hooks/useStudentMutation";
 
 import {
     updatePasswordSchema,
@@ -16,8 +16,8 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
     BadgeCheck,
-    BriefcaseBusiness,
     Building2,
+    GraduationCap,
     Hash,
     KeyRound,
     Lock,
@@ -26,15 +26,15 @@ import {
     Phone,
     User,
     X,
-    GraduationCap,
-    ShieldCheck,
+    BookMarked,
+    IdCard,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-const InstructorProfile = () => {
+const Profile = () => {
     const { data, isPending, isError, error } = useMe();
     const user = data?.data;
 
@@ -108,7 +108,7 @@ const InstructorProfile = () => {
                             </h2>
 
                             <p className="text-sm text-text-muted mt-1">
-                                Manage your instructor profile information and account settings.
+                                Manage your student profile information and account settings.
                             </p>
                         </div>
 
@@ -164,7 +164,7 @@ const InstructorProfile = () => {
                             bg-gradient-to-br
                             from-primary/10
                             via-bg
-                            to-warning/10
+                            to-success/10
                             p-6
                         "
                     >
@@ -180,7 +180,7 @@ const InstructorProfile = () => {
                             className="
                                 absolute -bottom-10 -left-8
                                 h-28 w-28 rounded-full
-                                bg-warning/10 blur-3xl
+                                bg-success/10 blur-3xl
                                 pointer-events-none
                             "
                         />
@@ -197,7 +197,7 @@ const InstructorProfile = () => {
                                         shadow-sm
                                     "
                                 >
-                                    {user?.name?.[0] ?? "I"}
+                                    {user?.name?.[0] ?? "S"}
                                 </div>
 
                                 <div className="min-w-0">
@@ -213,7 +213,7 @@ const InstructorProfile = () => {
                                         <BadgePill
                                             text={
                                                 user?.role ||
-                                                "instructor"
+                                                "student"
                                             }
                                             className="bg-primary/12 text-primary"
                                         />
@@ -333,7 +333,7 @@ const InstructorProfile = () => {
                     </AnimatedSection>
 
                     <AnimatedSection delay={0.16}>
-                        <ParentBox label="Professional Information">
+                        <ParentBox label="Academic Information">
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                                 <ReadOnlyInput
                                     label="Role"
@@ -341,7 +341,7 @@ const InstructorProfile = () => {
                                         user?.role
                                     }
                                     icon={
-                                        <BriefcaseBusiness
+                                        <GraduationCap
                                             size={
                                                 18
                                             }
@@ -368,9 +368,23 @@ const InstructorProfile = () => {
                                 />
 
                                 <ReadOnlyInput
-                                    label="Employee ID"
+                                    label="Registration Number"
                                     value={
-                                        user?.employeeId
+                                        user?.registrationNumber
+                                    }
+                                    icon={
+                                        <IdCard
+                                            size={
+                                                18
+                                            }
+                                        />
+                                    }
+                                />
+
+                                <ReadOnlyInput
+                                    label="Roll Number"
+                                    value={
+                                        user?.rollNumber
                                     }
                                     icon={
                                         <Hash
@@ -382,25 +396,15 @@ const InstructorProfile = () => {
                                 />
 
                                 <ReadOnlyInput
-                                    label="Faculty Status"
+                                    label="Class"
                                     value={
-                                        user?.status ||
-                                        "active"
+                                        user?.class
+                                            ?.name
+                                            ? `${user.class.name} (${user.class.code})`
+                                            : "--"
                                     }
                                     icon={
-                                        <ShieldCheck
-                                            size={
-                                                18
-                                            }
-                                        />
-                                    }
-                                />
-
-                                <ReadOnlyInput
-                                    label="Designation"
-                                    value="Instructor"
-                                    icon={
-                                        <GraduationCap
+                                        <BookMarked
                                             size={
                                                 18
                                             }
@@ -437,7 +441,7 @@ const InstructorProfile = () => {
     );
 };
 
-export default InstructorProfile;
+export default Profile;
 
 /* ---------------------------- */
 /* Update Profile Modal */
@@ -462,7 +466,7 @@ const UpdateProfile = ({
     });
 
     const { mutate, isPending } =
-        useUpdateInstructorProfile();
+        useUpdateStudentProfile();
 
     const onSubmit = (
         data: UpdateUserInput
@@ -492,7 +496,7 @@ const UpdateProfile = ({
     return (
         <ModalShell
             title="Update Profile"
-            description="Update your instructor profile information."
+            description="Update your student profile information."
             onClose={() => setIsOpen(false)}
         >
             <form

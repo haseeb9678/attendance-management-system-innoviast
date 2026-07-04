@@ -259,16 +259,16 @@ export const studentSidebarItems = [
         items: [
             {
                 id: 2,
-                label: "My Subjects",
-                Icon: BookOpen,
-                href: "/student/subjects",
+                label: "My Class",
+                Icon: GraduationCap,
+                href: "/student/class",
                 children: [],
             },
             {
                 id: 3,
-                label: "My Classes",
-                Icon: GraduationCap,
-                href: "/student/classes",
+                label: "My Subjects",
+                Icon: BookOpen,
+                href: "/student/subjects",
                 children: [],
             },
             {
