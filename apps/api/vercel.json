@@ -1,11 +1,11 @@
 {
     "rewrites": [
         {
-            "source": "/api/cron/update_session",
-            "destination": "/api/cron/update_session"
+            "source": "/api/api/cron/update_session",
+            "destination": "/api/api/cron/update_session"
         },
         {
-            "source": "/api/(.*)",
+            "source": "/((?!api/api/cron/update_session).*)",
             "destination": "/api/index"
         }
     ]
