@@ -15,7 +15,7 @@ import teacherAssignmentRouter from "./modules/teacherAssignment/teacherAssignme
 import sessionRouter from "./modules/session/session.routes.js";
 import instructorRouter from "./modules/instructor/instructor.routes.js";
 import attendanceRouter from "./modules/attendance/attendance.routes.js";
-import { startSessionStatusCron } from "./modules/session/session.cron.js";
+// import { startSessionStatusCron } from "./modules/session/session.cron.js";
 
 
 
@@ -62,6 +62,11 @@ app.get("/", (_req, res) => {
 
 app.use(errorMiddleware)
 
+// const isVercel = !!process.env.VERCEL;
+
+// if (NODE_ENV === "development" && !isVercel) {
+//     startSessionStatusCron();
+// }
 
 await connectDB();
 

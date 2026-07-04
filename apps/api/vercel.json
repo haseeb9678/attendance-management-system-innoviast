@@ -5,7 +5,7 @@
             "destination": "/api/cron/update_session"
         },
         {
-            "source": "/(.*)",
+            "source": "/api/(.*)",
             "destination": "/api/index"
         }
     ],
