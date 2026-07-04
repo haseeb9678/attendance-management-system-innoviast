@@ -1,5 +1,5 @@
 import cron from "node-cron";
-import { updateSessionStatusesService } from "./session.service";
+import { updateSessionStatusesService } from "./session.service.js";
 
 export const startSessionStatusCron =
     () => {
