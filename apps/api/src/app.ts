@@ -61,8 +61,12 @@ app.get("/", (_req, res) => {
 //Global Error Middleware
 
 app.use(errorMiddleware)
-if (NODE_ENV === "development")
-    startSessionStatusCron()
+
+const isVercel = !!process.env.VERCEL;
+
+if (NODE_ENV === "development" && !isVercel) {
+    startSessionStatusCron();
+}
 
 await connectDB();
 

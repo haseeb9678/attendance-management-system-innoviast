@@ -2,6 +2,15 @@ import cron from "node-cron";
 import { updateSessionStatusesService } from "./session.service.js";
 
 export const startSessionStatusCron = () => {
+
+    const isVercel = !!process.env.VERCEL;
+    const isProduction = process.env.NODE_ENV === "production";
+
+    if (isVercel || isProduction) {
+        console.log("[Local Cron] Skipped on Vercel/production.");
+        return;
+    }
+
     cron.schedule("*/1 * * * *", async () => {
         try {
             console.log(
