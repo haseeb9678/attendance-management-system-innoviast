@@ -1,16 +1,10 @@
 import Header from '@/features/admin/components/Header'
 import Sidebar from '@/components/common/Sidebar'
-import { useThemeStore } from '@/shared/store/theme.store'
-import React, { useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import { adminSidebarItems } from '@/shared/constants/sidebarItems'
 
 const AdminLayout = () => {
-    const initializeTheme = useThemeStore((s) => s.initializeTheme);
 
-    useEffect(() => {
-        initializeTheme();
-    }, [initializeTheme]);
     return (
         <div className='flex h-screen w-screen '>
             <Sidebar

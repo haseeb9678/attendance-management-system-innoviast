@@ -6,13 +6,14 @@ const LoginPage = () => {
         <section
             className="
                 flex items-center justify-center
-                 px-4 py-8 flex-1 max-w-7xl mx-auto
+                 px-4 py-8 flex-1 max-w-7xl mx-auto 
             "
         >
             <div
                 className="
                     flex w-full mx-auto overflow-hidden
-                    rounded-2xl lg:border border-gray-200 bg-background lg:shadow-xl
+                    rounded-2xl lg:border border-border bg-bg-card
+                    shadow-md lg:shadow-xl
                     h-[73vh] max-h-300
                 "
             >

@@ -8,8 +8,8 @@ const AuthShowcase = () => {
         relative hidden lg:flex
         w-full max-w-2xl
         overflow-hidden
-        border border-white/10
-        bg-gradient-to-br from-primary to-secondary
+        border border-border/10
+        bg-gradient-to-br from-primary-hover to-secondary
         p-10 text-white
       "
         >
@@ -25,7 +25,7 @@ const AuthShowcase = () => {
                 className="
     absolute inset-0
     bg-gradient-to-r
-    from-primary
+    from-primary-hover
     via-primary/90
     to-primary/60
     via-45%

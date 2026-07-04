@@ -49,7 +49,7 @@ const LoginForm = () => {
         });
     };
     return (
-        <div className="border border-gray-300 lg:border-0 rounded-2xl p-5 w-full max-w-md
+        <div className="border border-border lg:border-0 rounded-2xl p-5 w-full max-w-md
         flex flex-col gap-12
         ">
             <div className='flex flex-col gap-1 items-center justify-center'>

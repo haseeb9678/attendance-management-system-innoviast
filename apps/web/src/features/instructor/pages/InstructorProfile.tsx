@@ -1,8 +1,11 @@
 import FormButton from '@/components/common/FormButton'
 import FormInput from '@/components/common/FormInput'
 import { useMe } from '@/features/auth/hooks/useAuth'
-import { updatePasswordSchema, updateUserSchema, type UpdatePasswordInput, type UpdateUserInput } from '@attendance/shared-zod'
-import { zodResolver } from '@hookform/resolvers/zod/dist/zod.js'
+import {
+    updatePasswordSchema, updateUserSchema,
+    type UpdatePasswordInput, type UpdateUserInput
+} from '@attendance/shared-zod'
+import { zodResolver } from '@hookform/resolvers/zod'
 import {
 
     BadgeCheck, BriefcaseBusiness, Building2, Hash,

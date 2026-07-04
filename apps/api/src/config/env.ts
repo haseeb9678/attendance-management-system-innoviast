@@ -15,7 +15,8 @@ const envSchema = z.object({
     JWT_REFRESH_SECRET: z.string().min(1),
     JWT_REFRESH_EXPIRES_IN: z.string().min(1),
     ACCESS_COOKIE_MAX_AGE: z.coerce.number(),
-    REFRESH_COOKIE_MAX_AGE: z.coerce.number()
+    REFRESH_COOKIE_MAX_AGE: z.coerce.number(),
+    CRON_SECRET: z.string().min(1),
 });
 
 const env = envSchema.parse(process.env);
@@ -31,6 +32,7 @@ export const {
     JWT_REFRESH_EXPIRES_IN,
     ACCESS_COOKIE_MAX_AGE,
     REFRESH_COOKIE_MAX_AGE,
+    CRON_SECRET,
 
 
 } = env;

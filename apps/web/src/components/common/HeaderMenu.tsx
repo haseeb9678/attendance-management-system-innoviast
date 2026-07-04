@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import { useLogout } from "@/features/auth/hooks/useAuthMutation";
 import { Spinner } from "../ui/spinner";
+import { useAuthStore } from "@/features/auth/store/auth.store";
 
 const menuVariants = {
     hidden: {
@@ -48,6 +49,7 @@ const HeaderMenu = ({
     const navigate = useNavigate();
 
     const { mutate: logout, isPending } = useLogout();
+    const user = useAuthStore((s) => s.user)
 
     const handleAction = (action: string) => {
         switch (action) {
@@ -88,6 +90,27 @@ const HeaderMenu = ({
                         z-50
                     "
                     >
+                        <motion.h2
+                            variants={itemVariants}
+
+                            className="  w-full
+                                        px-4
+                                        py-3
+                                        flex
+                                        items-center
+                                        gap-1
+                                        text-sm
+                                       
+                                        cursor-default!
+                                        font-semibold
+                                        md:hidden
+                                       
+                                        ">
+                            {user?.name}
+                            <span
+                                className="text-xs text-text-secondary"
+                            >{' (' + user?.role + ')'}</span>
+                        </motion.h2>
                         {menu.map((item) => {
                             const Icon = item.Icon;
 

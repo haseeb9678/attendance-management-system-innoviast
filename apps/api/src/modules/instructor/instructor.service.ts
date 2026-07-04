@@ -1149,7 +1149,7 @@ export const getMySessionsService = async (
         })
         .sort({
             date: -1,
-            startTime: 1,
+            startTime: -1,
         })
         .lean();
 };

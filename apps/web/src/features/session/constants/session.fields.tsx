@@ -50,12 +50,5 @@ export const sessionFields = [
         type: "text",
         component: "input",
         Icon: DoorOpen,
-    },
-    {
-        id: 6,
-        name: "status",
-        label: "Status",
-        component: "select",
-        options: sessionStatusOptions.slice(1),
-    },
+    }
 ];

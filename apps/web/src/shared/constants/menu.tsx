@@ -38,19 +38,19 @@ export const instructorHeaderMenuItems = [
     {
         id: 1,
         label: "Dashboard",
-        href: "/admin/dashboard",
+        href: "/instructor/dashboard",
         Icon: LayoutDashboard,
     },
     {
         id: 2,
         label: "Profile",
-        href: "/admin/profile",
+        href: "/instructor/profile",
         Icon: User,
     },
     {
         id: 3,
         label: "Settings",
-        href: "/admin/settings",
+        href: "/instructor/settings",
         Icon: Settings,
     },
     {

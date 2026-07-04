@@ -4,6 +4,7 @@ import { refresh } from "@/features/auth/api/auth.api";
 
 import { useAuthStore } from "@/features/auth/store/auth.store";
 import { Spinner } from "@/components/ui/spinner";
+import { useThemeStore } from "@/shared/store/theme.store";
 
 interface Props {
     children: React.ReactNode;
@@ -33,6 +34,8 @@ const AuthInitializer = ({
 
         initialize();
     }, []);
+
+
 
     if (auth.isInitializing) {
         return (

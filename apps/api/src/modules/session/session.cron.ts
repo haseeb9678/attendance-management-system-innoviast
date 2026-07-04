@@ -1,25 +1,24 @@
 import cron from "node-cron";
 import { updateSessionStatusesService } from "./session.service.js";
 
-export const startSessionStatusCron =
-    () => {
-        cron.schedule("* * * * *", async () => {
-            try {
-                console.log(
-                    "[Session Cron] Checking session statuses..."
-                );
+export const startSessionStatusCron = () => {
+    cron.schedule("*/1 * * * *", async () => {
+        try {
+            console.log(
+                "[Local Cron] Updating session statuses..."
+            );
 
-                const result =
-                    await updateSessionStatusesService();
+            const result =
+                await updateSessionStatusesService();
 
-                console.log(
-                    `[Session Cron] Done. Checked: ${result.totalChecked}, Updated: ${result.updatedCount}`
-                );
-            } catch (error) {
-                console.error(
-                    "[Session Cron] Failed to update session statuses:",
-                    error
-                );
-            }
-        });
-    };
+            console.log(
+                `[Local Cron] Done. Checked: ${result.totalChecked}, Updated: ${result.updatedCount}`
+            );
+        } catch (error) {
+            console.error(
+                "[Local Cron] Failed to update session statuses:",
+                error
+            );
+        }
+    });
+};

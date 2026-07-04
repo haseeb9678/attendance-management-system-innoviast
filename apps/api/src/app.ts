@@ -5,7 +5,7 @@ import authRouter from "./modules/auth/auth.routes.js";
 import errorMiddleware from "./middleware/error.middleware.js";
 
 import helmet from "helmet";
-import { CLIENT_URL } from "./config/env.js";
+import { CLIENT_URL, NODE_ENV } from "./config/env.js";
 import departmentRouter from "./modules/department/department.routes.js";
 import { connectDB } from "./config/database.js";
 import classRouter from "./modules/class/class.routes.js";
@@ -61,8 +61,8 @@ app.get("/", (_req, res) => {
 //Global Error Middleware
 
 app.use(errorMiddleware)
-
-startSessionStatusCron()
+if (NODE_ENV === "development")
+    startSessionStatusCron()
 
 await connectDB();
 
