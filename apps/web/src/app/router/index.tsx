@@ -9,6 +9,8 @@ import ProtectedRoute from "../providers/ProtectedRoute";
 import AdminLayout from "../layouts/AdminLayout";
 import InstructorLayout from "../layouts/InstructorLayout";
 import PublicRoute from "../providers/PublicRoute";
+import StudentLayout from "../layouts/StudentLayout";
+import { studentRoutes } from "./student.routes";
 
 const router = createBrowserRouter([
     {
@@ -60,6 +62,20 @@ const router = createBrowserRouter([
             },
         ],
     },
+    {
+        element: (
+            <ProtectedRoute
+                allowedRoles={["student"]}
+            />
+        ),
+        children: [
+            {
+                path: "student",
+                element: <StudentLayout />,
+                children: studentRoutes,
+            },
+        ],
+    }
 ]);
 
 export default router;

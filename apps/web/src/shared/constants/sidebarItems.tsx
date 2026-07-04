@@ -236,3 +236,82 @@ export const instructorSidebarItems = [
         ],
     },
 ];
+
+
+export const studentSidebarItems = [
+    {
+        id: 1,
+        label: "Menu",
+        items: [
+            {
+                id: 1,
+                label: "Dashboard",
+                Icon: LayoutDashboard,
+                href: "/student/dashboard",
+                children: [],
+            },
+        ],
+    },
+
+    {
+        id: 2,
+        label: "Learning",
+        items: [
+            {
+                id: 2,
+                label: "My Subjects",
+                Icon: BookOpen,
+                href: "/student/subjects",
+                children: [],
+            },
+            {
+                id: 3,
+                label: "My Classes",
+                Icon: GraduationCap,
+                href: "/student/classes",
+                children: [],
+            },
+            {
+                id: 4,
+                label: "My Sessions",
+                Icon: CalendarClock,
+                href: "/student/sessions",
+                children: [],
+            },
+        ],
+    },
+
+    {
+        id: 3,
+        label: "Attendance",
+        items: [
+            {
+                id: 5,
+                label: "Attendance",
+                Icon: ClipboardCheck,
+                href: "/student/attendance",
+                children: [
+                    {
+                        id: 1,
+                        label: "Attendance History",
+                        href: "/student/attendance/history",
+                    },
+                ],
+            },
+        ],
+    },
+
+    {
+        id: 4,
+        label: "Account",
+        items: [
+            {
+                id: 6,
+                label: "Profile",
+                Icon: UserCog,
+                href: "/student/profile",
+                children: [],
+            },
+        ],
+    },
+];
