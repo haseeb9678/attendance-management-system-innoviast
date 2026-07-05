@@ -25,7 +25,7 @@ const SessionActions = ({
     onDelete,
 }: SessionActionsProps) => {
     return (
-        <div className="flex items-center justify-end gap-2">
+        <div className="flex items-center justify-start gap-2">
             <button
                 type="button"
                 onClick={() => onView?.(session)}
@@ -41,7 +41,8 @@ const SessionActions = ({
                 <Eye className="h-4.5 w-4.5" />
             </button>
 
-            <button
+
+            {session?.status !== "completed" && <button
                 type="button"
                 onClick={() => onEdit?.(session)}
                 className={`
@@ -54,9 +55,8 @@ const SessionActions = ({
                 title="Edit"
             >
                 <Pencil className="h-4.5 w-4.5" />
-            </button>
-
-            <button
+            </button>}
+            {session?.status === "scheduled" && <button
                 type="button"
                 onClick={() => onDelete?.(session)}
                 className={`
@@ -69,7 +69,8 @@ const SessionActions = ({
                 title="Delete"
             >
                 <Trash2 className="h-4.5 w-4.5" />
-            </button>
+            </button>}
+
         </div>
     );
 };

@@ -23,6 +23,8 @@ import { useDeleteSession } from "@/features/session/hooks/useSessionMutation";
 import type { Session } from "@/features/session/types/session.types";
 import { getSessionColumns } from "@/features/session/constants/sessionColumns";
 import { sessionStatusOptions } from "@/features/session/constants/filters";
+import ExportButton from "@/components/common/ExportButton";
+import { sessionExportColumns } from "@/features/session/constants/sessionExportColumns";
 
 const Sessions = () => {
     const navigate = useNavigate();
@@ -56,10 +58,10 @@ const Sessions = () => {
         useDeleteSession();
 
     const handleView = (session: Session) =>
-        navigate(`${session._id}`);
+        navigate(`${session._id}/info`);
 
     const handleEdit = (session: Session) =>
-        navigate(`edit/${session._id}`);
+        navigate(`${session._id}/update`);
 
     const handleDeleteClick = (session: Session) => {
         setSelectedSession(session);
@@ -81,6 +83,7 @@ const Sessions = () => {
         setDeleteOpen(false);
         setSelectedSession(null);
     };
+    const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
 
     const columns = useMemo(
         () =>
@@ -117,14 +120,12 @@ const Sessions = () => {
                             onClick={() => navigate("add")}
                         />
 
-                        <FormButton
-                            type="button"
-                            text="Export"
-                            Icon={LucideUpload}
-                            className="
-                                min-w-max h-10! px-5 text-sm
-                                bg-warning hover:bg-warning-hover
-                            "
+                        <ExportButton
+                            data={data?.data ?? []}
+                            selectedRowIds={selectedRowIds}
+                            getRowId={(row) => row._id}
+                            fileName="sessions"
+                            columns={sessionExportColumns}
                         />
                     </div>
                 </div>
@@ -176,6 +177,11 @@ const Sessions = () => {
                         columns={columns}
                         data={data?.data}
                         loading={isLoading}
+                        getRowId={(row) => row._id}
+                        selectedRowIds={selectedRowIds}
+                        onSelectedRowIdsChange={(ids) =>
+                            setSelectedRowIds(ids as string[])
+                        }
                     />
                 </div>
 

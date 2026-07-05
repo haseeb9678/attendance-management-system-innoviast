@@ -20,6 +20,8 @@ import UpdateSubject from "@/features/admin/pages/update/UpdateSubject";
 import ViewSubject from "@/features/admin/pages/view/ViewSubject";
 import UpdateTeacherAssignment from "@/features/admin/pages/update/UpdateTeacherAssignment";
 import ViewTeacherAssignment from "@/features/admin/pages/view/ViewTeacherAsignment";
+import UpdateSession from "@/features/admin/pages/update/UpdateSession";
+import ViewSession from "@/features/admin/pages/view/ViewSession";
 
 export const adminRoutes = [
     {
@@ -110,6 +112,14 @@ export const adminRoutes = [
     {
         path: "sessions",
         element: <Sessions />,
+    },
+    {
+        path: "sessions/:id/update",
+        element: <UpdateSession />,
+    },
+    {
+        path: "sessions/:id/info",
+        element: <ViewSession />,
     },
     {
         path: "sessions/add",

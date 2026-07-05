@@ -24,11 +24,11 @@ export const getSessions = async (
 };
 
 export const getSession = async (id: string) => {
-    const { data } = await api.get<Session>(
+    const { data } = await api.get(
         `/sessions/${id}`
     );
 
-    return data;
+    return data.data as Session;
 };
 
 export const createSession = async (body: {

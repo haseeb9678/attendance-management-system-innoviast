@@ -1,6 +1,7 @@
 import Combobox from "@/components/common/Combobox";
 import ConfirmationDialog from "@/components/common/ConfirmationDialog";
 import EntriesSelect from "@/components/common/EnteriesSelect";
+import ExportButton from "@/components/common/ExportButton";
 import FormButton from "@/components/common/FormButton";
 import Pagination from "@/components/common/Pagination";
 import SearchBox from "@/components/common/SearchBox";
@@ -8,6 +9,7 @@ import SelectBox from "@/components/common/SelectBox";
 import DataTable from "@/components/common/Table";
 import { useDepartmentOptions } from "@/features/department/hooks/useDepartmentOptions";
 import { getSubjectColumns } from "@/features/subject/constants/subjectColumns";
+import { subjectExportColumns } from "@/features/subject/constants/subjectExportColumns";
 import { useSubjects } from "@/features/subject/hooks/useSubject";
 import { useDeleteSubject } from "@/features/subject/hooks/useSubjectMutation";
 import type { Subject } from "@/features/subject/types/subject.types";
@@ -100,7 +102,7 @@ const Subjects = () => {
     );
 
 
-
+    const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
 
     useEffect(() => {
         if (department) return;
@@ -132,12 +134,12 @@ const Subjects = () => {
                             onClick={() => navigate("add")}
                         />
 
-                        <FormButton
-                            type="button"
-                            text="Export"
-                            className="min-w-max h-10! px-5 text-sm
-                        bg-warning hover:bg-warning-hover"
-                            Icon={LucideUpload}
+                        <ExportButton
+                            data={data?.data ?? []}
+                            selectedRowIds={selectedRowIds}
+                            getRowId={(subject) => subject._id}
+                            fileName="subjects"
+                            columns={subjectExportColumns}
                         />
                     </div>
                 </div>
@@ -190,6 +192,11 @@ const Subjects = () => {
                         columns={columns}
                         data={data?.data}
                         loading={isLoading}
+                        getRowId={(row) => row._id}
+                        selectedRowIds={selectedRowIds}
+                        onSelectedRowIdsChange={(ids) =>
+                            setSelectedRowIds(ids as string[])
+                        }
                     />
                 </div>
 

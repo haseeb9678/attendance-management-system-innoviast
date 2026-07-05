@@ -258,22 +258,27 @@ export const updateSessionService =
         return session;
     };
 
-export const deleteSessionService =
-    async (sessionId: string) => {
-        const session =
-            await SessionModel.findByIdAndDelete(
-                sessionId
-            );
+export const deleteSessionService = async (sessionId: string) => {
+    const session = await SessionModel.findById(sessionId);
 
-        if (!session) {
-            throw new ApiError(
-                StatusCodes.NOT_FOUND,
-                "Session not found."
-            );
-        }
+    if (!session) {
+        throw new ApiError(
+            StatusCodes.NOT_FOUND,
+            "Session not found."
+        );
+    }
 
-        return session;
-    };
+    if (session.status !== "scheduled") {
+        throw new ApiError(
+            StatusCodes.BAD_REQUEST,
+            "Only scheduled sessions can be deleted."
+        );
+    }
+
+    await SessionModel.findByIdAndDelete(sessionId);
+
+    return session;
+};
 
 
 export const updateSessionStatusesService = async () => {

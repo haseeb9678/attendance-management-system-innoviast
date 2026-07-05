@@ -25,6 +25,8 @@ import { toast } from "sonner";
 import Combobox from "@/components/common/Combobox";
 import { useDepartmentOptions } from "@/features/department/hooks/useDepartmentOptions";
 import EntriesSelect from "@/components/common/EnteriesSelect";
+import ExportButton from "@/components/common/ExportButton";
+import { userExportColumns } from "@/features/users/constants/userExportColumns";
 
 const Users = () => {
     const navigate = useNavigate();
@@ -39,6 +41,8 @@ const Users = () => {
 
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
     const [deleteOpen, setDeleteOpen] = useState(false);
+
+    const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
 
     const debouncedSearch = useDebounce(search, 500);
 
@@ -96,6 +100,7 @@ const Users = () => {
         setSelectedUser(null);
     };
 
+
     const columns = useMemo(
         () =>
             getUserColumns({
@@ -138,14 +143,12 @@ const Users = () => {
                             onClick={() => navigate("add")}
                         />
 
-                        <FormButton
-                            type="button"
-                            text="Export"
-                            Icon={LucideUpload}
-                            className="
-                                min-w-max h-10! px-5 text-sm
-                                bg-warning hover:bg-warning-hover
-                            "
+                        <ExportButton
+                            data={data?.data ?? []}
+                            selectedRowIds={selectedRowIds}
+                            getRowId={(user) => user._id}
+                            fileName="users"
+                            columns={userExportColumns}
                         />
                     </div>
                 </div>
@@ -209,6 +212,11 @@ const Users = () => {
                         columns={columns}
                         data={data?.data}
                         loading={isLoading}
+                        getRowId={(row) => row._id}
+                        selectedRowIds={selectedRowIds}
+                        onSelectedRowIdsChange={(ids) =>
+                            setSelectedRowIds(ids as string[])
+                        }
                     />
                 </div>
 

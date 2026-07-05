@@ -1,11 +1,13 @@
 import ConfirmationDialog from '@/components/common/ConfirmationDialog'
 import EntriesSelect from '@/components/common/EnteriesSelect'
+import ExportButton from '@/components/common/ExportButton'
 import FormButton from '@/components/common/FormButton'
 import Pagination from '@/components/common/Pagination'
 import SearchBox from '@/components/common/SearchBox'
 import SelectBox from '@/components/common/SelectBox'
 import DataTable from '@/components/common/Table'
 import { getDepartmentColumns } from '@/features/department/constants/departmentColumns'
+import { departmentExportColumns } from '@/features/department/constants/departmentExportColumns'
 import { useDepartments } from '@/features/department/hooks/useDepartment'
 import { useDeleteDepartment } from '@/features/department/hooks/useDepartmentMutation'
 import type { Department } from '@/features/department/types/department.types'
@@ -75,6 +77,9 @@ const Departments = () => {
         setSelectedDepart(null);
     };
 
+    const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
+
+
     const columns = useMemo(
         () =>
             getDepartmentColumns({
@@ -102,11 +107,12 @@ const Departments = () => {
                             Icon={LucidePlus}
                             onClick={() => navigate("add")}
                         />
-                        <FormButton
-                            type={"button"}
-                            text={"Export"}
-                            className='min-w-max h-10! px-5 text-sm bg-warning hover:bg-warning-hover '
-                            Icon={LucideUpload}
+                        <ExportButton
+                            data={data?.data ?? []}
+                            selectedRowIds={selectedRowIds}
+                            getRowId={(row) => row._id}
+                            fileName="departments"
+                            columns={departmentExportColumns}
                         />
                     </div>
                 </div>
@@ -149,6 +155,11 @@ const Departments = () => {
                         columns={columns}
                         data={data?.data}
                         loading={isLoading}
+                        getRowId={(row) => row._id}
+                        selectedRowIds={selectedRowIds}
+                        onSelectedRowIdsChange={(ids) =>
+                            setSelectedRowIds(ids as string[])
+                        }
                     />
                 </div>
 
