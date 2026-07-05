@@ -23,8 +23,8 @@ export const getSubjects = async (
 };
 
 export const getSubject = async (id: string) => {
-    const { data } = await api.get<Subject>(`/subjects/${id}`);
-    return data;
+    const { data } = await api.get(`/subjects/${id}`);
+    return data.data as Subject;
 };
 
 export const createSubject = async (

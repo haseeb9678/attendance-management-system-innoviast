@@ -13,6 +13,11 @@ import Sessions from "@/features/admin/pages/Sessions";
 import AddSession from "@/features/admin/pages/AddSession";
 import UpdateDepartment from "@/features/admin/pages/update/UpdateDepartment";
 import ViewDepartment from "@/features/admin/pages/view/ViewDepartment";
+import ViewUser from "@/features/admin/pages/view/ViewUser";
+import UpdateClass from "@/features/admin/pages/update/UpdateClass";
+import ViewClass from "@/features/admin/pages/view/ViewClass";
+import UpdateSubject from "@/features/admin/pages/update/UpdateSubject";
+import ViewSubject from "@/features/admin/pages/view/ViewSubject";
 
 export const adminRoutes = [
     {
@@ -30,6 +35,10 @@ export const adminRoutes = [
     {
         path: "users/add",
         element: <AddUser />,
+    },
+    {
+        path: "users/:id/info",
+        element: <ViewUser />,
     },
     {
         path: "departments",
@@ -57,12 +66,28 @@ export const adminRoutes = [
         element: <AddClass />,
     },
     {
+        path: "classes/:id/update",
+        element: <UpdateClass />,
+    },
+    {
+        path: "classes/:id/info",
+        element: <ViewClass />,
+    },
+    {
         path: "subjects",
         element: <Subjects />,
     },
     {
         path: "subjects/add",
         element: <AddSubject />,
+    },
+    {
+        path: "subjects/:id/update",
+        element: <UpdateSubject />,
+    },
+    {
+        path: "subjects/:id/info",
+        element: <ViewSubject />,
     },
     {
         path: "teacher-assignments",

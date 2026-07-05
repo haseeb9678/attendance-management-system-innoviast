@@ -55,10 +55,11 @@ const Classes = () => {
     );
 
     const handleView = (seletedClassCol: Class) => {
-
+        navigate(`${seletedClassCol._id}/info`);
     };
 
     const handleEdit = (seletedClassCol: Class) => {
+        navigate(`${seletedClassCol._id}/update`);
 
     };
 

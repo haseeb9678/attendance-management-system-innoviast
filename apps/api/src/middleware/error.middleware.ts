@@ -21,6 +21,14 @@ const errorMiddleware: ErrorRequestHandler = (
         );
     }
 
+    //Invalid Id
+    if (
+        err.name === "BSONError" ||
+        err.name === "BSONTypeError"
+    ) {
+        error = new ApiError(400, "Invalid resource id");
+    }
+
     // Duplicate Key
     if (err.code === 11000) {
         error = new ApiError(

@@ -56,11 +56,11 @@ const Subjects = () => {
     );
 
     const handleView = (subject: Subject) => {
-
+        navigate(`${subject._id}/info`);
     };
 
     const handleEdit = (subject: Subject) => {
-
+        navigate(`${subject._id}/update`);
     };
 
     const handleDeleteClick = (subject: Subject) => {

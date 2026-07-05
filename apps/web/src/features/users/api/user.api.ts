@@ -25,8 +25,8 @@ export const getUsers = async (
 };
 
 export const getUser = async (id: string) => {
-    const { data } = await api.get<User>(`/users/${id}`);
-    return data;
+    const { data } = await api.get(`/users/${id}`);
+    return data.data as User;
 };
 
 export const createUser = async (

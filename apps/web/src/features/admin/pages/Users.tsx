@@ -66,7 +66,7 @@ const Users = () => {
     );
 
     const handleView = (user: User) => {
-        navigate(`${user._id}`);
+        navigate(`${user._id}/info`);
     };
 
     const handleEdit = (user: User) => {

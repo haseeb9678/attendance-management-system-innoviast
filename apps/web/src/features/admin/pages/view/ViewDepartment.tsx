@@ -1,6 +1,8 @@
 
+import FormButton from '@/components/common/FormButton'
 import FormInput from '@/components/common/FormInput'
 import SelectBox from '@/components/common/SelectBox'
+import { Spinner } from '@/components/ui/spinner'
 import { departmentFields } from '@/features/department/constants/department.fields'
 import { useDepartment } from '@/features/department/hooks/useDepartment'
 import { statusOptions } from '@/shared/constants/filters'
@@ -28,7 +30,7 @@ const ViewDepartment = () => {
 
     const { id } = useParams()
 
-    const { data, isPending: isDepartmentLoading } = useDepartment(id as string)
+    const { data, isPending: isDepartmentLoading, isError, error } = useDepartment(id as string)
 
 
     useEffect(() => {
@@ -44,6 +46,35 @@ const ViewDepartment = () => {
 
     const status = (status: string) => statusOptions.find((item) => item.value === status)
 
+    if (isDepartmentLoading)
+        return <section
+            className="flex justify-center items-center gap-2 flex-1 text-primary-hover"
+        >
+            <Spinner className=" size-6" />
+            Loading...
+        </section>
+
+    if (!isDepartmentLoading && isError)
+        return <section
+            className="flex flex-col justify-center items-center gap-2 flex-1 text-text-secondary"
+        >
+            {error?.message || "Something went wrong"}
+            <FormButton
+                type="button"
+                text="Go Back"
+                Icon={ArrowLeft}
+                onClick={() =>
+                    navigate(-1)
+                }
+                className="
+                                h-9!
+                                px-4
+                                text-sm
+                                max-w-fit
+                            "
+            />
+        </section>
+
 
 
     return (
@@ -51,15 +82,17 @@ const ViewDepartment = () => {
         flex flex-col gap-3
          shadow-sm flex-1 min-w-0 h-max">
             <div className='p-4 flex items-center gap-2'>
-                <div className='
+                <button
+                    onClick={() => navigate(-1)}
+                    className='
                      p-2 backdrop-blur-lg rounded-full cursor-pointer relative
                       hover:bg-surface text-text-base transition-all duration-300'>
                     <ArrowLeft
                         size={20}
-                        onClick={() => navigate(-1)}
+
                         className='cursor-pointer '
                     />
-                </div>
+                </button>
 
                 <h2 className='text-text-base text-2xl font-bold'>Department Info</h2>
             </div>
@@ -83,7 +116,7 @@ const ViewDepartment = () => {
                                             errors={errors}
                                             name={field.name}
                                             label={field.label}
-                                            placeholder={field.placeholder}
+                                            placeholder={field.label}
                                             type={field.type}
                                             Icon={field.Icon}
                                             disabled={true}
