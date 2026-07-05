@@ -95,11 +95,11 @@ const TeacherAssignments = () => {
 
 
     const handleView = (assignment: TeacherAssignment) => {
-        navigate(`${assignment._id}`);
+        navigate(`${assignment._id}/info`);
     };
 
     const handleEdit = (assignment: TeacherAssignment) => {
-        navigate(`edit/${assignment._id}`);
+        navigate(`${assignment._id}/update`);
     };
 
     const handleDeleteClick = (assignment: TeacherAssignment) => {

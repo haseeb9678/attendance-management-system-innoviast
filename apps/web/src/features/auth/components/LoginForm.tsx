@@ -97,6 +97,7 @@ const LoginForm = () => {
                     <FormButton
                         type={"submit"}
                         text={'Login'}
+                        loadingText='Login..'
                         isLoading={isPending}
                     />
                 </form>

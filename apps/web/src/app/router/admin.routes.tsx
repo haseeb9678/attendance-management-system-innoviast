@@ -18,6 +18,8 @@ import UpdateClass from "@/features/admin/pages/update/UpdateClass";
 import ViewClass from "@/features/admin/pages/view/ViewClass";
 import UpdateSubject from "@/features/admin/pages/update/UpdateSubject";
 import ViewSubject from "@/features/admin/pages/view/ViewSubject";
+import UpdateTeacherAssignment from "@/features/admin/pages/update/UpdateTeacherAssignment";
+import ViewTeacherAssignment from "@/features/admin/pages/view/ViewTeacherAsignment";
 
 export const adminRoutes = [
     {
@@ -96,6 +98,14 @@ export const adminRoutes = [
     {
         path: "teacher-assignments/add",
         element: <AddTeacherAssignment />,
+    },
+    {
+        path: "teacher-assignments/:id/update",
+        element: <UpdateTeacherAssignment />,
+    },
+    {
+        path: "teacher-assignments/:id/info",
+        element: <ViewTeacherAssignment />,
     },
     {
         path: "sessions",

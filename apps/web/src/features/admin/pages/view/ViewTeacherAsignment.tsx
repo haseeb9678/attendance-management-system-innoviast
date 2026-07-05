@@ -5,32 +5,37 @@ import { statusOptions } from "@/shared/constants/filters";
 import {
 
     teacherAssignmentFormSchema,
-    type TeacherAssignmentFormInput,
-    type CreateTeacherAssignmentInput,
+
 } from "@attendance/shared-zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowLeft } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { toast } from "sonner";
-import { useCreateTeacherAssignment } from "@/features/teacherAssignment/hooks/useTeacherAssignmentMutations";
+import { useNavigate, useParams } from "react-router-dom";
 import { teacherAssignmentFields } from "@/features/teacherAssignment/constants/teacherAssignment.fields";
 import { useClassOptions } from "@/features/class/hooks/useClassOptions";
 import { useSubjectOptions } from "@/features/subject/hooks/useSubjectOptions";
 import { useUserOptions } from "@/features/users/hooks/useUserOptions";
 import { useEffect } from "react";
 import Combobox from "@/components/common/Combobox";
+import { useTeacherAssignment } from "@/features/teacherAssignment/hooks/useTeacherAssignment";
+import { Spinner } from "@/components/ui/spinner";
 
-const AddTeacherAssignment = () => {
+const ViewTeacherAssignment = () => {
     const navigate = useNavigate();
+
+    const { id } = useParams()
+
+    const { data, isPending: isTeacherAssignmentLoading, isError, error } = useTeacherAssignment(id as string)
+
 
     const {
         register,
-        handleSubmit,
+
         formState: { errors },
         control,
         watch,
-        setValue,
+
+        reset
     } = useForm({
         resolver: zodResolver(teacherAssignmentFormSchema),
         defaultValues: {
@@ -38,9 +43,6 @@ const AddTeacherAssignment = () => {
         },
     });
 
-    const { mutate, isPending } = useCreateTeacherAssignment();
-
-    const instructor = watch("instructor");
     const department = watch("department");
 
 
@@ -48,10 +50,11 @@ const AddTeacherAssignment = () => {
     const { options: departmentOptions } = useDepartmentOptions();
 
     const { options: classOptions } = useClassOptions({
-        department: instructor?.department
+        department: department?.value
     })
+
     const { options: subjectOptions } = useSubjectOptions({
-        department: instructor?.department
+        department: department?.value
     })
     const { options: instructorOptions } = useUserOptions({
         role: "instructor",
@@ -76,43 +79,61 @@ const AddTeacherAssignment = () => {
         return [];
     };
 
-    useEffect(() => {
-        if (!department) return;
 
-        setValue("class", undefined)
-        setValue("subject", undefined)
-        setValue("instructor", undefined)
+    console.log(classOptions, departmentOptions);
 
-    }, [department])
+
+    const originalValue = (value: string, options) => options.find((item) => item.value === value)
 
     useEffect(() => {
-        if (!instructor) return;
 
+        if (!id || !data || isTeacherAssignmentLoading)
+            return
 
-        setValue("class", undefined)
-        setValue("subject", undefined)
+        reset(
+            {
+                ...data,
+                department: originalValue(data?.department?._id, departmentOptions),
+                class: originalValue(data?.class?._id, classOptions),
+                subject: originalValue(data?.subject?._id, subjectOptions),
+                instructor: originalValue(data?.instructor?._id, instructorOptions),
+                status: originalValue(data?.status, statusOptions)
+            }
+        )
 
-    }, [instructor])
+    }, [id, isTeacherAssignmentLoading,
+        data, reset, departmentOptions,
+        instructorOptions,
+        classOptions, subjectOptions])
 
-    const onSubmit = (data: TeacherAssignmentFormInput) => {
-        const formattedData: CreateTeacherAssignmentInput = {
-            instructor: data.instructor.value,
-            department: data.department.value,
-            class: data.class.value,
-            subject: data.subject.value,
-            status: data.status.value as "active" | "inactive",
-        };
+    if (isTeacherAssignmentLoading)
+        return <section
+            className="flex justify-center items-center gap-2 flex-1 text-primary-hover"
+        >
+            <Spinner className=" size-6" />
+            Loading...
+        </section>
 
-        mutate(formattedData, {
-            onSuccess: (res) => {
-                toast.success(res?.message);
-                navigate(-1);
-            },
-            onError: (err) => {
-                toast.error(err?.message);
-            },
-        });
-    };
+    if (!isTeacherAssignmentLoading && isError)
+        return <section
+            className="flex flex-col justify-center items-center gap-2 flex-1 text-text-secondary"
+        >
+            {error?.message || "Something went wrong"}
+            <FormButton
+                type="button"
+                text="Go Back"
+                Icon={ArrowLeft}
+                onClick={() =>
+                    navigate(-1)
+                }
+                className="
+                                        h-9!
+                                        px-4
+                                        text-sm
+                                        max-w-fit
+                                    "
+            />
+        </section>
 
     return (
         <section
@@ -120,20 +141,21 @@ const AddTeacherAssignment = () => {
             flex flex-col gap-3 shadow-sm flex-1 min-w-0 h-max"
         >
             <div className="p-4 flex items-center gap-2">
-                <div
+                <button
+                    onClick={() => navigate(-1)}
                     className="
                     p-2 backdrop-blur-lg rounded-full cursor-pointer relative
                     hover:bg-surface text-text-base transition-all duration-300"
                 >
                     <ArrowLeft
                         size={20}
-                        onClick={() => navigate(-1)}
+
                         className="cursor-pointer"
                     />
-                </div>
+                </button>
 
                 <h2 className="text-text-base text-2xl font-bold">
-                    Add Assignemnt
+                    Assignemnt Info
                 </h2>
             </div>
 
@@ -141,7 +163,7 @@ const AddTeacherAssignment = () => {
 
             <div className="p-6">
                 <form
-                    onSubmit={handleSubmit(onSubmit)}
+
                     className="flex flex-col gap-8"
                 >
                     <div
@@ -160,6 +182,7 @@ const AddTeacherAssignment = () => {
                                         placeholder={field.placeholder}
                                         type={field.type as string}
                                         Icon={field.Icon}
+                                        disabled={true}
                                     />
                                 );
                             }
@@ -185,6 +208,7 @@ const AddTeacherAssignment = () => {
                                                     errors[field.name]?.message
                                                 }
                                                 className="h-12! rounded-3xl!"
+                                                disabled={true}
                                             />
                                         )}
                                     />
@@ -195,18 +219,11 @@ const AddTeacherAssignment = () => {
                         })}
                     </div>
 
-                    <div className="flex justify-end">
-                        <FormButton
-                            type="submit"
-                            text="Add"
-                            isLoading={isPending}
-                            className="max-w-50"
-                        />
-                    </div>
+
                 </form>
             </div>
         </section>
     );
 };
 
-export default AddTeacherAssignment;
+export default ViewTeacherAssignment;

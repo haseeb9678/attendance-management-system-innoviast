@@ -29,11 +29,11 @@ export const getTeacherAssignment = async (
     id: string
 ) => {
     const { data } =
-        await api.get<TeacherAssignment>(
+        await api.get(
             `/teacher-assignments/${id}`
         );
 
-    return data;
+    return data.data as TeacherAssignment;
 };
 
 export const createTeacherAssignment = async (

@@ -90,9 +90,14 @@ export const divisions = [
         label: "Personal Information",
         division: "personal"
     },
-
     {
         id: 2,
+        label: "Account Information",
+        division: "account"
+    },
+
+    {
+        id: 3,
         label: "Role Information",
         division: "role"
     },
