@@ -1,6 +1,7 @@
 import Combobox from "@/components/common/Combobox";
 import ConfirmationDialog from "@/components/common/ConfirmationDialog";
 import EntriesSelect from "@/components/common/EnteriesSelect";
+import ExportButton from "@/components/common/ExportButton";
 import FormButton from "@/components/common/FormButton";
 import Pagination from "@/components/common/Pagination";
 import SearchBox from "@/components/common/SearchBox";
@@ -10,6 +11,7 @@ import { useClassOptions } from "@/features/class/hooks/useClassOptions";
 import { useDepartmentOptions } from "@/features/department/hooks/useDepartmentOptions";
 import { useSubjectOptions } from "@/features/subject/hooks/useSubjectOptions";
 import { getTeacherAssignmentColumns } from "@/features/teacherAssignment/constants/teacherAssignmentColumns";
+import { teacherAssignmentExportColumns } from "@/features/teacherAssignment/constants/teacherAssignmentExportColumns";
 import { useTeacherAssignments } from "@/features/teacherAssignment/hooks/useTeacherAssignment";
 import { useDeleteTeacherAssignment } from "@/features/teacherAssignment/hooks/useTeacherAssignmentMutations";
 import type { TeacherAssignment } from "@/features/teacherAssignment/types/teacherAssignment.types";
@@ -135,6 +137,10 @@ const TeacherAssignments = () => {
         []
     );
 
+    const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
+
+
+
     useEffect(() => {
         if (selectedDepartment) {
             setSelectedClass(allClassOptions[0])
@@ -185,13 +191,12 @@ const TeacherAssignments = () => {
                             Icon={LucidePlus}
                             onClick={() => navigate("add")}
                         />
-
-                        <FormButton
-                            type="button"
-                            text="Export"
-                            className="min-w-max h-10! px-5 text-sm
-                        bg-warning hover:bg-warning-hover"
-                            Icon={LucideUpload}
+                        <ExportButton
+                            data={data?.data ?? []}
+                            selectedRowIds={selectedRowIds}
+                            getRowId={(row) => row._id}
+                            fileName="teacher_assingments"
+                            columns={teacherAssignmentExportColumns}
                         />
                     </div>
                 </div>
@@ -256,6 +261,11 @@ const TeacherAssignments = () => {
                         columns={columns}
                         data={data?.data}
                         loading={isLoading}
+                        getRowId={(row) => row._id}
+                        selectedRowIds={selectedRowIds}
+                        onSelectedRowIdsChange={(ids) =>
+                            setSelectedRowIds(ids as string[])
+                        }
                     />
                 </div>
 

@@ -1,12 +1,14 @@
 import Combobox from "@/components/common/Combobox";
 import ConfirmationDialog from "@/components/common/ConfirmationDialog";
 import EntriesSelect from "@/components/common/EnteriesSelect";
+import ExportButton from "@/components/common/ExportButton";
 import FormButton from "@/components/common/FormButton";
 import Pagination from "@/components/common/Pagination";
 import SearchBox from "@/components/common/SearchBox";
 import SelectBox from "@/components/common/SelectBox";
 import DataTable from "@/components/common/Table";
 import { getClassColumns } from "@/features/class/constants/classColumns";
+import { classExportColumns } from "@/features/class/constants/classExportColumns";
 import { useClasses } from "@/features/class/hooks/useClass";
 import { useDeleteClass } from "@/features/class/hooks/useClassMutation";
 import type { Class } from "@/features/class/types/class.types";
@@ -98,6 +100,8 @@ const Classes = () => {
             }),
         []
     );
+    const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
+
 
     useEffect(() => {
         if (department) return;
@@ -129,12 +133,12 @@ const Classes = () => {
                             onClick={() => navigate("add")}
                         />
 
-                        <FormButton
-                            type="button"
-                            text="Export"
-                            className="min-w-max h-10! px-5 text-sm
-                        bg-warning hover:bg-warning-hover"
-                            Icon={LucideUpload}
+                        <ExportButton
+                            data={data?.data ?? []}
+                            selectedRowIds={selectedRowIds}
+                            getRowId={(row) => row._id}
+                            fileName="classes"
+                            columns={classExportColumns}
                         />
                     </div>
                 </div>
@@ -192,6 +196,11 @@ const Classes = () => {
                         columns={columns}
                         data={data?.data}
                         loading={isLoading}
+                        getRowId={(row) => row._id}
+                        selectedRowIds={selectedRowIds}
+                        onSelectedRowIdsChange={(ids) =>
+                            setSelectedRowIds(ids as string[])
+                        }
                     />
                 </div>
 
