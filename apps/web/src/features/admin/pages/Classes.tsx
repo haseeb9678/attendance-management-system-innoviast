@@ -1,18 +1,22 @@
 import Combobox from "@/components/common/Combobox";
+import ConfirmationDialog from "@/components/common/ConfirmationDialog";
 import EntriesSelect from "@/components/common/EnteriesSelect";
 import FormButton from "@/components/common/FormButton";
 import Pagination from "@/components/common/Pagination";
 import SearchBox from "@/components/common/SearchBox";
 import SelectBox from "@/components/common/SelectBox";
 import DataTable from "@/components/common/Table";
-import { classColumns } from "@/features/class/constants/classColumns";
+import { getClassColumns } from "@/features/class/constants/classColumns";
 import { useClasses } from "@/features/class/hooks/useClass";
+import { useDeleteClass } from "@/features/class/hooks/useClassMutation";
+import type { Class } from "@/features/class/types/class.types";
 import { useDepartmentOptions } from "@/features/department/hooks/useDepartmentOptions";
 import { limitOptions, sortOptions, statusOptions } from "@/shared/constants/filters";
 import useDebounce from "@/shared/hooks/useDebounce";
 import { LucidePlus, LucideUpload } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const Classes = () => {
     const [status, setStatus] = useState(statusOptions[0]);
@@ -35,6 +39,9 @@ const Classes = () => {
         limit: limit.value,
     });
 
+    const [selectedClass, setSelectedClass] = useState<Class | null>(null);
+    const [deleteOpen, setDeleteOpen] = useState(false);
+
     const { options: departmentOptions, isLoading: isDepartmentLoading } = useDepartmentOptions()
     const allDepartmentOptions = useMemo(
         () => [
@@ -47,7 +54,49 @@ const Classes = () => {
         [departmentOptions]
     );
 
+    const handleView = (seletedClassCol: Class) => {
 
+    };
+
+    const handleEdit = (seletedClassCol: Class) => {
+
+    };
+
+    const handleDeleteClick = (seletedClassCol: Class) => {
+        setSelectedClass(seletedClassCol);
+        setDeleteOpen(true);
+    };
+
+    const { mutate, isPending: isDeleting } = useDeleteClass()
+
+
+    const handleDelete = () => {
+        if (!selectedClass) return;
+
+
+        mutate(selectedClass?._id, {
+            onSuccess: (res) => {
+                toast.success(res.message);
+            },
+
+            onError: (err) => {
+                toast.error(err.message);
+            },
+        })
+
+        setDeleteOpen(false);
+        setSelectedClass(null);
+    };
+
+    const columns = useMemo(
+        () =>
+            getClassColumns({
+                onView: handleView,
+                onEdit: handleEdit,
+                onDelete: handleDeleteClick,
+            }),
+        []
+    );
 
     useEffect(() => {
         if (department) return;
@@ -57,101 +106,121 @@ const Classes = () => {
 
 
     return (
-        <section
-            className="bg-bg-card border border-border rounded-md
+        <>
+
+
+            <section
+                className="bg-bg-card border border-border rounded-md
             flex flex-col gap-3 shadow-sm h-max flex-1 min-w-0"
-        >
-            <div className="p-6 flex flex-col md:flex-row justify-between gap-5">
-                <h2 className="text-text-base text-2xl font-bold">
-                    Classes
-                </h2>
+            >
+                <div className="p-6 flex flex-col md:flex-row justify-between gap-5">
+                    <h2 className="text-text-base text-2xl font-bold">
+                        Classes
+                    </h2>
 
-                <div className="flex flex-col sm:flex-row items-center gap-3">
-                    <FormButton
-                        type="button"
-                        text="Add Class"
-                        className="min-w-max h-10! px-5 text-sm
+                    <div className="flex flex-col sm:flex-row items-center gap-3">
+                        <FormButton
+                            type="button"
+                            text="Add Class"
+                            className="min-w-max h-10! px-5 text-sm
                         bg-success hover:bg-success-hover"
-                        Icon={LucidePlus}
-                        onClick={() => navigate("add")}
-                    />
+                            Icon={LucidePlus}
+                            onClick={() => navigate("add")}
+                        />
 
-                    <FormButton
-                        type="button"
-                        text="Export"
-                        className="min-w-max h-10! px-5 text-sm
+                        <FormButton
+                            type="button"
+                            text="Export"
+                            className="min-w-max h-10! px-5 text-sm
                         bg-warning hover:bg-warning-hover"
-                        Icon={LucideUpload}
-                    />
+                            Icon={LucideUpload}
+                        />
+                    </div>
                 </div>
-            </div>
 
-            <div className="border-t border-dashed border-border" />
+                <div className="border-t border-dashed border-border" />
 
-            <div
-                className="grid grid-cols-1 md:grid-cols-2
+                <div
+                    className="grid grid-cols-1 md:grid-cols-2
                 lg:grid-cols-5 gap-3 p-6 py-4
                 border-b border-dashed border-border"
-            >
-                <div className="lg:col-span-2">
-                    <SearchBox
-                        value={search}
-                        onChange={setSearch}
-                        placeholder="Search classes by name or code..."
+                >
+                    <div className="lg:col-span-2">
+                        <SearchBox
+                            value={search}
+                            onChange={setSearch}
+                            placeholder="Search classes by name or code..."
+                        />
+                    </div>
+
+                    <SelectBox
+                        label="Status"
+                        option={status}
+                        setOption={setStatus}
+                        options={statusOptions}
+                    />
+
+                    <SelectBox
+                        label="Sort"
+                        option={sort}
+                        setOption={setSort}
+                        options={sortOptions}
+                    />
+
+                    <Combobox
+                        label="Department"
+                        option={department}
+                        setOption={setDepartment}
+                        options={allDepartmentOptions}
                     />
                 </div>
 
-                <SelectBox
-                    label="Status"
-                    option={status}
-                    setOption={setStatus}
-                    options={statusOptions}
-                />
+                <div className="px-6 py-3">
 
-                <SelectBox
-                    label="Sort"
-                    option={sort}
-                    setOption={setSort}
-                    options={sortOptions}
-                />
-
-                <Combobox
-                    label="Department"
-                    option={department}
-                    setOption={setDepartment}
-                    options={allDepartmentOptions}
-                />
-            </div>
-
-            <div className="px-6 py-3">
-
-                <EntriesSelect
-                    value={limit}
-                    onChange={setLimit}
-                    options={limitOptions}
-                />
-            </div>
-
-            <div
-                className="min-h-70"
-            >
-                <DataTable
-                    columns={classColumns}
-                    data={data?.data}
-                    loading={isLoading}
-                />
-            </div>
-
-            <div className="p-6">
-                {data?.meta && (
-                    <Pagination
-                        metaData={data.meta}
-                        loading={isLoading}
-                        onPageChange={setPage}
+                    <EntriesSelect
+                        value={limit}
+                        onChange={setLimit}
+                        options={limitOptions}
                     />
-                )}
-            </div>
-        </section>
+                </div>
+
+                <div
+                    className="min-h-70"
+                >
+                    <DataTable
+                        columns={columns}
+                        data={data?.data}
+                        loading={isLoading}
+                    />
+                </div>
+
+                <div className="p-6">
+                    {data?.meta && (
+                        <Pagination
+                            metaData={data.meta}
+                            loading={isLoading}
+                            onPageChange={setPage}
+                        />
+                    )}
+                </div>
+            </section>
+
+            <ConfirmationDialog
+                open={deleteOpen}
+                onOpenChange={setDeleteOpen}
+                loading={isDeleting}
+                variant="danger"
+                title="Delete User?"
+                description={
+                    selectedClass
+                        ? `Are you sure you want to delete "${selectedClass?.name}"? This action cannot be undone.`
+                        : "Are you sure you want to delete this class?"
+                }
+                confirmText="Delete"
+                cancelText="Cancel"
+                onConfirm={handleDelete}
+            />
+        </>
     );
 };
 

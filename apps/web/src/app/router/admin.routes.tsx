@@ -11,6 +11,8 @@ import TeacherAssignments from "@/features/admin/pages/TeacherAssignments";
 import AddTeacherAssignment from "@/features/admin/pages/AddTeacherAssignment";
 import Sessions from "@/features/admin/pages/Sessions";
 import AddSession from "@/features/admin/pages/AddSession";
+import UpdateDepartment from "@/features/admin/pages/update/UpdateDepartment";
+import ViewDepartment from "@/features/admin/pages/view/ViewDepartment";
 
 export const adminRoutes = [
     {
@@ -33,6 +35,15 @@ export const adminRoutes = [
         path: "departments",
         element: <Departments />,
     },
+    {
+        path: "departments/:id/update",
+        element: <UpdateDepartment />,
+    },
+    {
+        path: "departments/:id/info",
+        element: <ViewDepartment />,
+    },
+
     {
         path: "departments/add",
         element: <AddDepartment />,

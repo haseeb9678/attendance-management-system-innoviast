@@ -4,46 +4,57 @@ import type { Class } from "../types/class.types";
 import ClassActions from "../components/ClassActions";
 import DateTimeCell from "@/components/common/DateTimeCell";
 
-export const classColumns: TableColumn<Class>[] = [
-    {
-        key: "name",
-        label: "Class Name",
-    },
-    {
-        key: "code",
-        label: "Code",
-    },
-    {
-        key: "department",
-        label: "Department",
-        render: (row) => row.department?.name ?? "--",
-    },
-    {
-        key: "description",
-        label: "Description",
-        cellClassName: "max-w-72 truncate",
-        render: (row) => row.description || "--",
-    },
-    {
-        key: "status",
-        label: "Status",
-        render: (row) => (
-            <StatusBadge status={row.status} />
-        ),
-    },
-    {
-        key: "createdAt",
-        label: "Created Date",
-        render: (row) => <DateTimeCell
-            date={row.createdAt}
-        />
-    },
-    {
-        key: "actions",
-        label: "Actions",
-        align: "right",
-        render: (row) => (
-            <ClassActions classItem={row} />
-        ),
-    },
-];
+interface ClassColumnsProps {
+    onView?: (classItem: Class) => void;
+    onEdit?: (classItem: Class) => void;
+    onDelete?: (classItem: Class) => void;
+}
+
+export const getClassColumns = ({
+    onView,
+    onEdit,
+    onDelete,
+}: ClassColumnsProps): TableColumn<Class>[] => [
+        {
+            key: "name",
+            label: "Class Name",
+        },
+        {
+            key: "code",
+            label: "Code",
+        },
+        {
+            key: "department",
+            label: "Department",
+            render: (row) => row.department?.name ?? "--",
+        },
+        {
+            key: "description",
+            label: "Description",
+            cellClassName: "max-w-72 truncate",
+            render: (row) => row.description || "--",
+        },
+        {
+            key: "status",
+            label: "Status",
+            render: (row) => <StatusBadge status={row.status} />,
+        },
+        {
+            key: "createdAt",
+            label: "Created Date",
+            render: (row) => <DateTimeCell date={row.createdAt} />,
+        },
+        {
+            key: "actions",
+            label: "Actions",
+            align: "right",
+            render: (row) => (
+                <ClassActions
+                    classItem={row}
+                    onView={onView}
+                    onEdit={onEdit}
+                    onDelete={onDelete}
+                />
+            ),
+        },
+    ];

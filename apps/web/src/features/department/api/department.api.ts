@@ -17,9 +17,9 @@ export const getDepartments = async (filters: DepartmentFilters = {}) => {
 };
 
 export const getDepartment = async (id: string) => {
-    const { data } = await api.get<Department>(`/departments/${id}`);
-    return data;
-};
+    const { data } = await api.get(`/departments/${id}`);
+    return data.data as Department;
+}
 
 export const createDepartment = async (body: {
     name: string;

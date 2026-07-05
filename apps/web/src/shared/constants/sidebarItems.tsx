@@ -89,26 +89,13 @@ export const adminSidebarItems = [
                 Icon: ClipboardCheck,
                 href: "/admin/attendance",
                 children: [
+
                     {
                         id: 1,
-                        label: "Mark Attendance",
-                        href: "/admin/attendance/mark",
-                    },
-                    {
-                        id: 2,
                         label: "Attendance History",
                         href: "/admin/attendance/history",
                     },
-                    {
-                        id: 3,
-                        label: "Leave Requests",
-                        href: "/admin/attendance/leaves",
-                    },
-                    {
-                        id: 4,
-                        label: "Reports",
-                        href: "/admin/attendance/reports",
-                    },
+
                 ],
             },
         ],
@@ -132,13 +119,6 @@ export const adminSidebarItems = [
         id: 5,
         label: "Administration",
         items: [
-            {
-                id: 8,
-                label: "Roles & Permissions",
-                Icon: ShieldCheck,
-                href: "/admin/roles",
-                children: [],
-            },
             {
                 id: 9,
                 label: "Profile",

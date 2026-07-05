@@ -23,7 +23,8 @@ interface SelectBoxProps {
     setOption: React.Dispatch<React.SetStateAction<SelectOption>>;
     options: SelectOption[];
     className?: string
-    error?: string
+    error?: string,
+    disabled?: boolean
 }
 
 const SelectBox = ({
@@ -33,11 +34,13 @@ const SelectBox = ({
     setOption,
     options,
     className = "",
-    error = ""
+    error = "",
+    disabled = false
 }: SelectBoxProps) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleOpen = () => {
+        if (disabled) return;
         setIsOpen((prev) => !prev);
     };
 
@@ -84,6 +87,7 @@ const SelectBox = ({
                 justify-between gap-2 border border-border px-3 text-text-secondary
 
                 ${className}
+                ${disabled && "cursor-default!"}
 
                 ${isOpen && (!error) && `transition-all duration-300
       border-primary-hover
