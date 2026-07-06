@@ -13,8 +13,9 @@ import FormButton from "@/components/common/FormButton";
 import { sortOptions } from "@/shared/constants/filters";
 import useDebounce from "@/shared/hooks/useDebounce";
 
-
+import { SEO } from '@/shared/components/SEO';
 import {
+
     useMyAttendanceHistory,
 
 } from "@/features/student/hooks/useStudent";
@@ -182,11 +183,13 @@ const AttendanceHistory = () => {
         );
 
     return (
-        <motion.section
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35, ease: "easeOut" }}
-            className="
+        <>
+            <SEO title="Attendance History | Attendix" description="Review past attendance records and historical session details." noindex />
+            <motion.section
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.35, ease: "easeOut" }}
+                className="
                 bg-bg-card
                 border border-border
                 rounded-md
@@ -197,10 +200,10 @@ const AttendanceHistory = () => {
                 min-w-0
                 h-max
             "
-        >
-            {/* Header */}
-            <div
-                className="
+            >
+                {/* Header */}
+                <div
+                    className="
                     p-6
                     flex
                     flex-col
@@ -208,36 +211,36 @@ const AttendanceHistory = () => {
                     justify-between
                     gap-5
                 "
-            >
-                <div>
-                    <h2
-                        className="
+                >
+                    <div>
+                        <h2
+                            className="
                             text-2xl
                             font-bold
                             text-text-base
                         "
-                    >
-                        Attendance History
-                    </h2>
+                        >
+                            Attendance History
+                        </h2>
 
-                    <p
-                        className="
+                        <p
+                            className="
                             text-sm
                             text-text-secondary
                             mt-1
                         "
-                    >
-                        View your subject-wise attendance summary and open detailed session records.
-                    </p>
+                        >
+                            View your subject-wise attendance summary and open detailed session records.
+                        </p>
+                    </div>
                 </div>
-            </div>
 
-            <div className="border-t border-dashed border-border" />
+                <div className="border-t border-dashed border-border" />
 
 
-            {/* Filters */}
-            <div
-                className="
+                {/* Filters */}
+                <div
+                    className="
                     grid
                     grid-cols-1
                     md:grid-cols-2
@@ -249,33 +252,34 @@ const AttendanceHistory = () => {
                     border-dashed
                     border-border
                 "
-            >
-                <div className="lg:col-span-2">
-                    <SearchBox
-                        value={search}
-                        onChange={setSearch}
-                        placeholder="Search by subject name or code..."
+                >
+                    <div className="lg:col-span-2">
+                        <SearchBox
+                            value={search}
+                            onChange={setSearch}
+                            placeholder="Search by subject name or code..."
+                        />
+                    </div>
+
+                    <SelectBox
+                        label="Sort"
+                        option={sort}
+                        setOption={setSort}
+                        options={sortOptions}
                     />
                 </div>
 
-                <SelectBox
-                    label="Sort"
-                    option={sort}
-                    setOption={setSort}
-                    options={sortOptions}
-                />
-            </div>
-
-            {/* Table */}
-            <div className="min-h-70">
-                <DataTable
-                    columns={columns}
-                    data={history}
-                    loading={isLoading}
-                    showCheckbox={false}
-                />
-            </div>
-        </motion.section>
+                {/* Table */}
+                <div className="min-h-70">
+                    <DataTable
+                        columns={columns}
+                        data={history}
+                        loading={isLoading}
+                        showCheckbox={false}
+                    />
+                </div>
+            </motion.section>
+        </>
     );
 };
 

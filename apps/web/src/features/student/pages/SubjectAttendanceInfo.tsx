@@ -33,6 +33,7 @@ import DateTimeCell from "@/components/common/DateTimeCell";
 import SessionTimeCell from "@/components/common/SessionTimeCell";
 
 import { useStudentAttendanceSubjectDetails } from "@/features/student/hooks/useStudent";
+import { SEO } from '@/shared/components/SEO';
 
 interface SubjectAttendanceSession {
     _id: string;
@@ -278,8 +279,10 @@ const SubjectAttendanceInfo = () => {
         );
 
     return (
-        <section
-            className="
+        <>
+            <SEO title="Subject Attendance Info | Attendix" description="View attendance details for the selected subject in Attendix." noindex />
+            <section
+                className="
                 bg-bg-card
                 border border-border
                 rounded-md
@@ -290,15 +293,15 @@ const SubjectAttendanceInfo = () => {
                 min-w-0
                 h-max
             "
-        >
-            {/* Header */}
-            <div className="p-6">
-                <div className="flex gap-2">
-                    <button
-                        onClick={() =>
-                            navigate(-1)
-                        }
-                        className="
+            >
+                {/* Header */}
+                <div className="p-6">
+                    <div className="flex gap-2">
+                        <button
+                            onClick={() =>
+                                navigate(-1)
+                            }
+                            className="
                             h-max w-max
                             p-2
                             backdrop-blur-lg
@@ -310,33 +313,33 @@ const SubjectAttendanceInfo = () => {
                             transition-all
                             duration-300
                         "
-                    >
-                        <ArrowLeft
-                            size={20}
-                            className="cursor-pointer"
-                        />
-                    </button>
+                        >
+                            <ArrowLeft
+                                size={20}
+                                className="cursor-pointer"
+                            />
+                        </button>
 
-                    <div>
-                        <h2 className="text-2xl font-bold text-text-base">
-                            Subject Attendance
-                            Details
-                        </h2>
+                        <div>
+                            <h2 className="text-2xl font-bold text-text-base">
+                                Subject Attendance
+                                Details
+                            </h2>
 
-                        <p className="text-sm text-text-secondary mt-1">
-                            View all sessions and
-                            your attendance status
-                            for this subject.
-                        </p>
+                            <p className="text-sm text-text-secondary mt-1">
+                                View all sessions and
+                                your attendance status
+                                for this subject.
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div className="border-t border-dashed border-border" />
+                <div className="border-t border-dashed border-border" />
 
-            {/* Subject / Instructor / Department Info */}
-            <div
-                className="
+                {/* Subject / Instructor / Department Info */}
+                <div
+                    className="
                     grid
                     grid-cols-1
                     md:grid-cols-2
@@ -345,42 +348,42 @@ const SubjectAttendanceInfo = () => {
                     px-6
                     pt-6
                 "
-            >
-                <InfoCard
-                    title="Subject"
-                    value={
-                        attendanceInfo?.subject
-                            ? `${attendanceInfo.subject.name} (${attendanceInfo.subject.code})`
-                            : "--"
-                    }
-                    Icon={BookOpen}
-                    color="bg-primary/15 text-primary"
-                />
+                >
+                    <InfoCard
+                        title="Subject"
+                        value={
+                            attendanceInfo?.subject
+                                ? `${attendanceInfo.subject.name} (${attendanceInfo.subject.code})`
+                                : "--"
+                        }
+                        Icon={BookOpen}
+                        color="bg-primary/15 text-primary"
+                    />
 
-                <InfoCard
-                    title="Instructor"
-                    value={
-                        attendanceInfo?.instructor
-                            ?.name || "--"
-                    }
-                    Icon={UserRound}
-                    color="bg-success/15 text-success"
-                />
+                    <InfoCard
+                        title="Instructor"
+                        value={
+                            attendanceInfo?.instructor
+                                ?.name || "--"
+                        }
+                        Icon={UserRound}
+                        color="bg-success/15 text-success"
+                    />
 
-                <InfoCard
-                    title="Department"
-                    value={
-                        attendanceInfo?.department
-                            ?.name || "--"
-                    }
-                    Icon={GraduationCap}
-                    color="bg-warning/15 text-warning"
-                />
-            </div>
+                    <InfoCard
+                        title="Department"
+                        value={
+                            attendanceInfo?.department
+                                ?.name || "--"
+                        }
+                        Icon={GraduationCap}
+                        color="bg-warning/15 text-warning"
+                    />
+                </div>
 
-            {/* Attendance Stats */}
-            <div
-                className="
+                {/* Attendance Stats */}
+                <div
+                    className="
                     grid
                     grid-cols-1
                     sm:grid-cols-2
@@ -389,72 +392,72 @@ const SubjectAttendanceInfo = () => {
                     px-6
                     pt-6
                 "
-            >
-                <InfoCard
-                    title="Total Sessions"
-                    value={String(
-                        stats?.totalSessions ?? 0
-                    )}
-                    Icon={CalendarCheck2}
-                    color="bg-primary/15 text-primary"
-                />
+                >
+                    <InfoCard
+                        title="Total Sessions"
+                        value={String(
+                            stats?.totalSessions ?? 0
+                        )}
+                        Icon={CalendarCheck2}
+                        color="bg-primary/15 text-primary"
+                    />
 
-                <InfoCard
-                    title="Present"
-                    value={String(
-                        stats?.present ?? 0
-                    )}
-                    Icon={CircleCheckBig}
-                    color="bg-success/15 text-success"
-                />
+                    <InfoCard
+                        title="Present"
+                        value={String(
+                            stats?.present ?? 0
+                        )}
+                        Icon={CircleCheckBig}
+                        color="bg-success/15 text-success"
+                    />
 
-                <InfoCard
-                    title="Absent"
-                    value={String(
-                        stats?.absent ?? 0
-                    )}
-                    Icon={CircleX}
-                    color="bg-error/15 text-error"
-                />
+                    <InfoCard
+                        title="Absent"
+                        value={String(
+                            stats?.absent ?? 0
+                        )}
+                        Icon={CircleX}
+                        color="bg-error/15 text-error"
+                    />
 
-                <InfoCard
-                    title="Late"
-                    value={String(
-                        stats?.late ?? 0
-                    )}
-                    Icon={Clock3}
-                    color="bg-warning/15 text-warning"
-                />
+                    <InfoCard
+                        title="Late"
+                        value={String(
+                            stats?.late ?? 0
+                        )}
+                        Icon={Clock3}
+                        color="bg-warning/15 text-warning"
+                    />
 
-                <InfoCard
-                    title="Excused"
-                    value={String(
-                        stats?.excused ?? 0
-                    )}
-                    Icon={ShieldCheck}
-                    color="bg-primary/15 text-primary"
-                />
+                    <InfoCard
+                        title="Excused"
+                        value={String(
+                            stats?.excused ?? 0
+                        )}
+                        Icon={ShieldCheck}
+                        color="bg-primary/15 text-primary"
+                    />
 
-                <InfoCard
-                    title="Not Marked"
-                    value={String(
-                        stats?.notMarked ?? 0
-                    )}
-                    Icon={FileQuestion}
-                    color="bg-muted text-text-secondary"
-                />
+                    <InfoCard
+                        title="Not Marked"
+                        value={String(
+                            stats?.notMarked ?? 0
+                        )}
+                        Icon={FileQuestion}
+                        color="bg-muted text-text-secondary"
+                    />
 
-                <InfoCard
-                    title="Attendance %"
-                    value={`${stats?.attendancePercentage ?? 0}%`}
-                    Icon={Percent}
-                    color="bg-success/15 text-success"
-                />
-            </div>
+                    <InfoCard
+                        title="Attendance %"
+                        value={`${stats?.attendancePercentage ?? 0}%`}
+                        Icon={Percent}
+                        color="bg-success/15 text-success"
+                    />
+                </div>
 
-            {/* Filters */}
-            <div
-                className="
+                {/* Filters */}
+                <div
+                    className="
                     grid
                     grid-cols-1
                     md:grid-cols-2
@@ -466,62 +469,63 @@ const SubjectAttendanceInfo = () => {
                     border-dashed
                     border-border
                 "
-            >
-                <div className="lg:col-span-2">
-                    <SearchBox
-                        value={search}
-                        onChange={(value) => {
+                >
+                    <div className="lg:col-span-2">
+                        <SearchBox
+                            value={search}
+                            onChange={(value) => {
+                                setPage(1);
+                                setSearch(value);
+                            }}
+                            placeholder="Search by room..."
+                        />
+                    </div>
+
+                    <SelectBox
+                        label="Sort"
+                        option={sort}
+                        setOption={(value) => {
                             setPage(1);
-                            setSearch(value);
+                            setSort(value);
                         }}
-                        placeholder="Search by room..."
+                        options={sortOptions}
                     />
                 </div>
 
-                <SelectBox
-                    label="Sort"
-                    option={sort}
-                    setOption={(value) => {
-                        setPage(1);
-                        setSort(value);
-                    }}
-                    options={sortOptions}
-                />
-            </div>
-
-            {/* Entries */}
-            <div className="px-6 py-3">
-                <EntriesSelect
-                    value={limit}
-                    onChange={(value) => {
-                        setPage(1);
-                        setLimit(value);
-                    }}
-                    options={limitOptions}
-                />
-            </div>
-
-            {/* Table */}
-            <div className="min-h-70">
-                <DataTable
-                    columns={columns}
-                    data={sessions}
-                    loading={isPending}
-                    showCheckbox={false}
-                />
-            </div>
-
-            {/* Pagination */}
-            <div className="p-6">
-                {meta && (
-                    <Pagination
-                        metaData={meta}
-                        loading={isPending}
-                        onPageChange={setPage}
+                {/* Entries */}
+                <div className="px-6 py-3">
+                    <EntriesSelect
+                        value={limit}
+                        onChange={(value) => {
+                            setPage(1);
+                            setLimit(value);
+                        }}
+                        options={limitOptions}
                     />
-                )}
-            </div>
-        </section>
+                </div>
+
+                {/* Table */}
+                <div className="min-h-70">
+                    <DataTable
+                        columns={columns}
+                        data={sessions}
+                        loading={isPending}
+                        showCheckbox={false}
+                    />
+                </div>
+
+                {/* Pagination */}
+                <div className="p-6">
+                    {meta && (
+                        <Pagination
+                            metaData={meta}
+                            loading={isPending}
+                            onPageChange={setPage}
+                        />
+                    )}
+                </div>
+            </section>
+        </>
     );
 };
 

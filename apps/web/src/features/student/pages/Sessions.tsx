@@ -16,6 +16,7 @@ import StatusBadge from "@/shared/components/StatusBadge";
 import { formatDate } from "@/lib/date";
 
 import { useMySessions } from "@/features/student/hooks/useStudent";
+import { SEO } from '@/shared/components/SEO';
 
 interface StudentSession {
     _id: string;
@@ -263,11 +264,15 @@ const Sessions = () => {
     }
 
     return (
-        <motion.section
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35, ease: "easeOut" }}
-            className="
+        <>
+
+            <SEO title="Sessions | Attendix" description="Track your sessions, schedules, and attendance details in Attendix." noindex />
+
+            <motion.section
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.35, ease: "easeOut" }}
+                className="
                 bg-bg-card
                 border border-border
                 rounded-2xl
@@ -278,44 +283,44 @@ const Sessions = () => {
                 h-max
                 overflow-hidden
             "
-        >
-            {/* Header */}
-            <div className="p-6 border-b border-dashed border-border">
-                <div className="flex items-center justify-between gap-4">
-                    <div>
-                        <h2 className="text-2xl font-bold text-text-base">
-                            My Sessions
-                        </h2>
+            >
+                {/* Header */}
+                <div className="p-6 border-b border-dashed border-border">
+                    <div className="flex items-center justify-between gap-4">
+                        <div>
+                            <h2 className="text-2xl font-bold text-text-base">
+                                My Sessions
+                            </h2>
 
-                        <p className="text-sm text-text-muted mt-1">
-                            View your upcoming, ongoing, and completed sessions.
-                        </p>
-                    </div>
+                            <p className="text-sm text-text-muted mt-1">
+                                View your upcoming, ongoing, and completed sessions.
+                            </p>
+                        </div>
 
-                    <div
-                        className="
+                        <div
+                            className="
                             h-12 w-12
                             rounded-2xl
                             bg-primary/10
                             flex items-center justify-center
                             shrink-0
                         "
-                    >
-                        <CalendarDays
-                            className="text-primary"
-                            size={22}
-                        />
+                        >
+                            <CalendarDays
+                                className="text-primary"
+                                size={22}
+                            />
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            {/* Tabs */}
-            <div className="px-6 pt-6">
-                <motion.div
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.25, ease: "easeOut" }}
-                    className="
+                {/* Tabs */}
+                <div className="px-6 pt-6">
+                    <motion.div
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.25, ease: "easeOut" }}
+                        className="
                         inline-flex
                         flex-wrap
                         gap-2
@@ -324,16 +329,17 @@ const Sessions = () => {
                         bg-bg/60
                         p-2
                     "
-                >
-                    {tabs.map((tab) => {
-                        const isActive = activeTab === tab.key;
+                    >
+                        {tabs.map((tab) => {
+                            const isActive = activeTab === tab.key;
 
-                        return (
-                            <button
-                                key={tab.key}
-                                type="button"
-                                onClick={() => setActiveTab(tab.key)}
-                                className={`
+                            return (
+
+                                <button
+                                    key={tab.key}
+                                    type="button"
+                                    onClick={() => setActiveTab(tab.key)}
+                                    className={`
                                     inline-flex
                                     items-center
                                     gap-2
@@ -345,15 +351,15 @@ const Sessions = () => {
                                     transition-all
                                     cursor-pointer
                                     ${isActive
-                                        ? "bg-primary text-white shadow-sm"
-                                        : "text-text-secondary hover:bg-bg-secondary hover:text-text-base"
-                                    }
+                                            ? "bg-primary text-white shadow-sm"
+                                            : "text-text-secondary hover:bg-bg-secondary hover:text-text-base"
+                                        }
                                 `}
-                            >
-                                <span>{tab.label}</span>
+                                >
+                                    <span>{tab.label}</span>
 
-                                <span
-                                    className={`
+                                    <span
+                                        className={`
                                         min-w-6
                                         h-6
                                         px-2
@@ -363,49 +369,49 @@ const Sessions = () => {
                                         items-center
                                         justify-center
                                         ${isActive
-                                            ? "bg-white/20 text-white"
-                                            : "bg-primary/10 text-primary"
-                                        }
+                                                ? "bg-white/20 text-white"
+                                                : "bg-primary/10 text-primary"
+                                            }
                                     `}
-                                >
-                                    {tab.count}
-                                </span>
-                            </button>
-                        );
-                    })}
-                </motion.div>
-            </div>
+                                    >
+                                        {tab.count}
+                                    </span>
+                                </button>
+                            );
+                        })}
+                    </motion.div>
+                </div>
 
-            {/* Empty State */}
-            {filteredSessions.length === 0 ? (
-                <div className="p-6">
-                    <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.25, ease: "easeOut" }}
-                        className="
+                {/* Empty State */}
+                {filteredSessions.length === 0 ? (
+                    <div className="p-6">
+                        <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.25, ease: "easeOut" }}
+                            className="
                             border border-dashed border-border
                             rounded-2xl
                             p-10
                             text-center
                             bg-bg/40
                         "
-                    >
-                        <h3 className="text-lg font-semibold text-text-base">
-                            No {activeTab === "upcoming" ? "upcoming" : activeTab === "ongoing" ? "ongoing" : "completed"} sessions found
-                        </h3>
+                        >
+                            <h3 className="text-lg font-semibold text-text-base">
+                                No {activeTab === "upcoming" ? "upcoming" : activeTab === "ongoing" ? "ongoing" : "completed"} sessions found
+                            </h3>
 
-                        <p className="mt-2 text-sm text-text-muted">
-                            Sessions in this category will appear here.
-                        </p>
-                    </motion.div>
-                </div>
-            ) : (
-                <>
-                    {/* Upcoming + Ongoing = Cards */}
-                    {(activeTab === "upcoming" || activeTab === "ongoing") && (
-                        <div
-                            className="
+                            <p className="mt-2 text-sm text-text-muted">
+                                Sessions in this category will appear here.
+                            </p>
+                        </motion.div>
+                    </div>
+                ) : (
+                    <>
+                        {/* Upcoming + Ongoing = Cards */}
+                        {(activeTab === "upcoming" || activeTab === "ongoing") && (
+                            <div
+                                className="
                                 p-6
                                 grid
                                 grid-cols-1
@@ -413,15 +419,15 @@ const Sessions = () => {
                                 xl:grid-cols-3
                                 gap-5
                             "
-                        >
-                            {filteredSessions.map((item) => (
-                                <motion.div
-                                    key={item._id}
-                                    initial={{ opacity: 0, y: 12 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.25, ease: "easeOut" }}
-                                    whileHover={{ y: -4, scale: 1.01 }}
-                                    className="
+                            >
+                                {filteredSessions.map((item) => (
+                                    <motion.div
+                                        key={item._id}
+                                        initial={{ opacity: 0, y: 12 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 0.25, ease: "easeOut" }}
+                                        whileHover={{ y: -4, scale: 1.01 }}
+                                        className="
                                         border border-border
                                         rounded-2xl
                                         p-5
@@ -432,98 +438,99 @@ const Sessions = () => {
                                         transition-all
                                         duration-300
                                     "
-                                >
-                                    <div className="flex justify-between items-start gap-4">
-                                        <div className="min-w-0">
-                                            <h3 className="text-lg font-semibold text-text-base truncate">
-                                                {item.teacherAssignment?.subject?.name || "--"}
-                                            </h3>
+                                    >
+                                        <div className="flex justify-between items-start gap-4">
+                                            <div className="min-w-0">
+                                                <h3 className="text-lg font-semibold text-text-base truncate">
+                                                    {item.teacherAssignment?.subject?.name || "--"}
+                                                </h3>
 
-                                            <p className="text-sm text-text-secondary truncate">
-                                                {item.teacherAssignment?.class?.name || "--"}
-                                            </p>
+                                                <p className="text-sm text-text-secondary truncate">
+                                                    {item.teacherAssignment?.class?.name || "--"}
+                                                </p>
+                                            </div>
+
+                                            <BookOpen
+                                                className="text-primary shrink-0"
+                                                size={22}
+                                            />
                                         </div>
 
-                                        <BookOpen
-                                            className="text-primary shrink-0"
-                                            size={22}
-                                        />
-                                    </div>
+                                        <div className="mt-5 space-y-3 text-text-secondary">
+                                            <div className="flex items-center justify-between gap-3">
+                                                <span className="text-sm">Date</span>
 
-                                    <div className="mt-5 space-y-3 text-text-secondary">
-                                        <div className="flex items-center justify-between gap-3">
-                                            <span className="text-sm">Date</span>
+                                                <span className="font-medium text-sm text-text-base">
+                                                    {formatDate(item.date)}
+                                                </span>
+                                            </div>
 
-                                            <span className="font-medium text-sm text-text-base">
-                                                {formatDate(item.date)}
-                                            </span>
+                                            <div className="flex items-center justify-between gap-3">
+                                                <span className="text-sm flex items-center gap-2">
+                                                    <Clock3 size={15} />
+                                                    Time
+                                                </span>
+
+                                                <span className="font-medium text-sm text-text-base">
+                                                    <SessionTimeCell
+                                                        startTime={item.startTime}
+                                                        endTime={item.endTime}
+                                                    />
+                                                </span>
+                                            </div>
+
+                                            <div className="flex items-center justify-between gap-3">
+                                                <span className="text-sm">Room</span>
+
+                                                <span className="font-medium text-sm text-text-base">
+                                                    {item.room || "-"}
+                                                </span>
+                                            </div>
+
+                                            <div className="flex items-center justify-between gap-3">
+                                                <span className="text-sm">Instructor</span>
+
+                                                <span className="font-medium text-sm text-text-base text-right">
+                                                    {item.teacherAssignment?.instructor?.name || "--"}
+                                                </span>
+                                            </div>
+
+                                            <div className="flex items-center justify-between gap-3">
+                                                <span className="text-sm">Department</span>
+
+                                                <span className="font-medium text-sm text-text-base text-right">
+                                                    {item.teacherAssignment?.department?.name || "--"}
+                                                </span>
+                                            </div>
+
+                                            <div className="flex items-center justify-between gap-3">
+                                                <span className="text-sm">Status</span>
+
+                                                <StatusBadge status={item.status} />
+                                            </div>
                                         </div>
-
-                                        <div className="flex items-center justify-between gap-3">
-                                            <span className="text-sm flex items-center gap-2">
-                                                <Clock3 size={15} />
-                                                Time
-                                            </span>
-
-                                            <span className="font-medium text-sm text-text-base">
-                                                <SessionTimeCell
-                                                    startTime={item.startTime}
-                                                    endTime={item.endTime}
-                                                />
-                                            </span>
-                                        </div>
-
-                                        <div className="flex items-center justify-between gap-3">
-                                            <span className="text-sm">Room</span>
-
-                                            <span className="font-medium text-sm text-text-base">
-                                                {item.room || "-"}
-                                            </span>
-                                        </div>
-
-                                        <div className="flex items-center justify-between gap-3">
-                                            <span className="text-sm">Instructor</span>
-
-                                            <span className="font-medium text-sm text-text-base text-right">
-                                                {item.teacherAssignment?.instructor?.name || "--"}
-                                            </span>
-                                        </div>
-
-                                        <div className="flex items-center justify-between gap-3">
-                                            <span className="text-sm">Department</span>
-
-                                            <span className="font-medium text-sm text-text-base text-right">
-                                                {item.teacherAssignment?.department?.name || "--"}
-                                            </span>
-                                        </div>
-
-                                        <div className="flex items-center justify-between gap-3">
-                                            <span className="text-sm">Status</span>
-
-                                            <StatusBadge status={item.status} />
-                                        </div>
-                                    </div>
-                                </motion.div>
-                            ))}
-                        </div>
-                    )}
-
-                    {/* Completed = Table */}
-                    {activeTab === "completed" && (
-                        <div className="p-6">
-                            <div className="min-h-70">
-                                <DataTable
-                                    columns={completedColumns}
-                                    data={filteredSessions}
-                                    loading={isPending}
-                                    showCheckbox={false}
-                                />
+                                    </motion.div>
+                                ))}
                             </div>
-                        </div>
-                    )}
-                </>
-            )}
-        </motion.section>
+                        )}
+
+                        {/* Completed = Table */}
+                        {activeTab === "completed" && (
+                            <div className="p-6">
+                                <div className="min-h-70">
+                                    <DataTable
+                                        columns={completedColumns}
+                                        data={filteredSessions}
+                                        loading={isPending}
+                                        showCheckbox={false}
+                                    />
+                                </div>
+                            </div>
+                        )}
+                    </>
+                )}
+            </motion.section>
+        </>
     );
 };
 

@@ -13,6 +13,7 @@ import { useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
+import { SEO } from '@/shared/components/SEO';
 
 const UpdateDepartment = () => {
 
@@ -101,87 +102,92 @@ const UpdateDepartment = () => {
             />
         </section>
     return (
-        <section className="bg-bg-card border border-border rounded-md
+        <>
+            <SEO title="Update Department | Attendix" description="Update department details in Attendix for accurate attendance tracking." noindex />
+
+            <section className="bg-bg-card border border-border rounded-md
         flex flex-col gap-3
          shadow-sm flex-1 min-w-0 h-max">
-            <div className='p-4 flex items-center gap-2'>
-                <div className='
+                <div className='p-4 flex items-center gap-2'>
+                    <div className='
                      p-2 backdrop-blur-lg rounded-full cursor-pointer relative
                       hover:bg-surface text-text-base transition-all duration-300'>
-                    <ArrowLeft
-                        size={20}
-                        onClick={() => navigate(-1)}
-                        className='cursor-pointer '
-                    />
-                </div>
-
-                <h2 className='text-text-base text-2xl font-bold'>Update Department</h2>
-            </div>
-            <div className='border-t border-dashed border-border' />
-            <div className='p-6'>
-                <form
-                    onSubmit={handleSubmit(onSubmit)}
-                    className='flex flex-col gap-8'
-                    method="post">
-                    <div
-                        className='grid grid-cols-1 xl:grid-cols-2 gap-8'
-                    >
-
-                        {departmentFields
-                            .map((field) => {
-                                if (field.component === "input") {
-                                    return (
-                                        <FormInput
-                                            key={field.id}
-                                            register={register}
-                                            errors={errors}
-                                            name={field.name}
-                                            label={field.label}
-                                            placeholder={field.placeholder}
-                                            type={field.type}
-                                            Icon={field.Icon}
-                                        />
-                                    );
-                                }
-
-                                if (field.component === "select") {
-                                    return (
-                                        <Controller
-                                            key={field.id}
-                                            control={control}
-                                            name={field.name}
-                                            render={({ field: controllerField }) => (
-                                                <SelectBox
-                                                    showTopLabel
-                                                    label={field.label}
-                                                    option={controllerField.value}
-                                                    setOption={controllerField.onChange}
-                                                    options={field.options}
-                                                    error={errors[field.name]?.message}
-                                                    className="h-12! rounded-3xl!"
-                                                />
-                                            )}
-                                        />
-                                    );
-                                }
-
-                                return null;
-                            })}
-                    </div>
-                    <div className='flex justify-end'>
-                        <FormButton
-                            type={"submit"}
-                            text={'Update'}
-                            isLoading={isUpdating}
-                            className='max-w-50'
+                        <ArrowLeft
+                            size={20}
+                            onClick={() => navigate(-1)}
+                            className='cursor-pointer '
                         />
                     </div>
-                </form>
 
-            </div>
+                    <h2 className='text-text-base text-2xl font-bold'>Update Department</h2>
+                </div>
+                <div className='border-t border-dashed border-border' />
+                <div className='p-6'>
+                    <form
+                        onSubmit={handleSubmit(onSubmit)}
+                        className='flex flex-col gap-8'
+                        method="post">
+                        <div
+                            className='grid grid-cols-1 xl:grid-cols-2 gap-8'
+                        >
+
+                            {departmentFields
+                                .map((field) => {
+                                    if (field.component === "input") {
+                                        return (
+                                            <FormInput
+                                                key={field.id}
+                                                register={register}
+                                                errors={errors}
+                                                name={field.name}
+                                                label={field.label}
+                                                placeholder={field.placeholder}
+                                                type={field.type}
+                                                Icon={field.Icon}
+                                            />
+                                        );
+                                    }
+
+                                    if (field.component === "select") {
+                                        return (
+
+                                            <Controller
+                                                key={field.id}
+                                                control={control}
+                                                name={field.name}
+                                                render={({ field: controllerField }) => (
+                                                    <SelectBox
+                                                        showTopLabel
+                                                        label={field.label}
+                                                        option={controllerField.value}
+                                                        setOption={controllerField.onChange}
+                                                        options={field.options}
+                                                        error={errors[field.name]?.message}
+                                                        className="h-12! rounded-3xl!"
+                                                    />
+                                                )}
+                                            />
+                                        );
+                                    }
+
+                                    return null;
+                                })}
+                        </div>
+                        <div className='flex justify-end'>
+                            <FormButton
+                                type={"submit"}
+                                text={'Update'}
+                                isLoading={isUpdating}
+                                className='max-w-50'
+                            />
+                        </div>
+                    </form>
+
+                </div>
 
 
-        </section >
+            </section >
+        </>
     )
 }
 

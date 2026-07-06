@@ -31,6 +31,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useEffect } from "react";
 import Combobox from "@/components/common/Combobox";
+import { SEO } from '@/shared/components/SEO';
 
 const AddUser = () => {
     const navigate = useNavigate();
@@ -199,80 +200,83 @@ const AddUser = () => {
     }, [department])
 
     return (
-        <section
-            className="bg-bg-card border border-border rounded-md
+        <>
+            <SEO title="Add User | Attendix" description="Add a new user to Attendix for streamlined attendance and academic management." noindex />
+            <section
+                className="bg-bg-card border border-border rounded-md
             flex flex-col gap-3 shadow-sm flex-1 min-w-0 h-max"
-        >
-            <div className="p-4 flex items-center gap-2">
-                <div
-                    className="
+            >
+                <div className="p-4 flex items-center gap-2">
+                    <div
+                        className="
                     p-2 backdrop-blur-lg rounded-full
                     cursor-pointer relative
                     hover:bg-surface
                     text-text-base
                     transition-all duration-300"
-                >
-                    <ArrowLeft
-                        size={20}
-                        onClick={() => navigate(-1)}
-                        className="cursor-pointer"
-                    />
-                </div>
-
-                <h2 className="text-text-base text-2xl font-bold">
-                    Add User
-                </h2>
-            </div>
-
-            <div className="border-t border-dashed border-border" />
-
-            <div className="p-6">
-                <form
-                    onSubmit={handleSubmit(onSubmit)}
-                    className="flex flex-col gap-8"
-                >
-                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
-                        {divisions.map((division) => (
-                            <ParentBox
-                                key={division.id}
-                                label={division.label}
-                            >
-                                <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
-                                    {renderFields(
-                                        formFields.filter(
-                                            (field) =>
-                                                field.division ===
-                                                division.division
-                                        )
-                                    )}
-                                </div>
-                            </ParentBox>
-                        ))}
-
-                        {currentRole && (
-                            <ParentBox
-                                label={currentRole.title}
-                            >
-                                <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
-                                    {renderFields(
-                                        currentRole.fields
-                                    )}
-                                </div>
-                            </ParentBox>
-                        )}
-                    </div>
-
-                    <div className="flex justify-end">
-                        <FormButton
-                            type="submit"
-                            text="Add"
-                            isLoading={isPending}
-                            className="max-w-50"
+                    >
+                        <ArrowLeft
+                            size={20}
+                            onClick={() => navigate(-1)}
+                            className="cursor-pointer"
                         />
                     </div>
-                </form>
-            </div>
-        </section>
+
+                    <h2 className="text-text-base text-2xl font-bold">
+                        Add User
+                    </h2>
+                </div>
+
+                <div className="border-t border-dashed border-border" />
+
+                <div className="p-6">
+                    <form
+                        onSubmit={handleSubmit(onSubmit)}
+                        className="flex flex-col gap-8"
+                    >
+                        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+                            {divisions.map((division) => (
+                                <ParentBox
+                                    key={division.id}
+                                    label={division.label}
+                                >
+                                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
+                                        {renderFields(
+                                            formFields.filter(
+                                                (field) =>
+                                                    field.division ===
+                                                    division.division
+                                            )
+                                        )}
+                                    </div>
+                                </ParentBox>
+                            ))}
+
+                            {currentRole && (
+                                <ParentBox
+                                    label={currentRole.title}
+                                >
+                                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
+                                        {renderFields(
+                                            currentRole.fields
+                                        )}
+                                    </div>
+                                </ParentBox>
+                            )}
+                        </div>
+
+                        <div className="flex justify-end">
+                            <FormButton
+                                type="submit"
+                                text="Add"
+                                isLoading={isPending}
+                                className="max-w-50"
+                            />
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </>
     );
 };
 
@@ -288,6 +292,7 @@ const ParentBox = ({
     children,
 }: ParentBoxProps) => {
     return (
+
         <section
             className="
             overflow-hidden

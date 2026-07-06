@@ -14,6 +14,7 @@ import { useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
+import { SEO } from '@/shared/components/SEO';
 
 const UpdateClass = () => {
 
@@ -113,93 +114,97 @@ const UpdateClass = () => {
 
 
     return (
-        <section className="bg-bg-card border border-border rounded-md
+        <>
+            <SEO title="Update Class | Attendix" description="Update class details in Attendix for accurate attendance tracking." noindex />
+            <section className="bg-bg-card border border-border rounded-md
         flex flex-col gap-3
          shadow-sm flex-1 min-w-0 h-max">
-            <div className='p-4 flex items-center gap-2'>
-                <button
-                    onClick={() => navigate(-1)}
-                    className='
+                <div className='p-4 flex items-center gap-2'>
+                    <button
+                        onClick={() => navigate(-1)}
+                        className='
                      p-2 backdrop-blur-lg rounded-full cursor-pointer relative
                       hover:bg-surface text-text-base ransition-all duration-300'>
-                    <ArrowLeft
-                        size={20}
+                        <ArrowLeft
+                            size={20}
 
-                        className='cursor-pointer '
-                    />
-                </button>
-
-                <h2 className='text-text-base text-2xl font-bold'>Update Class</h2>
-            </div>
-            <div className='border-t border-dashed border-border' />
-            <div className='p-6'>
-                <form
-                    onSubmit={handleSubmit(onSubmit)}
-                    className='flex flex-col gap-8'
-                    method="post">
-                    <div
-                        className='grid grid-cols-1 xl:grid-cols-2 
-                        gap-8'
-                    >
-
-                        {classFields
-                            .map((field) => {
-                                if (field.component === "input") {
-                                    return (
-                                        <FormInput
-                                            key={field.id}
-                                            register={register}
-                                            errors={errors}
-                                            name={field.name}
-                                            label={field.label}
-                                            placeholder={field.placeholder}
-                                            type={field.type as string}
-                                            Icon={field.Icon}
-                                        />
-                                    );
-                                }
-
-                                if (field.component === "select") {
-                                    return (
-                                        <Controller
-                                            key={field.id}
-                                            control={control}
-                                            name={field.name}
-                                            render={({ field: controllerField }) => (
-                                                <Combobox
-                                                    showTopLabel
-                                                    label={field.label}
-                                                    option={controllerField.value}
-                                                    setOption={controllerField.onChange}
-                                                    options={field.isApi ? getOptions(field.name) : field.options}
-                                                    error={errors[field.name]?.message}
-                                                    className="h-12! rounded-3xl!"
-                                                    disabled={
-                                                        field.name === "department"
-                                                    }
-                                                />
-                                            )}
-                                        />
-                                    );
-                                }
-
-                                return null;
-                            })}
-                    </div>
-                    <div className='flex justify-end'>
-                        <FormButton
-                            type={"submit"}
-                            text={'Update'}
-                            isLoading={isPending}
-                            className='max-w-50'
+                            className='cursor-pointer '
                         />
-                    </div>
-                </form>
+                    </button>
 
-            </div>
+                    <h2 className='text-text-base text-2xl font-bold'>Update Class</h2>
+                </div>
+                <div className='border-t border-dashed border-border' />
+                <div className='p-6'>
+                    <form
+                        onSubmit={handleSubmit(onSubmit)}
+                        className='flex flex-col gap-8'
+                        method="post">
+                        <div
+                            className='grid grid-cols-1 xl:grid-cols-2 
+                        gap-8'
+                        >
+
+                            {classFields
+                                .map((field) => {
+                                    if (field.component === "input") {
+                                        return (
+                                            <FormInput
+                                                key={field.id}
+                                                register={register}
+                                                errors={errors}
+                                                name={field.name}
+                                                label={field.label}
+                                                placeholder={field.placeholder}
+                                                type={field.type as string}
+                                                Icon={field.Icon}
+                                            />
+                                        );
+                                    }
+
+                                    if (field.component === "select") {
+                                        return (
+
+                                            <Controller
+                                                key={field.id}
+                                                control={control}
+                                                name={field.name}
+                                                render={({ field: controllerField }) => (
+                                                    <Combobox
+                                                        showTopLabel
+                                                        label={field.label}
+                                                        option={controllerField.value}
+                                                        setOption={controllerField.onChange}
+                                                        options={field.isApi ? getOptions(field.name) : field.options}
+                                                        error={errors[field.name]?.message}
+                                                        className="h-12! rounded-3xl!"
+                                                        disabled={
+                                                            field.name === "department"
+                                                        }
+                                                    />
+                                                )}
+                                            />
+                                        );
+                                    }
+
+                                    return null;
+                                })}
+                        </div>
+                        <div className='flex justify-end'>
+                            <FormButton
+                                type={"submit"}
+                                text={'Update'}
+                                isLoading={isPending}
+                                className='max-w-50'
+                            />
+                        </div>
+                    </form>
+
+                </div>
 
 
-        </section >
+            </section >
+        </>
     )
 }
 

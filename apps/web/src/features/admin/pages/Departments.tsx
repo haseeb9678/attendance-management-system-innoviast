@@ -17,6 +17,7 @@ import { LucidePlus, LucideUpload } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
+import { SEO } from '@/shared/components/SEO';
 
 const Departments = () => {
 
@@ -93,6 +94,7 @@ const Departments = () => {
 
     return (
         <>
+            <SEO title="Departments | Attendix" description="Manage departments in Attendix with attendance and academic workflows." noindex />
             <section className="bg-bg-card border border-border rounded-md
         flex flex-col gap-3 h-max
          shadow-sm flex-1 min-w-0">

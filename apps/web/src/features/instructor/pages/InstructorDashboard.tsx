@@ -15,6 +15,7 @@ import DataTable, {
 
 import { useInstructorDashboard } from "@/features/instructor/hooks/useInstructor";
 import DateTimeCell from "@/components/common/DateTimeCell";
+import { SEO } from '@/shared/components/SEO';
 
 interface Session {
     _id: string;
@@ -265,16 +266,19 @@ const InstructorDashboard = () => {
         recentSessionColumns;
 
     return (
-        <div
-            className="
+        <>
+            <SEO title="Instructor Dashboard | Attendix" description="Overview of attendance, sessions, and academic summary in Attendix." noindex />
+
+            <div
+                className="
                 flex
                 flex-col
                 gap-6
                   flex-1 h-max min-w-0
             "
-        >
-            <section
-                className="
+            >
+                <section
+                    className="
                     bg-bg-card
                     border
                     border-border
@@ -282,41 +286,41 @@ const InstructorDashboard = () => {
                     shadow-sm
                     p-6
                 "
-            >
-                <div
-                    className="
+                >
+                    <div
+                        className="
                         flex
                         items-center
                         justify-between
                     "
-                >
-                    <div>
+                    >
+                        <div>
 
-                        <h2
-                            className="
+                            <h2
+                                className="
                                 text-2xl
                                 font-bold
                                 text-text-base
                             "
-                        >
-                            Instructor Dashboard
-                        </h2>
+                            >
+                                Instructor Dashboard
+                            </h2>
 
-                        <p
-                            className="
+                            <p
+                                className="
                                 text-text-secondary
                                 mt-1
                             "
-                        >
-                            Overview of your teaching
-                            activities.
-                        </p>
+                            >
+                                Overview of your teaching
+                                activities.
+                            </p>
 
+                        </div>
                     </div>
-                </div>
 
-                <div
-                    className="
+                    <div
+                        className="
                         grid
                         grid-cols-1
                         sm:grid-cols-2
@@ -326,127 +330,128 @@ const InstructorDashboard = () => {
 
                         mt-8
                     "
-                >
-                    <DashboardCard
-                        title="Assignments (Assigned Courses)"
-                        value={
-                            dashboard?.overview
-                                .totalAssignments ?? 0
-                        }
-                        Icon={BookOpen}
-                        color="bg-primary/20 text-primary"
-                    />
+                    >
+                        <DashboardCard
+                            title="Assignments (Assigned Courses)"
+                            value={
+                                dashboard?.overview
+                                    .totalAssignments ?? 0
+                            }
+                            Icon={BookOpen}
+                            color="bg-primary/20 text-primary"
+                        />
 
-                    <DashboardCard
-                        title="Classes"
-                        value={
-                            dashboard?.overview
-                                .totalClasses ?? 0
-                        }
-                        Icon={GraduationCap}
-                        color="bg-success/20 text-success"
-                    />
+                        <DashboardCard
+                            title="Classes"
+                            value={
+                                dashboard?.overview
+                                    .totalClasses ?? 0
+                            }
+                            Icon={GraduationCap}
+                            color="bg-success/20 text-success"
+                        />
 
-                    <DashboardCard
-                        title="Students"
-                        value={
-                            dashboard?.overview
-                                .totalStudents ?? 0
-                        }
-                        Icon={Users}
-                        color="bg-warning/20 text-warning"
-                    />
+                        <DashboardCard
+                            title="Students"
+                            value={
+                                dashboard?.overview
+                                    .totalStudents ?? 0
+                            }
+                            Icon={Users}
+                            color="bg-warning/20 text-warning"
+                        />
 
-                    <DashboardCard
-                        title="Subjects"
-                        value={
-                            dashboard?.overview
-                                .totalSubjects ?? 0
-                        }
-                        Icon={BookOpen}
-                        color="bg-error/20 text-error"
-                    />
+                        <DashboardCard
+                            title="Subjects"
+                            value={
+                                dashboard?.overview
+                                    .totalSubjects ?? 0
+                            }
+                            Icon={BookOpen}
+                            color="bg-error/20 text-error"
+                        />
 
 
-                </div>
-                <div className="mt-8 border-t border-dashed border-border" />
+                    </div>
+                    <div className="mt-8 border-t border-dashed border-border" />
 
-                <div className="mt-8">
-                    <h3 className="text-xl font-semibold text-text-base">
-                        Attendance Overview
-                    </h3>
+                    <div className="mt-8">
+                        <h3 className="text-xl font-semibold text-text-base">
+                            Attendance Overview
+                        </h3>
 
-                    <p className="mt-1 text-sm text-text-secondary">
-                        Overall attendance statistics across all your sessions.
-                    </p>
+                        <p className="mt-1 text-sm text-text-secondary">
+                            Overall attendance statistics across all your sessions.
+                        </p>
 
-                    <div
-                        className="
+                        <div
+                            className="
         mt-5
         grid
         grid-cols-2
         lg:grid-cols-4
         gap-5
     "
-                    >
-                        <MiniStatCard
-                            title="Present"
-                            value={dashboard?.attendance.present ?? 0}
-                            valueClassName="text-success"
-                            className="bg-success/5 hover:border-success/30 hover:shadow-sm"
-                        />
+                        >
+                            <MiniStatCard
+                                title="Present"
+                                value={dashboard?.attendance.present ?? 0}
+                                valueClassName="text-success"
+                                className="bg-success/5 hover:border-success/30 hover:shadow-sm"
+                            />
 
-                        <MiniStatCard
-                            title="Absent"
-                            value={dashboard?.attendance.absent ?? 0}
-                            valueClassName="text-error"
-                            className="bg-error/5 hover:border-error/30 hover:shadow-sm"
-                        />
+                            <MiniStatCard
+                                title="Absent"
+                                value={dashboard?.attendance.absent ?? 0}
+                                valueClassName="text-error"
+                                className="bg-error/5 hover:border-error/30 hover:shadow-sm"
+                            />
 
-                        <MiniStatCard
-                            title="Late"
-                            value={dashboard?.attendance.late ?? 0}
-                            valueClassName="text-warning"
-                            className="bg-warning/5 hover:border-warning/30 hover:shadow-sm"
-                        />
+                            <MiniStatCard
+                                title="Late"
+                                value={dashboard?.attendance.late ?? 0}
+                                valueClassName="text-warning"
+                                className="bg-warning/5 hover:border-warning/30 hover:shadow-sm"
+                            />
 
-                        <MiniStatCard
-                            title="Excused"
-                            value={dashboard?.attendance.excused ?? 0}
-                            valueClassName="text-primary"
-                            className="bg-primary/5 hover:border-primary/30 hover:shadow-sm"
-                        />
-                    </div>
-                </div>
-
-                <div className="mt-8 border-t border-dashed border-border" />
-
-                <div className="mt-8">
-                    <div className="mb-5">
-                        <h3 className="text-xl font-semibold text-text-base">
-                            Recent Sessions
-                        </h3>
-
-                        <p className="mt-1 text-sm text-text-secondary">
-                            Your latest teaching sessions.
-                        </p>
+                            <MiniStatCard
+                                title="Excused"
+                                value={dashboard?.attendance.excused ?? 0}
+                                valueClassName="text-primary"
+                                className="bg-primary/5 hover:border-primary/30 hover:shadow-sm"
+                            />
+                        </div>
                     </div>
 
-                    <div className="min-h-70">
-                        <DataTable
-                            columns={recentSessionColumns}
-                            data={
-                                dashboard?.recentSessions
-                            }
-                            loading={isPending}
-                            showCheckbox={false}
-                        />
+                    <div className="mt-8 border-t border-dashed border-border" />
+
+                    <div className="mt-8">
+                        <div className="mb-5">
+                            <h3 className="text-xl font-semibold text-text-base">
+                                Recent Sessions
+                            </h3>
+
+                            <p className="mt-1 text-sm text-text-secondary">
+                                Your latest teaching sessions.
+                            </p>
+                        </div>
+
+                        <div className="min-h-70">
+                            <DataTable
+                                columns={recentSessionColumns}
+                                data={
+                                    dashboard?.recentSessions
+                                }
+                                loading={isPending}
+                                showCheckbox={false}
+                            />
+                        </div>
                     </div>
-                </div>
 
 
-            </section>
-        </div>
+                </section>
+            </div>
+        </>
     );
 };
 
@@ -466,6 +471,7 @@ const MiniStatCard = ({
     subtitle,
 }: MiniStatCardProps) => {
     return (
+
         <div
             className={`
                 border border-border

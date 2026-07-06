@@ -28,6 +28,7 @@ import { useClassOverview } from "@/features/instructor/hooks/useInstructor";
 
 import { classOverviewColumns } from "../constants/classColumns";
 import { Spinner } from "@/components/ui/spinner";
+import { SEO } from '@/shared/components/SEO';
 
 const InstructorClassInfo = () => {
     const navigate = useNavigate();
@@ -100,8 +101,10 @@ const InstructorClassInfo = () => {
         </section>
 
     return (
-        <section
-            className="
+        <>
+            <SEO title="Instructor Class Info | Attendix" description="Manage instructor class info in Attendix with attendance and academic workflows." noindex />
+            <section
+                className="
                 bg-bg-card
                 border border-border
                 rounded-md
@@ -112,11 +115,11 @@ const InstructorClassInfo = () => {
                 min-w-0
                 h-max
             "
-        >
-            {/* Header */}
+            >
+                {/* Header */}
 
-            <div
-                className="
+                <div
+                    className="
                     p-6
                     flex
                     flex-col
@@ -124,42 +127,42 @@ const InstructorClassInfo = () => {
                     justify-between
                     gap-6
                 "
-            >
+                >
 
 
-                <div className="space-y-4">
-                    <div>
-                        <div className="flex gap-2">
-                            <button
-                                onClick={() => navigate(-1)}
-                                className="
+                    <div className="space-y-4">
+                        <div>
+                            <div className="flex gap-2">
+                                <button
+                                    onClick={() => navigate(-1)}
+                                    className="
                             h-max w-max
                     p-2 backdrop-blur-lg rounded-full
                     cursor-pointer relative
                     hover:bg-surface
                     text-text-base
                     transition-all duration-300"
-                            >
-                                <ArrowLeft
-                                    size={20}
+                                >
+                                    <ArrowLeft
+                                        size={20}
 
-                                    className="cursor-pointer"
-                                />
-                            </button>
-                            <h2
-                                className="
+                                        className="cursor-pointer"
+                                    />
+                                </button>
+                                <h2
+                                    className="
                                 text-2xl
                                 font-bold
                                 text-text-base
                             "
-                            >
-                                {data?.data?.class?.name} Students
-                            </h2>
-                        </div>
+                                >
+                                    {data?.data?.class?.name} Students
+                                </h2>
+                            </div>
 
 
-                        <div
-                            className="
+                            <div
+                                className="
                                 flex
                                 flex-wrap
                                 items-center
@@ -168,50 +171,50 @@ const InstructorClassInfo = () => {
                                 text-sm
                                 text-text-muted
                             "
-                        >
-                            <span>
-                                {data?.data?.class?.department?.name}
-                            </span>
+                            >
+                                <span>
+                                    {data?.data?.class?.department?.name}
+                                </span>
 
-                            <span>•</span>
+                                <span>•</span>
 
-                            <span>
-                                Code:{" "}
-                                {data?.data?.class?.code}
-                            </span>
+                                <span>
+                                    Code:{" "}
+                                    {data?.data?.class?.code}
+                                </span>
 
-                            <span>•</span>
+                                <span>•</span>
 
-                            <span className="capitalize">
-                                {data?.data?.class?.status}
-                            </span>
-                        </div>
+                                <span className="capitalize">
+                                    {data?.data?.class?.status}
+                                </span>
+                            </div>
 
-                        {data?.data?.class?.description && (
-                            <p
-                                className="
+                            {data?.data?.class?.description && (
+                                <p
+                                    className="
                                     mt-3
                                     text-sm
                                     text-text-muted
                                     max-w-3xl
                                 "
-                            >
-                                {
-                                    data.data.class
-                                        .description
-                                }
-                            </p>
-                        )}
-                    </div>
+                                >
+                                    {
+                                        data.data.class
+                                            .description
+                                    }
+                                </p>
+                            )}
+                        </div>
 
-                    {/* Subjects */}
+                        {/* Subjects */}
 
-                    <div className="flex flex-wrap gap-2">
-                        {data?.data?.subjects?.map(
-                            (subject: any) => (
-                                <div
-                                    key={subject._id}
-                                    className="
+                        <div className="flex flex-wrap gap-2">
+                            {data?.data?.subjects?.map(
+                                (subject: any) => (
+                                    <div
+                                        key={subject._id}
+                                        className="
                                         flex
                                         items-center
                                         gap-2
@@ -222,72 +225,72 @@ const InstructorClassInfo = () => {
                                         px-3
                                         py-1.5
                                     "
-                                >
-                                    <LucideBookOpen
-                                        size={14}
-                                        className="
+                                    >
+                                        <LucideBookOpen
+                                            size={14}
+                                            className="
                                             text-primary
                                         "
-                                    />
+                                        />
 
-                                    <span
-                                        className="
+                                        <span
+                                            className="
                                             text-xs
                                             font-medium
                                             text-primary
                                         "
-                                    >
-                                        {subject.name}
-                                    </span>
+                                        >
+                                            {subject.name}
+                                        </span>
 
-                                    <span
-                                        className="
+                                        <span
+                                            className="
                                             text-[11px]
                                             text-primary/70
                                         "
-                                    >
-                                        ({subject.code})
-                                    </span>
-                                </div>
-                            )
-                        )}
+                                        >
+                                            ({subject.code})
+                                        </span>
+                                    </div>
+                                )
+                            )}
+                        </div>
                     </div>
-                </div>
 
-                {/* Actions */}
+                    {/* Actions */}
 
-                <div
-                    className="
+                    <div
+                        className="
                         flex
                         flex-wrap
                         gap-3
                         h-max
                     "
-                >
+                    >
 
 
-                    <FormButton
-                        type="button"
-                        text="Attendance History"
-                        Icon={LucideCalendarCheck}
-                        className="
+                        <FormButton
+                            type="button"
+                            text="Attendance History"
+                            Icon={LucideCalendarCheck}
+                            className="
                             h-10!
                             px-5
                         "
-                        onClick={() =>
-                            navigate(
-                                `/instructor/attendance-history?class=${id}`
-                            )
-                        }
-                    />
+                            onClick={() =>
+                                navigate(
+                                    `/instructor/attendance-history?class=${id}`
+                                )
+                            }
+                        />
+                    </div>
                 </div>
-            </div>
 
-            <div className="border-t border-dashed border-border" />
+                <div className="border-t border-dashed border-border" />
 
-            {/* Stats */}
-            <div
-                className="
+                {/* Stats */}
+                <div
+                    className="
                     grid
                     grid-cols-1
                     sm:grid-cols-2
@@ -295,45 +298,45 @@ const InstructorClassInfo = () => {
                     gap-5
                     px-6
                 "
-            >
-                {[
-                    {
-                        title: "Students",
-                        value:
-                            data?.data?.stats
-                                ?.totalStudents ?? 0,
-                        Icon: LucideUsers,
-                    },
+                >
+                    {[
+                        {
+                            title: "Students",
+                            value:
+                                data?.data?.stats
+                                    ?.totalStudents ?? 0,
+                            Icon: LucideUsers,
+                        },
 
-                    {
-                        title: "Subjects",
-                        value:
-                            data?.data?.stats
-                                ?.totalSubjects ?? 0,
-                        Icon: LucideBookOpen,
-                    },
+                        {
+                            title: "Subjects",
+                            value:
+                                data?.data?.stats
+                                    ?.totalSubjects ?? 0,
+                            Icon: LucideBookOpen,
+                        },
 
-                    {
-                        title: "Sessions",
-                        value:
-                            data?.data?.stats
-                                ?.totalSessions ?? 0,
-                        Icon: LucideCalendarCheck,
-                    },
+                        {
+                            title: "Sessions",
+                            value:
+                                data?.data?.stats
+                                    ?.totalSessions ?? 0,
+                            Icon: LucideCalendarCheck,
+                        },
 
-                    {
-                        title: "Attendance",
-                        value: `${data?.data?.stats?.averageAttendance ?? 0}%`,
-                        Icon: LucideGraduationCap,
-                    },
-                ].map(
-                    (
-                        item,
-                        index
-                    ) => (
-                        <div
-                            key={index}
-                            className="
+                        {
+                            title: "Attendance",
+                            value: `${data?.data?.stats?.averageAttendance ?? 0}%`,
+                            Icon: LucideGraduationCap,
+                        },
+                    ].map(
+                        (
+                            item,
+                            index
+                        ) => (
+                            <div
+                                key={index}
+                                className="
                                 rounded-2xl
                                 border
                                 border-border
@@ -347,31 +350,31 @@ const InstructorClassInfo = () => {
                                 hover:border-primary/30
                                 hover:shadow-sm
                             "
-                        >
-                            <div>
-                                <p
-                                    className="
+                            >
+                                <div>
+                                    <p
+                                        className="
                                         text-sm
                                         text-text-muted
                                     "
-                                >
-                                    {item.title}
-                                </p>
+                                    >
+                                        {item.title}
+                                    </p>
 
-                                <h3
-                                    className="
+                                    <h3
+                                        className="
                                         mt-2
                                         text-3xl
                                         font-bold
                                         text-text-base
                                     "
-                                >
-                                    {item.value}
-                                </h3>
-                            </div>
+                                    >
+                                        {item.value}
+                                    </h3>
+                                </div>
 
-                            <div
-                                className="
+                                <div
+                                    className="
                                     h-12
                                     w-12
                                     rounded-full
@@ -380,24 +383,24 @@ const InstructorClassInfo = () => {
                                     items-center
                                     justify-center
                                 "
-                            >
-                                <item.Icon
-                                    size={22}
-                                    className="
+                                >
+                                    <item.Icon
+                                        size={22}
+                                        className="
                                         text-primary
                                     "
-                                />
+                                    />
+                                </div>
                             </div>
-                        </div>
-                    )
-                )}
-            </div>
+                        )
+                    )}
+                </div>
 
-            <div className="border-t border-dashed border-border" />
+                <div className="border-t border-dashed border-border" />
 
-            {/* Filters */}
-            <div
-                className="
+                {/* Filters */}
+                <div
+                    className="
                     grid
                     grid-cols-1
                     md:grid-cols-4
@@ -405,60 +408,61 @@ const InstructorClassInfo = () => {
                     p-6
                     pb-4
                 "
-            >
-                <div className="md:col-span-2">
-                    <SearchBox
-                        value={search}
-                        onChange={setSearch}
-                        placeholder="Search by student name, registration no, roll no..."
+                >
+                    <div className="md:col-span-2">
+                        <SearchBox
+                            value={search}
+                            onChange={setSearch}
+                            placeholder="Search by student name, registration no, roll no..."
+                        />
+                    </div>
+
+                    <SelectBox
+                        label="Sort"
+                        option={sort}
+                        setOption={setSort}
+                        options={sortOptions}
+                    />
+
+                    <EntriesSelect
+                        value={limit}
+                        onChange={setLimit}
+                        options={limitOptions}
                     />
                 </div>
 
-                <SelectBox
-                    label="Sort"
-                    option={sort}
-                    setOption={setSort}
-                    options={sortOptions}
-                />
+                <div className="border-t border-dashed border-border" />
 
-                <EntriesSelect
-                    value={limit}
-                    onChange={setLimit}
-                    options={limitOptions}
-                />
-            </div>
+                {/* Students Table */}
 
-            <div className="border-t border-dashed border-border" />
-
-            {/* Students Table */}
-
-            <div
-                className="
+                <div
+                    className="
                     px-6
                     py-4
                 "
-            >
-                <DataTable
-                    columns={columns}
-                    data={students}
-                    loading={isPending}
-                    showCheckbox={false}
-                    message="No students found for this class."
-                />
-            </div>
-
-            {/* Pagination */}
-
-            <div className="px-6 pb-6">
-                {data?.meta && (
-                    <Pagination
-                        metaData={data.meta}
+                >
+                    <DataTable
+                        columns={columns}
+                        data={students}
                         loading={isPending}
-                        onPageChange={setPage}
+                        showCheckbox={false}
+                        message="No students found for this class."
                     />
-                )}
-            </div>
-        </section>
+                </div>
+
+                {/* Pagination */}
+
+                <div className="px-6 pb-6">
+                    {data?.meta && (
+                        <Pagination
+                            metaData={data.meta}
+                            loading={isPending}
+                            onPageChange={setPage}
+                        />
+                    )}
+                </div>
+            </section>
+        </>
     );
 };
 

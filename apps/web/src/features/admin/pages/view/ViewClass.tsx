@@ -12,6 +12,7 @@ import { ArrowLeft } from 'lucide-react'
 import { useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
+import { SEO } from '@/shared/components/SEO';
 
 
 const ViewClass = () => {
@@ -85,83 +86,88 @@ const ViewClass = () => {
 
 
     return (
-        <section className="bg-bg-card border border-border rounded-md
+        <>
+            <SEO title="View Class | Attendix" description="Review class details within Attendix." noindex />
+            <section className="bg-bg-card border border-border rounded-md
         flex flex-col gap-3
-         shadow-sm flex-1 min-w-0 h-max">
-            <div className='p-4 flex items-center gap-2'>
-                <div className='
+        shadow-sm flex-1 min-w-0 h-max">
+
+                <div className='p-4 flex items-center gap-2'>
+                    <div className='
                      p-2 backdrop-blur-lg rounded-full cursor-pointer relative
                       hover:bg-surface text-text-base ransition-all duration-300'>
-                    <ArrowLeft
-                        size={20}
-                        onClick={() => navigate(-1)}
-                        className='cursor-pointer '
-                    />
-                </div>
-
-                <h2 className='text-text-base text-2xl font-bold'>Class Info</h2>
-            </div>
-            <div className='border-t border-dashed border-border' />
-            <div className='p-6'>
-                <form
-
-                    className='flex flex-col gap-8'
-                    method="post">
-                    <div
-                        className='grid grid-cols-1 xl:grid-cols-2 
-                        gap-8'
-                    >
-
-                        {classFields
-                            .map((field) => {
-                                if (field.component === "input") {
-                                    return (
-                                        <FormInput
-                                            key={field.id}
-                                            register={register}
-                                            errors={errors}
-                                            name={field.name}
-                                            label={field.label}
-                                            placeholder={field.label}
-                                            type={field.type as string}
-                                            Icon={field.Icon}
-                                            disabled={true}
-                                        />
-                                    );
-                                }
-
-                                if (field.component === "select") {
-                                    return (
-                                        <Controller
-                                            key={field.id}
-                                            control={control}
-                                            name={field.name}
-                                            render={({ field: controllerField }) => (
-                                                <Combobox
-                                                    showTopLabel
-                                                    label={field.label}
-                                                    option={controllerField.value}
-                                                    setOption={controllerField.onChange}
-                                                    options={field.isApi ? getOptions(field.name) : field.options}
-                                                    error={errors[field.name]?.message}
-                                                    className="h-12! rounded-3xl!"
-                                                    disabled={true}
-                                                />
-                                            )}
-                                        />
-                                    );
-                                }
-
-                                return null;
-                            })}
+                        <ArrowLeft
+                            size={20}
+                            onClick={() => navigate(-1)}
+                            className='cursor-pointer '
+                        />
                     </div>
 
-                </form>
+                    <h2 className='text-text-base text-2xl font-bold'>Class Info</h2>
+                </div>
+                <div className='border-t border-dashed border-border' />
+                <div className='p-6'>
+                    <form
 
-            </div>
+                        className='flex flex-col gap-8'
+                        method="post">
+                        <div
+                            className='grid grid-cols-1 xl:grid-cols-2 
+                        gap-8'
+                        >
+
+                            {classFields
+                                .map((field) => {
+                                    if (field.component === "input") {
+                                        return (
+                                            <FormInput
+                                                key={field.id}
+                                                register={register}
+                                                errors={errors}
+                                                name={field.name}
+                                                label={field.label}
+                                                placeholder={field.label}
+                                                type={field.type as string}
+                                                Icon={field.Icon}
+                                                disabled={true}
+                                            />
+                                        );
+                                    }
+
+                                    if (field.component === "select") {
+                                        return (
+
+                                            <Controller
+                                                key={field.id}
+                                                control={control}
+                                                name={field.name}
+                                                render={({ field: controllerField }) => (
+                                                    <Combobox
+                                                        showTopLabel
+                                                        label={field.label}
+                                                        option={controllerField.value}
+                                                        setOption={controllerField.onChange}
+                                                        options={field.isApi ? getOptions(field.name) : field.options}
+                                                        error={errors[field.name]?.message}
+                                                        className="h-12! rounded-3xl!"
+                                                        disabled={true}
+                                                    />
+                                                )}
+                                            />
+                                        );
+                                    }
+
+                                    return null;
+                                })}
+                        </div>
+
+                    </form>
+
+                </div>
 
 
-        </section >
+            </section >
+        </>
     )
 }
 

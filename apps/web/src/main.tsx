@@ -7,19 +7,22 @@ import QueryProvider from './app/providers/QueryProvider'
 import { Toaster } from './components/ui/sonner'
 import AuthInitializer from './app/providers/AuthInitializer'
 import ThemeInitializer from './app/providers/ThemeInitializer'
+import { HelmetProvider } from "react-helmet-async";
 
 
 
 createRoot(document.getElementById('root')!).render(
-  <QueryProvider>
-    <ThemeInitializer />
-    <Toaster
-      position='top-right' />
-    <AuthInitializer>
+  <HelmetProvider>
+    <QueryProvider>
+      <ThemeInitializer />
+      <Toaster
+        position='top-right' />
+      <AuthInitializer>
 
-      <RouterProvider router={router} />
-    </AuthInitializer>
+        <RouterProvider router={router} />
+      </AuthInitializer>
 
-  </QueryProvider>
+    </QueryProvider>
+  </HelmetProvider>
 
 )

@@ -33,6 +33,7 @@ import { useEffect } from "react";
 import Combobox from "@/components/common/Combobox";
 import { useUser } from "@/features/users/hooks/useUser";
 import { Spinner } from "@/components/ui/spinner";
+import { SEO } from '@/shared/components/SEO';
 
 const ViewUser = () => {
     const navigate = useNavigate();
@@ -202,74 +203,78 @@ const ViewUser = () => {
             />
         </section>
     return (
-        <section
-            className="bg-bg-card border border-border rounded-md
+        <>
+
+            <SEO title="View User | Attendix" description="Review user details within Attendix." noindex />
+            <section
+                className="bg-bg-card border border-border rounded-md
             flex flex-col gap-3 shadow-sm flex-1 min-w-0 h-max"
-        >
-            <div className="p-4 flex items-center gap-2">
-                <div
-                    onClick={() => navigate(-1)}
-                    className="
+            >
+                <div className="p-4 flex items-center gap-2">
+                    <div
+                        onClick={() => navigate(-1)}
+                        className="
                     p-2 backdrop-blur-lg rounded-full
                     cursor-pointer relative
                     hover:bg-surface
                     text-text-base
                     transition-all duration-300"
-                >
-                    <ArrowLeft
-                        size={20}
+                    >
+                        <ArrowLeft
+                            size={20}
 
-                        className="cursor-pointer"
-                    />
-                </div>
-
-                <h2 className="text-text-base text-2xl font-bold">
-                    User Info
-                </h2>
-            </div>
-
-            <div className="border-t border-dashed border-border" />
-
-            <div className="p-6">
-                <form
-
-                    className="flex flex-col gap-8"
-                >
-                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
-                        {divisions.map((division) => (
-                            <ParentBox
-                                key={division.id}
-                                label={division.label}
-                            >
-                                <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
-                                    {renderFields(
-                                        formFields.filter(
-                                            (field) =>
-                                                field.division ===
-                                                division.division
-                                        )
-                                    )}
-                                </div>
-                            </ParentBox>
-                        ))}
-
-                        {currentRole && (
-                            <ParentBox
-                                label={currentRole.title}
-                            >
-                                <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
-                                    {renderFields(
-                                        currentRole.fields
-                                    )}
-                                </div>
-                            </ParentBox>
-                        )}
+                            className="cursor-pointer"
+                        />
                     </div>
 
+                    <h2 className="text-text-base text-2xl font-bold">
+                        User Info
+                    </h2>
+                </div>
 
-                </form>
-            </div>
-        </section>
+                <div className="border-t border-dashed border-border" />
+
+                <div className="p-6">
+                    <form
+
+                        className="flex flex-col gap-8"
+                    >
+                        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+                            {divisions.map((division) => (
+                                <ParentBox
+                                    key={division.id}
+                                    label={division.label}
+                                >
+                                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
+                                        {renderFields(
+                                            formFields.filter(
+                                                (field) =>
+                                                    field.division ===
+                                                    division.division
+                                            )
+                                        )}
+                                    </div>
+                                </ParentBox>
+                            ))}
+
+                            {currentRole && (
+                                <ParentBox
+                                    label={currentRole.title}
+                                >
+                                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
+                                        {renderFields(
+                                            currentRole.fields
+                                        )}
+                                    </div>
+                                </ParentBox>
+                            )}
+                        </div>
+
+
+                    </form>
+                </div>
+            </section>
+        </>
     );
 };
 
@@ -285,6 +290,7 @@ const ParentBox = ({
     children,
 }: ParentBoxProps) => {
     return (
+
         <section
             className="
             overflow-hidden

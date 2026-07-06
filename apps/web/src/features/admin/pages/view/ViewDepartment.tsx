@@ -12,6 +12,7 @@ import { ArrowLeft } from 'lucide-react'
 import { useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
+import { SEO } from '@/shared/components/SEO';
 
 const ViewDepartment = () => {
 
@@ -78,84 +79,89 @@ const ViewDepartment = () => {
 
 
     return (
-        <section className="bg-bg-card border border-border rounded-md
+        <>
+
+            <SEO title="View Department | Attendix" description="Review department details within Attendix." noindex />
+            <section className="bg-bg-card border border-border rounded-md
         flex flex-col gap-3
          shadow-sm flex-1 min-w-0 h-max">
-            <div className='p-4 flex items-center gap-2'>
-                <button
-                    onClick={() => navigate(-1)}
-                    className='
+                <div className='p-4 flex items-center gap-2'>
+                    <button
+                        onClick={() => navigate(-1)}
+                        className='
                      p-2 backdrop-blur-lg rounded-full cursor-pointer relative
                       hover:bg-surface text-text-base transition-all duration-300'>
-                    <ArrowLeft
-                        size={20}
+                        <ArrowLeft
+                            size={20}
 
-                        className='cursor-pointer '
-                    />
-                </button>
+                            className='cursor-pointer '
+                        />
+                    </button>
 
-                <h2 className='text-text-base text-2xl font-bold'>Department Info</h2>
-            </div>
-            <div className='border-t border-dashed border-border' />
-            <div className='p-6'>
-                <form
+                    <h2 className='text-text-base text-2xl font-bold'>Department Info</h2>
+                </div>
+                <div className='border-t border-dashed border-border' />
+                <div className='p-6'>
+                    <form
 
-                    className='flex flex-col gap-8'
-                    method="post">
-                    <div
-                        className='grid grid-cols-1 xl:grid-cols-2 gap-8'
-                    >
+                        className='flex flex-col gap-8'
+                        method="post">
+                        <div
+                            className='grid grid-cols-1 xl:grid-cols-2 gap-8'
+                        >
 
-                        {departmentFields
-                            .map((field) => {
-                                if (field.component === "input") {
-                                    return (
-                                        <FormInput
-                                            key={field.id}
-                                            register={register}
-                                            errors={errors}
-                                            name={field.name}
-                                            label={field.label}
-                                            placeholder={field.label}
-                                            type={field.type}
-                                            Icon={field.Icon}
-                                            disabled={true}
-                                        />
-                                    );
-                                }
+                            {departmentFields
+                                .map((field) => {
+                                    if (field.component === "input") {
+                                        return (
+                                            <FormInput
+                                                key={field.id}
+                                                register={register}
+                                                errors={errors}
+                                                name={field.name}
+                                                label={field.label}
+                                                placeholder={field.label}
+                                                type={field.type}
+                                                Icon={field.Icon}
+                                                disabled={true}
+                                            />
+                                        );
+                                    }
 
-                                if (field.component === "select") {
-                                    return (
-                                        <Controller
-                                            key={field.id}
-                                            control={control}
-                                            name={field.name}
-                                            render={({ field: controllerField }) => (
-                                                <SelectBox
-                                                    showTopLabel
-                                                    label={field.label}
-                                                    option={controllerField.value}
-                                                    setOption={controllerField.onChange}
-                                                    options={field.options}
-                                                    error={errors[field.name]?.message}
-                                                    className="h-12! rounded-3xl!"
-                                                    disabled={true}
-                                                />
-                                            )}
-                                        />
-                                    );
-                                }
+                                    if (field.component === "select") {
+                                        return (
 
-                                return null;
-                            })}
-                    </div>
+                                            <Controller
+                                                key={field.id}
+                                                control={control}
+                                                name={field.name}
+                                                render={({ field: controllerField }) => (
+                                                    <SelectBox
+                                                        showTopLabel
+                                                        label={field.label}
+                                                        option={controllerField.value}
+                                                        setOption={controllerField.onChange}
+                                                        options={field.options}
+                                                        error={errors[field.name]?.message}
+                                                        className="h-12! rounded-3xl!"
+                                                        disabled={true}
+                                                    />
+                                                )}
+                                            />
+                                        );
+                                    }
 
-                </form>
+                                    return null;
+                                })}
+                        </div>
 
-            </div>
+                    </form>
+
+                </div>
 
 
-        </section >
+            </section >
+        </>
     )
 }
 

@@ -24,6 +24,7 @@ import { getAttendanceHistoryColumns } from "@/features/attendance/constants/att
 import { useClassOptions } from "@/features/class/hooks/useClassOptions";
 import { useSubjectOptions } from "@/features/subject/hooks/useSubjectOptions";
 import AttendanceStats from "@/features/attendance/components/AttendanceStats";
+import { SEO } from '@/shared/components/SEO';
 
 const InstructorAttendanceHistory = () => {
     const navigate = useNavigate();
@@ -177,8 +178,10 @@ const InstructorAttendanceHistory = () => {
         []
     );
     return (
-        <section
-            className="
+        <>
+            <SEO title="Instructor Attendance History | Attendix" description="Review past attendance records and historical session details." noindex />
+            <section
+                className="
                 bg-bg-card
                 border border-border
                 rounded-md
@@ -189,11 +192,11 @@ const InstructorAttendanceHistory = () => {
                 min-w-0
                 h-max
             "
-        >
-            {/* Header */}
+            >
+                {/* Header */}
 
-            <div
-                className="
+                <div
+                    className="
                     p-6
                     flex
                     flex-col
@@ -201,35 +204,35 @@ const InstructorAttendanceHistory = () => {
                     justify-between
                     gap-5
                 "
-            >
-                <div>
-                    <h2
-                        className="
+                >
+                    <div>
+                        <h2
+                            className="
                             text-2xl
                             font-bold
                             text-text-base
                         "
-                    >
-                        Attendance History
-                    </h2>
+                        >
+                            Attendance History
+                        </h2>
 
-                    <p
-                        className="
+                        <p
+                            className="
                             text-sm
                             text-text-secondary
                             mt-1
                         "
-                    >
-                        View and manage attendance
-                        records for your sessions.
-                    </p>
-                </div>
+                        >
+                            View and manage attendance
+                            records for your sessions.
+                        </p>
+                    </div>
 
-                <FormButton
-                    type="button"
-                    text="Export"
-                    Icon={LucideUpload}
-                    className="
+                    <FormButton
+                        type="button"
+                        text="Export"
+                        Icon={LucideUpload}
+                        className="
                         max-w-40
                         h-10!
                         px-5
@@ -237,20 +240,20 @@ const InstructorAttendanceHistory = () => {
                         bg-warning
                         hover:bg-warning-hover
                     "
+                    />
+                </div>
+
+                <div className="border-t border-dashed border-border" />
+
+                <AttendanceStats
+                    stats={stats?.data}
+                    loading={isStatsLoading}
                 />
-            </div>
 
-            <div className="border-t border-dashed border-border" />
+                {/* Filters */}
 
-            <AttendanceStats
-                stats={stats?.data}
-                loading={isStatsLoading}
-            />
-
-            {/* Filters */}
-
-            <div
-                className="
+                <div
+                    className="
                     grid
                     grid-cols-1
                     md:grid-cols-2
@@ -262,73 +265,74 @@ const InstructorAttendanceHistory = () => {
                     border-dashed
                     border-border
                 "
-            >
-                <div className="lg:col-span-2">
-                    <SearchBox
-                        value={search}
-                        onChange={setSearch}
-                        placeholder="Search by room..."
+                >
+                    <div className="lg:col-span-2">
+                        <SearchBox
+                            value={search}
+                            onChange={setSearch}
+                            placeholder="Search by room..."
+                        />
+                    </div>
+
+                    <SelectBox
+                        label="Sort"
+                        option={sort}
+                        setOption={setSort}
+                        options={sortOptions}
+                    />
+
+                    <Combobox
+                        label="Class"
+                        option={selectedClass}
+                        setOption={setSelectedClass}
+                        options={allClassOptions}
+                    />
+
+                    <Combobox
+                        label="Subject"
+                        option={selectedSubject}
+                        setOption={
+                            setSelectedSubject
+                        }
+                        options={
+                            allSubjectOptions
+                        }
                     />
                 </div>
 
-                <SelectBox
-                    label="Sort"
-                    option={sort}
-                    setOption={setSort}
-                    options={sortOptions}
-                />
+                {/* Entries */}
 
-                <Combobox
-                    label="Class"
-                    option={selectedClass}
-                    setOption={setSelectedClass}
-                    options={allClassOptions}
-                />
-
-                <Combobox
-                    label="Subject"
-                    option={selectedSubject}
-                    setOption={
-                        setSelectedSubject
-                    }
-                    options={
-                        allSubjectOptions
-                    }
-                />
-            </div>
-
-            {/* Entries */}
-
-            <div className="px-6 py-3">
-                <EntriesSelect
-                    value={limit}
-                    onChange={setLimit}
-                    options={limitOptions}
-                />
-            </div>
-
-            {/* Table */}
-
-            <div className="min-h-70">
-                <DataTable
-                    columns={columns}
-                    data={data?.data}
-                    loading={isLoading}
-                />
-            </div>
-
-            {/* Pagination */}
-
-            <div className="p-6">
-                {data?.meta && (
-                    <Pagination
-                        metaData={data.meta}
-                        loading={isLoading}
-                        onPageChange={setPage}
+                <div className="px-6 py-3">
+                    <EntriesSelect
+                        value={limit}
+                        onChange={setLimit}
+                        options={limitOptions}
                     />
-                )}
-            </div>
-        </section>
+                </div>
+
+                {/* Table */}
+
+                <div className="min-h-70">
+                    <DataTable
+                        columns={columns}
+                        data={data?.data}
+                        loading={isLoading}
+                    />
+                </div>
+
+                {/* Pagination */}
+
+                <div className="p-6">
+                    {data?.meta && (
+                        <Pagination
+                            metaData={data.meta}
+                            loading={isLoading}
+                            onPageChange={setPage}
+                        />
+                    )}
+                </div>
+            </section>
+        </>
     );
 };
 

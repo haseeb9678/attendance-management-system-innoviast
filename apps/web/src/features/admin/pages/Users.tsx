@@ -27,6 +27,7 @@ import { useDepartmentOptions } from "@/features/department/hooks/useDepartmentO
 import EntriesSelect from "@/components/common/EnteriesSelect";
 import ExportButton from "@/components/common/ExportButton";
 import { userExportColumns } from "@/features/users/constants/userExportColumns";
+import { SEO } from '@/shared/components/SEO';
 
 const Users = () => {
     const navigate = useNavigate();
@@ -119,6 +120,7 @@ const Users = () => {
 
     return (
         <>
+            <SEO title="Users | Attendix" description="Manage users in Attendix with attendance and academic workflows." noindex />
             <section
                 className="
                     bg-bg-card border border-border rounded-md

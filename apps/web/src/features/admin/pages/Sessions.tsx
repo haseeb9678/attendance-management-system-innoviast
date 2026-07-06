@@ -25,6 +25,7 @@ import { getSessionColumns } from "@/features/session/constants/sessionColumns";
 import { sessionStatusOptions } from "@/features/session/constants/filters";
 import ExportButton from "@/components/common/ExportButton";
 import { sessionExportColumns } from "@/features/session/constants/sessionExportColumns";
+import { SEO } from '@/shared/components/SEO';
 
 const Sessions = () => {
     const navigate = useNavigate();
@@ -97,6 +98,7 @@ const Sessions = () => {
 
     return (
         <>
+            <SEO title="Sessions | Attendix" description="Track your sessions, schedules, and attendance details in Attendix." noindex />
             <section
                 className="
                     bg-bg-card border border-border rounded-md

@@ -13,6 +13,7 @@ import DateTimeCell from "@/components/common/DateTimeCell";
 
 import { useStudentDashboard } from "@/features/student/hooks/useStudent";
 import SessionTimeCell from "@/components/common/SessionTimeCell";
+import { SEO } from '@/shared/components/SEO';
 
 /**
  * =========================
@@ -184,8 +185,12 @@ const StudentDashboard = () => {
         );
 
     return (
-        <div
-            className="
+        <>
+            <SEO title="Dashboard | Attendix" description="Overview of attendance, sessions, and academic summary in Attendix." noindex />
+
+
+            <div
+                className="
                 flex
                 flex-col
                 gap-6
@@ -193,12 +198,12 @@ const StudentDashboard = () => {
                 h-max
                 min-w-0
             "
-        >
-            <motion.section
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.35, ease: "easeOut" }}
-                className="
+            >
+                <motion.section
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.35, ease: "easeOut" }}
+                    className="
                     bg-bg-card
                     border
                     border-border
@@ -206,21 +211,21 @@ const StudentDashboard = () => {
                     shadow-sm
                     p-6
                 "
-            >
-                <div className="flex items-center justify-between">
-                    <div>
-                        <h2 className="text-2xl font-bold text-text-base">
-                            Student Dashboard
-                        </h2>
+                >
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <h2 className="text-2xl font-bold text-text-base">
+                                Student Dashboard
+                            </h2>
 
-                        <p className="text-text-secondary mt-1">
-                            Overview of your class, subjects, and recent sessions.
-                        </p>
+                            <p className="text-text-secondary mt-1">
+                                Overview of your class, subjects, and recent sessions.
+                            </p>
+                        </div>
                     </div>
-                </div>
 
-                <div
-                    className="
+                    <div
+                        className="
                         grid
                         grid-cols-1
                         sm:grid-cols-2
@@ -228,62 +233,63 @@ const StudentDashboard = () => {
                         gap-5
                         mt-8
                     "
-                >
-                    <DashboardCard
-                        title="My Class"
-                        value={
-                            dashboard?.overview.className ??
-                            "--"
-                        }
-                        Icon={GraduationCap}
-                        color="bg-success/20 text-success"
-                    />
+                    >
+                        <DashboardCard
+                            title="My Class"
+                            value={
+                                dashboard?.overview.className ??
+                                "--"
+                            }
+                            Icon={GraduationCap}
+                            color="bg-success/20 text-success"
+                        />
 
-                    <DashboardCard
-                        title="Subjects"
-                        value={
-                            dashboard?.overview
-                                .totalSubjects ?? 0
-                        }
-                        Icon={BookOpen}
-                        color="bg-primary/20 text-primary"
-                    />
+                        <DashboardCard
+                            title="Subjects"
+                            value={
+                                dashboard?.overview
+                                    .totalSubjects ?? 0
+                            }
+                            Icon={BookOpen}
+                            color="bg-primary/20 text-primary"
+                        />
 
-                    <DashboardCard
-                        title="Sessions"
-                        value={
-                            dashboard?.overview
-                                .totalSessions ?? 0
-                        }
-                        Icon={CalendarClock}
-                        color="bg-warning/20 text-warning"
-                    />
-                </div>
-
-                <div className="mt-8 border-t border-dashed border-border" />
-
-                <div className="mt-8">
-                    <div className="mb-5">
-                        <h3 className="text-xl font-semibold text-text-base">
-                            Recent Sessions
-                        </h3>
-
-                        <p className="mt-1 text-sm text-text-secondary">
-                            Your latest class sessions.
-                        </p>
-                    </div>
-
-                    <div className="min-h-70">
-                        <DataTable
-                            columns={recentSessionColumns}
-                            data={dashboard?.recentSessions}
-                            loading={isPending}
-                            showCheckbox={false}
+                        <DashboardCard
+                            title="Sessions"
+                            value={
+                                dashboard?.overview
+                                    .totalSessions ?? 0
+                            }
+                            Icon={CalendarClock}
+                            color="bg-warning/20 text-warning"
                         />
                     </div>
-                </div>
-            </motion.section>
-        </div>
+
+                    <div className="mt-8 border-t border-dashed border-border" />
+
+                    <div className="mt-8">
+                        <div className="mb-5">
+                            <h3 className="text-xl font-semibold text-text-base">
+                                Recent Sessions
+                            </h3>
+
+                            <p className="mt-1 text-sm text-text-secondary">
+                                Your latest class sessions.
+                            </p>
+                        </div>
+
+                        <div className="min-h-70">
+                            <DataTable
+                                columns={recentSessionColumns}
+                                data={dashboard?.recentSessions}
+                                loading={isPending}
+                                showCheckbox={false}
+                            />
+                        </div>
+                    </div>
+                </motion.section>
+            </div>
+        </>
     );
 };
 

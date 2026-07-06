@@ -30,6 +30,7 @@ import DataTable, {
 } from "@/components/common/Table";
 import DateTimeCell from "@/components/common/DateTimeCell";
 import { useAdminDashboard } from "../hooks/useAdmin";
+import { SEO } from '@/shared/components/SEO';
 
 type Role = "student" | "instructor" | "admin";
 type UserStatus = "active" | "inactive" | "suspended";
@@ -516,592 +517,595 @@ const AdminDashboard = () => {
         );
 
     return (
-        <div className="flex min-w-0 flex-1 flex-col gap-6">
-            <section
-                className="
+        <>
+            <SEO title="Dashboard | Attendix" description="Overview of attendance, sessions, and academic summary in Attendix." noindex />
+            <div className="flex min-w-0 flex-1 flex-col gap-6">
+                <section
+                    className="
                     rounded-md border border-border
                     bg-bg-card p-6 shadow-sm
                 "
-            >
-                <div className="flex items-center justify-between">
-                    <div>
-                        <h2 className="text-2xl font-bold text-text-base">
-                            Admin Dashboard
-                        </h2>
+                >
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <h2 className="text-2xl font-bold text-text-base">
+                                Admin Dashboard
+                            </h2>
 
-                        <p className="mt-1 text-text-secondary">
-                            Overview of users, attendance,
-                            sessions, and academic activity.
-                        </p>
+                            <p className="mt-1 text-text-secondary">
+                                Overview of users, attendance,
+                                sessions, and academic activity.
+                            </p>
+                        </div>
                     </div>
-                </div>
 
-                {/* Overview Cards */}
-                <div
-                    className="
+                    {/* Overview Cards */}
+                    <div
+                        className="
                         mt-8
                         grid grid-cols-1 gap-5
                         sm:grid-cols-2
                         xl:grid-cols-4
                     "
-                >
-                    <DashboardCard
-                        title="Total Users"
-                        value={
-                            dashboard?.overview
-                                .totalUsers ??
-                            0
-                        }
-                        Icon={Users}
-                        color="bg-primary/20 text-primary"
-                    />
+                    >
+                        <DashboardCard
+                            title="Total Users"
+                            value={
+                                dashboard?.overview
+                                    .totalUsers ??
+                                0
+                            }
+                            Icon={Users}
+                            color="bg-primary/20 text-primary"
+                        />
 
-                    <DashboardCard
-                        title="Students"
-                        value={
-                            dashboard?.overview
-                                .totalStudents ??
-                            0
-                        }
-                        Icon={GraduationCap}
-                        color="bg-success/20 text-success"
-                    />
+                        <DashboardCard
+                            title="Students"
+                            value={
+                                dashboard?.overview
+                                    .totalStudents ??
+                                0
+                            }
+                            Icon={GraduationCap}
+                            color="bg-success/20 text-success"
+                        />
 
-                    <DashboardCard
-                        title="Instructors"
-                        value={
-                            dashboard?.overview
-                                .totalInstructors ??
-                            0
-                        }
-                        Icon={UserCog}
-                        color="bg-warning/20 text-warning"
-                    />
+                        <DashboardCard
+                            title="Instructors"
+                            value={
+                                dashboard?.overview
+                                    .totalInstructors ??
+                                0
+                            }
+                            Icon={UserCog}
+                            color="bg-warning/20 text-warning"
+                        />
 
-                    <DashboardCard
-                        title="Admins"
-                        value={
-                            dashboard?.overview
-                                .totalAdmins ??
-                            0
-                        }
-                        Icon={ShieldCheck}
-                        color="bg-error/20 text-error"
-                    />
+                        <DashboardCard
+                            title="Admins"
+                            value={
+                                dashboard?.overview
+                                    .totalAdmins ??
+                                0
+                            }
+                            Icon={ShieldCheck}
+                            color="bg-error/20 text-error"
+                        />
 
-                    <DashboardCard
-                        title="Departments"
-                        value={
-                            dashboard?.overview
-                                .totalDepartments ??
-                            0
-                        }
-                        Icon={School}
-                        color="bg-primary/20 text-primary"
-                    />
+                        <DashboardCard
+                            title="Departments"
+                            value={
+                                dashboard?.overview
+                                    .totalDepartments ??
+                                0
+                            }
+                            Icon={School}
+                            color="bg-primary/20 text-primary"
+                        />
 
-                    <DashboardCard
-                        title="Classes"
-                        value={
-                            dashboard?.overview
-                                .totalClasses ??
-                            0
-                        }
-                        Icon={GraduationCap}
-                        color="bg-success/20 text-success"
-                    />
+                        <DashboardCard
+                            title="Classes"
+                            value={
+                                dashboard?.overview
+                                    .totalClasses ??
+                                0
+                            }
+                            Icon={GraduationCap}
+                            color="bg-success/20 text-success"
+                        />
 
-                    <DashboardCard
-                        title="Subjects"
-                        value={
-                            dashboard?.overview
-                                .totalSubjects ??
-                            0
-                        }
-                        Icon={BookOpen}
-                        color="bg-warning/20 text-warning"
-                    />
+                        <DashboardCard
+                            title="Subjects"
+                            value={
+                                dashboard?.overview
+                                    .totalSubjects ??
+                                0
+                            }
+                            Icon={BookOpen}
+                            color="bg-warning/20 text-warning"
+                        />
 
-                    <DashboardCard
-                        title="Assignments"
-                        value={
-                            dashboard?.overview
-                                .totalTeacherAssignments ??
-                            0
-                        }
-                        Icon={CalendarDays}
-                        color="bg-error/20 text-error"
-                    />
-                </div>
+                        <DashboardCard
+                            title="Assignments"
+                            value={
+                                dashboard?.overview
+                                    .totalTeacherAssignments ??
+                                0
+                            }
+                            Icon={CalendarDays}
+                            color="bg-error/20 text-error"
+                        />
+                    </div>
 
-                <div className="mt-8 border-t border-dashed border-border" />
+                    <div className="mt-8 border-t border-dashed border-border" />
 
-                {/* Attendance Mini Stats */}
-                <div className="mt-8">
-                    <h3 className="text-xl font-semibold text-text-base">
-                        Attendance Overview
-                    </h3>
+                    {/* Attendance Mini Stats */}
+                    <div className="mt-8">
+                        <h3 className="text-xl font-semibold text-text-base">
+                            Attendance Overview
+                        </h3>
 
-                    <p className="mt-1 text-sm text-text-secondary">
-                        Overall attendance performance
-                        across the whole system.
-                    </p>
+                        <p className="mt-1 text-sm text-text-secondary">
+                            Overall attendance performance
+                            across the whole system.
+                        </p>
 
-                    <div
-                        className="
+                        <div
+                            className="
                             mt-5
                             grid grid-cols-2 gap-5
                             lg:grid-cols-4
                         "
-                    >
-                        <MiniStatCard
-                            title="Present"
-                            value={
-                                dashboard
-                                    ?.attendance
-                                    .present ??
-                                0
-                            }
-                            subtitle={`${dashboard?.attendance.presentRate ?? 0}% of attendance records`}
-                            valueClassName="text-success"
-                            className="bg-success/5 hover:border-success/30 hover:shadow-sm"
-                        />
+                        >
+                            <MiniStatCard
+                                title="Present"
+                                value={
+                                    dashboard
+                                        ?.attendance
+                                        .present ??
+                                    0
+                                }
+                                subtitle={`${dashboard?.attendance.presentRate ?? 0}% of attendance records`}
+                                valueClassName="text-success"
+                                className="bg-success/5 hover:border-success/30 hover:shadow-sm"
+                            />
 
-                        <MiniStatCard
-                            title="Absent"
-                            value={
-                                dashboard
-                                    ?.attendance
-                                    .absent ??
-                                0
-                            }
-                            subtitle={`${dashboard?.attendance.absentRate ?? 0}% of attendance records`}
-                            valueClassName="text-error"
-                            className="bg-error/5 hover:border-error/30 hover:shadow-sm"
-                        />
+                            <MiniStatCard
+                                title="Absent"
+                                value={
+                                    dashboard
+                                        ?.attendance
+                                        .absent ??
+                                    0
+                                }
+                                subtitle={`${dashboard?.attendance.absentRate ?? 0}% of attendance records`}
+                                valueClassName="text-error"
+                                className="bg-error/5 hover:border-error/30 hover:shadow-sm"
+                            />
 
-                        <MiniStatCard
-                            title="Late"
-                            value={
-                                dashboard
-                                    ?.attendance
-                                    .late ??
-                                0
-                            }
-                            subtitle={`${dashboard?.attendance.lateRate ?? 0}% of attendance records`}
-                            valueClassName="text-warning"
-                            className="bg-warning/5 hover:border-warning/30 hover:shadow-sm"
-                        />
+                            <MiniStatCard
+                                title="Late"
+                                value={
+                                    dashboard
+                                        ?.attendance
+                                        .late ??
+                                    0
+                                }
+                                subtitle={`${dashboard?.attendance.lateRate ?? 0}% of attendance records`}
+                                valueClassName="text-warning"
+                                className="bg-warning/5 hover:border-warning/30 hover:shadow-sm"
+                            />
 
-                        <MiniStatCard
-                            title="Excused"
-                            value={
-                                dashboard
-                                    ?.attendance
-                                    .excused ??
-                                0
-                            }
-                            subtitle={`${dashboard?.attendance.excusedRate ?? 0}% of attendance records`}
-                            valueClassName="text-primary"
-                            className="bg-primary/5 hover:border-primary/30 hover:shadow-sm"
-                        />
-                    </div>
-                </div>
-
-                <div className="mt-8 border-t border-dashed border-border" />
-
-                {/* Charts */}
-                <div className="mt-8">
-                    <div className="mb-5">
-                        <h3 className="text-xl font-semibold text-text-base">
-                            Analytics & Insights
-                        </h3>
-
-                        <p className="mt-1 text-sm text-text-secondary">
-                            Visual overview of attendance,
-                            sessions, roles, and trends.
-                        </p>
+                            <MiniStatCard
+                                title="Excused"
+                                value={
+                                    dashboard
+                                        ?.attendance
+                                        .excused ??
+                                    0
+                                }
+                                subtitle={`${dashboard?.attendance.excusedRate ?? 0}% of attendance records`}
+                                valueClassName="text-primary"
+                                className="bg-primary/5 hover:border-primary/30 hover:shadow-sm"
+                            />
+                        </div>
                     </div>
 
-                    <div
-                        className="
+                    <div className="mt-8 border-t border-dashed border-border" />
+
+                    {/* Charts */}
+                    <div className="mt-8">
+                        <div className="mb-5">
+                            <h3 className="text-xl font-semibold text-text-base">
+                                Analytics & Insights
+                            </h3>
+
+                            <p className="mt-1 text-sm text-text-secondary">
+                                Visual overview of attendance,
+                                sessions, roles, and trends.
+                            </p>
+                        </div>
+
+                        <div
+                            className="
                             grid grid-cols-1 gap-6
                             2xl:grid-cols-2
                         "
-                    >
-                        {/* Attendance Distribution */}
-                        <ChartCard
-                            title="Attendance Distribution"
-                            description="Breakdown of present, absent, late, and excused attendance records."
                         >
-                            <ResponsiveContainer
-                                width="100%"
-                                height="100%"
+                            {/* Attendance Distribution */}
+                            <ChartCard
+                                title="Attendance Distribution"
+                                description="Breakdown of present, absent, late, and excused attendance records."
                             >
-                                <PieChart>
-                                    <Pie
-                                        data={
-                                            dashboard
-                                                ?.charts
-                                                .attendanceDistribution ??
-                                            []
-                                        }
-                                        dataKey="value"
-                                        nameKey="name"
-                                        innerRadius={
-                                            70
-                                        }
-                                        outerRadius={
-                                            110
-                                        }
-                                        paddingAngle={
-                                            3
-                                        }
-                                    >
-                                        {(
-                                            dashboard
-                                                ?.charts
-                                                .attendanceDistribution ??
-                                            []
-                                        ).map(
-                                            (
-                                                _entry,
-                                                index
-                                            ) => (
-                                                <Cell
-                                                    key={`attendance-cell-${index}`}
-                                                    fill={
-                                                        PIE_COLORS[
-                                                        index %
-                                                        PIE_COLORS.length
-                                                        ]
-                                                    }
-                                                />
-                                            )
-                                        )}
-                                    </Pie>
-
-                                    <Tooltip />
-                                    <Legend />
-                                </PieChart>
-                            </ResponsiveContainer>
-                        </ChartCard>
-
-                        {/* Session Status */}
-                        <ChartCard
-                            title="Session Status"
-                            description="Current distribution of scheduled, ongoing, completed, and cancelled sessions."
-                        >
-                            <ResponsiveContainer
-                                width="100%"
-                                height="100%"
-                            >
-                                <BarChart
-                                    data={
-                                        dashboard
-                                            ?.charts
-                                            .sessionStatusDistribution ??
-                                        []
-                                    }
+                                <ResponsiveContainer
+                                    width="100%"
+                                    height="100%"
                                 >
-                                    <CartesianGrid
-                                        strokeDasharray="3 3"
-                                        vertical={
-                                            false
-                                        }
-                                        opacity={
-                                            0.2
-                                        }
-                                    />
+                                    <PieChart>
+                                        <Pie
+                                            data={
+                                                dashboard
+                                                    ?.charts
+                                                    .attendanceDistribution ??
+                                                []
+                                            }
+                                            dataKey="value"
+                                            nameKey="name"
+                                            innerRadius={
+                                                70
+                                            }
+                                            outerRadius={
+                                                110
+                                            }
+                                            paddingAngle={
+                                                3
+                                            }
+                                        >
+                                            {(
+                                                dashboard
+                                                    ?.charts
+                                                    .attendanceDistribution ??
+                                                []
+                                            ).map(
+                                                (
+                                                    _entry,
+                                                    index
+                                                ) => (
+                                                    <Cell
+                                                        key={`attendance-cell-${index}`}
+                                                        fill={
+                                                            PIE_COLORS[
+                                                            index %
+                                                            PIE_COLORS.length
+                                                            ]
+                                                        }
+                                                    />
+                                                )
+                                            )}
+                                        </Pie>
 
-                                    <XAxis dataKey="name" />
-                                    <YAxis />
-                                    <Tooltip />
+                                        <Tooltip />
+                                        <Legend />
+                                    </PieChart>
+                                </ResponsiveContainer>
+                            </ChartCard>
 
-                                    <Bar
-                                        dataKey="value"
-                                        radius={[
-                                            10,
-                                            10,
-                                            0,
-                                            0,
-                                        ]}
-                                    >
-                                        {(
+                            {/* Session Status */}
+                            <ChartCard
+                                title="Session Status"
+                                description="Current distribution of scheduled, ongoing, completed, and cancelled sessions."
+                            >
+                                <ResponsiveContainer
+                                    width="100%"
+                                    height="100%"
+                                >
+                                    <BarChart
+                                        data={
                                             dashboard
                                                 ?.charts
                                                 .sessionStatusDistribution ??
                                             []
-                                        ).map(
-                                            (
-                                                _entry,
-                                                index
-                                            ) => (
-                                                <Cell
-                                                    key={`session-bar-${index}`}
-                                                    fill={
-                                                        BAR_COLORS[
-                                                        index %
-                                                        BAR_COLORS.length
-                                                        ]
-                                                    }
-                                                />
-                                            )
-                                        )}
-                                    </Bar>
-                                </BarChart>
-                            </ResponsiveContainer>
-                        </ChartCard>
-
-                        {/* User Role Distribution */}
-                        <ChartCard
-                            title="User Role Distribution"
-                            description="Comparison of students, instructors, and admins in the system."
-                        >
-                            <ResponsiveContainer
-                                width="100%"
-                                height="100%"
-                            >
-                                <BarChart
-                                    data={
-                                        dashboard
-                                            ?.charts
-                                            .userRoleDistribution ??
-                                        []
-                                    }
-                                >
-                                    <CartesianGrid
-                                        strokeDasharray="3 3"
-                                        vertical={
-                                            false
                                         }
-                                        opacity={
-                                            0.2
-                                        }
-                                    />
-
-                                    <XAxis dataKey="name" />
-                                    <YAxis />
-                                    <Tooltip />
-
-                                    <Bar
-                                        dataKey="value"
-                                        radius={[
-                                            10,
-                                            10,
-                                            0,
-                                            0,
-                                        ]}
                                     >
-                                        {(
+                                        <CartesianGrid
+                                            strokeDasharray="3 3"
+                                            vertical={
+                                                false
+                                            }
+                                            opacity={
+                                                0.2
+                                            }
+                                        />
+
+                                        <XAxis dataKey="name" />
+                                        <YAxis />
+                                        <Tooltip />
+
+                                        <Bar
+                                            dataKey="value"
+                                            radius={[
+                                                10,
+                                                10,
+                                                0,
+                                                0,
+                                            ]}
+                                        >
+                                            {(
+                                                dashboard
+                                                    ?.charts
+                                                    .sessionStatusDistribution ??
+                                                []
+                                            ).map(
+                                                (
+                                                    _entry,
+                                                    index
+                                                ) => (
+                                                    <Cell
+                                                        key={`session-bar-${index}`}
+                                                        fill={
+                                                            BAR_COLORS[
+                                                            index %
+                                                            BAR_COLORS.length
+                                                            ]
+                                                        }
+                                                    />
+                                                )
+                                            )}
+                                        </Bar>
+                                    </BarChart>
+                                </ResponsiveContainer>
+                            </ChartCard>
+
+                            {/* User Role Distribution */}
+                            <ChartCard
+                                title="User Role Distribution"
+                                description="Comparison of students, instructors, and admins in the system."
+                            >
+                                <ResponsiveContainer
+                                    width="100%"
+                                    height="100%"
+                                >
+                                    <BarChart
+                                        data={
                                             dashboard
                                                 ?.charts
                                                 .userRoleDistribution ??
                                             []
-                                        ).map(
-                                            (
-                                                _entry,
-                                                index
-                                            ) => (
-                                                <Cell
-                                                    key={`role-bar-${index}`}
-                                                    fill={
-                                                        BAR_COLORS[
-                                                        index %
-                                                        BAR_COLORS.length
-                                                        ]
-                                                    }
-                                                />
-                                            )
-                                        )}
-                                    </Bar>
-                                </BarChart>
-                            </ResponsiveContainer>
-                        </ChartCard>
+                                        }
+                                    >
+                                        <CartesianGrid
+                                            strokeDasharray="3 3"
+                                            vertical={
+                                                false
+                                            }
+                                            opacity={
+                                                0.2
+                                            }
+                                        />
 
-                        {/* Monthly Attendance Trend */}
-                        <ChartCard
-                            title="Monthly Attendance Trend"
-                            description="Monthly trend of present, absent, late, and excused attendance."
-                        >
-                            <ResponsiveContainer
-                                width="100%"
-                                height="100%"
+                                        <XAxis dataKey="name" />
+                                        <YAxis />
+                                        <Tooltip />
+
+                                        <Bar
+                                            dataKey="value"
+                                            radius={[
+                                                10,
+                                                10,
+                                                0,
+                                                0,
+                                            ]}
+                                        >
+                                            {(
+                                                dashboard
+                                                    ?.charts
+                                                    .userRoleDistribution ??
+                                                []
+                                            ).map(
+                                                (
+                                                    _entry,
+                                                    index
+                                                ) => (
+                                                    <Cell
+                                                        key={`role-bar-${index}`}
+                                                        fill={
+                                                            BAR_COLORS[
+                                                            index %
+                                                            BAR_COLORS.length
+                                                            ]
+                                                        }
+                                                    />
+                                                )
+                                            )}
+                                        </Bar>
+                                    </BarChart>
+                                </ResponsiveContainer>
+                            </ChartCard>
+
+                            {/* Monthly Attendance Trend */}
+                            <ChartCard
+                                title="Monthly Attendance Trend"
+                                description="Monthly trend of present, absent, late, and excused attendance."
                             >
-                                <LineChart
-                                    data={
-                                        dashboard
-                                            ?.charts
-                                            .monthlyAttendanceTrend ??
-                                        []
-                                    }
+                                <ResponsiveContainer
+                                    width="100%"
+                                    height="100%"
                                 >
-                                    <CartesianGrid
-                                        strokeDasharray="3 3"
-                                        vertical={
-                                            false
+                                    <LineChart
+                                        data={
+                                            dashboard
+                                                ?.charts
+                                                .monthlyAttendanceTrend ??
+                                            []
                                         }
-                                        opacity={
-                                            0.2
-                                        }
-                                    />
+                                    >
+                                        <CartesianGrid
+                                            strokeDasharray="3 3"
+                                            vertical={
+                                                false
+                                            }
+                                            opacity={
+                                                0.2
+                                            }
+                                        />
 
-                                    <XAxis dataKey="month" />
-                                    <YAxis />
-                                    <Tooltip />
-                                    <Legend />
+                                        <XAxis dataKey="month" />
+                                        <YAxis />
+                                        <Tooltip />
+                                        <Legend />
 
-                                    <Line
-                                        type="monotone"
-                                        dataKey="present"
-                                        stroke="var(--color-success)"
-                                        strokeWidth={
-                                            3
-                                        }
-                                        dot={{
-                                            r: 4,
-                                        }}
-                                    />
+                                        <Line
+                                            type="monotone"
+                                            dataKey="present"
+                                            stroke="var(--color-success)"
+                                            strokeWidth={
+                                                3
+                                            }
+                                            dot={{
+                                                r: 4,
+                                            }}
+                                        />
 
-                                    <Line
-                                        type="monotone"
-                                        dataKey="absent"
-                                        stroke="var(--color-error)"
-                                        strokeWidth={
-                                            3
-                                        }
-                                        dot={{
-                                            r: 4,
-                                        }}
-                                    />
+                                        <Line
+                                            type="monotone"
+                                            dataKey="absent"
+                                            stroke="var(--color-error)"
+                                            strokeWidth={
+                                                3
+                                            }
+                                            dot={{
+                                                r: 4,
+                                            }}
+                                        />
 
-                                    <Line
-                                        type="monotone"
-                                        dataKey="late"
-                                        stroke="var(--color-warning)"
-                                        strokeWidth={
-                                            3
-                                        }
-                                        dot={{
-                                            r: 4,
-                                        }}
-                                    />
+                                        <Line
+                                            type="monotone"
+                                            dataKey="late"
+                                            stroke="var(--color-warning)"
+                                            strokeWidth={
+                                                3
+                                            }
+                                            dot={{
+                                                r: 4,
+                                            }}
+                                        />
 
-                                    <Line
-                                        type="monotone"
-                                        dataKey="excused"
-                                        stroke="var(--color-primary)"
-                                        strokeWidth={
-                                            3
-                                        }
-                                        dot={{
-                                            r: 4,
-                                        }}
-                                    />
-                                </LineChart>
-                            </ResponsiveContainer>
-                        </ChartCard>
-                    </div>
-                </div>
-
-                <div className="mt-8 border-t border-dashed border-border" />
-
-                {/* Recent Users */}
-                <div className="mt-8">
-                    <div className="mb-5">
-                        <h3 className="text-xl font-semibold text-text-base">
-                            Recent Users
-                        </h3>
-
-                        <p className="mt-1 text-sm text-text-secondary">
-                            Latest users added to the
-                            system.
-                        </p>
+                                        <Line
+                                            type="monotone"
+                                            dataKey="excused"
+                                            stroke="var(--color-primary)"
+                                            strokeWidth={
+                                                3
+                                            }
+                                            dot={{
+                                                r: 4,
+                                            }}
+                                        />
+                                    </LineChart>
+                                </ResponsiveContainer>
+                            </ChartCard>
+                        </div>
                     </div>
 
-                    <div className="min-h-70">
-                        <DataTable
-                            columns={
-                                recentUsersColumns
-                            }
-                            data={
-                                dashboard?.recent
-                                    .users ?? []
-                            }
-                            loading={isPending}
-                            showCheckbox={
-                                false
-                            }
-                        />
-                    </div>
-                </div>
+                    <div className="mt-8 border-t border-dashed border-border" />
 
-                <div className="mt-8 border-t border-dashed border-border" />
+                    {/* Recent Users */}
+                    <div className="mt-8">
+                        <div className="mb-5">
+                            <h3 className="text-xl font-semibold text-text-base">
+                                Recent Users
+                            </h3>
 
-                {/* Recent Sessions */}
-                <div className="mt-8">
-                    <div className="mb-5">
-                        <h3 className="text-xl font-semibold text-text-base">
-                            Recent Sessions
-                        </h3>
+                            <p className="mt-1 text-sm text-text-secondary">
+                                Latest users added to the
+                                system.
+                            </p>
+                        </div>
 
-                        <p className="mt-1 text-sm text-text-secondary">
-                            Latest academic sessions
-                            created in the system.
-                        </p>
-                    </div>
-
-                    <div className="min-h-70">
-                        <DataTable
-                            columns={
-                                recentSessionsColumns
-                            }
-                            data={
-                                dashboard?.recent
-                                    .sessions ?? []
-                            }
-                            loading={isPending}
-                            showCheckbox={
-                                false
-                            }
-                        />
-                    </div>
-                </div>
-
-                <div className="mt-8 border-t border-dashed border-border" />
-
-                {/* Recent Teacher Assignments */}
-                <div className="mt-8">
-                    <div className="mb-5">
-                        <h3 className="text-xl font-semibold text-text-base">
-                            Recent Teacher Assignments
-                        </h3>
-
-                        <p className="mt-1 text-sm text-text-secondary">
-                            Latest instructor-subject-class
-                            assignments.
-                        </p>
+                        <div className="min-h-70">
+                            <DataTable
+                                columns={
+                                    recentUsersColumns
+                                }
+                                data={
+                                    dashboard?.recent
+                                        .users ?? []
+                                }
+                                loading={isPending}
+                                showCheckbox={
+                                    false
+                                }
+                            />
+                        </div>
                     </div>
 
-                    <div className="min-h-70">
-                        <DataTable
-                            columns={
-                                recentAssignmentsColumns
-                            }
-                            data={
-                                dashboard?.recent
-                                    .teacherAssignments ??
-                                []
-                            }
-                            loading={isPending}
-                            showCheckbox={
-                                false
-                            }
-                        />
+                    <div className="mt-8 border-t border-dashed border-border" />
+
+                    {/* Recent Sessions */}
+                    <div className="mt-8">
+                        <div className="mb-5">
+                            <h3 className="text-xl font-semibold text-text-base">
+                                Recent Sessions
+                            </h3>
+
+                            <p className="mt-1 text-sm text-text-secondary">
+                                Latest academic sessions
+                                created in the system.
+                            </p>
+                        </div>
+
+                        <div className="min-h-70">
+                            <DataTable
+                                columns={
+                                    recentSessionsColumns
+                                }
+                                data={
+                                    dashboard?.recent
+                                        .sessions ?? []
+                                }
+                                loading={isPending}
+                                showCheckbox={
+                                    false
+                                }
+                            />
+                        </div>
                     </div>
-                </div>
-            </section>
-        </div>
+
+                    <div className="mt-8 border-t border-dashed border-border" />
+
+                    {/* Recent Teacher Assignments */}
+                    <div className="mt-8">
+                        <div className="mb-5">
+                            <h3 className="text-xl font-semibold text-text-base">
+                                Recent Teacher Assignments
+                            </h3>
+
+                            <p className="mt-1 text-sm text-text-secondary">
+                                Latest instructor-subject-class
+                                assignments.
+                            </p>
+                        </div>
+
+                        <div className="min-h-70">
+                            <DataTable
+                                columns={
+                                    recentAssignmentsColumns
+                                }
+                                data={
+                                    dashboard?.recent
+                                        .teacherAssignments ??
+                                    []
+                                }
+                                loading={isPending}
+                                showCheckbox={
+                                    false
+                                }
+                            />
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </>
     );
 };
 

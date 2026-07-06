@@ -21,6 +21,7 @@ import { LucidePlus, LucideUpload } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { SEO } from '@/shared/components/SEO';
 
 const TeacherAssignments = () => {
     const [status, setStatus] = useState(statusOptions[0]);
@@ -171,6 +172,7 @@ const TeacherAssignments = () => {
 
     return (
         <>
+            <SEO title="Teacher Assignments | Attendix" description="Manage teacher assignments in Attendix with attendance and academic workflows." noindex />
             <section
                 className="bg-bg-card border border-border rounded-md
             flex flex-col gap-3 shadow-sm flex-1

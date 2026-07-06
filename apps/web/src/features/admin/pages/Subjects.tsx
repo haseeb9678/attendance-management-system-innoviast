@@ -19,6 +19,7 @@ import { LucidePlus, LucideUpload } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { SEO } from '@/shared/components/SEO';
 
 const Subjects = () => {
     const [status, setStatus] = useState(statusOptions[0]);
@@ -113,6 +114,7 @@ const Subjects = () => {
 
     return (
         <>
+            <SEO title="Subjects | Attendix" description="Browse your subjects, instructors, and course details in Attendix." noindex />
             <section
                 className="bg-bg-card border border-border rounded-md
             flex flex-col gap-3 shadow-sm flex-1

@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useMySubjects } from "../hooks/useInstructor";
 import { Spinner } from "@/components/ui/spinner";
+import { SEO } from '@/shared/components/SEO';
 
 const InstructorSubjects = () => {
     const navigate = useNavigate();
@@ -36,8 +37,10 @@ const InstructorSubjects = () => {
 
 
     return (
-        <section
-            className="
+        <>
+            <SEO title="Instructor Subjects | Attendix" description="Browse your subjects, instructors, and course details in Attendix." noindex />
+            <section
+                className="
             bg-bg-card
             border border-border
             rounded-md
@@ -47,38 +50,38 @@ const InstructorSubjects = () => {
              min-w-0
             h-max
             "
-        >
-            <div className="p-6 border-b border-dashed border-border">
-                <div className="flex items-center justify-between">
-                    <div>
-                        <h2 className="text-2xl font-bold text-text-base">
-                            My Subjects
-                        </h2>
+            >
+                <div className="p-6 border-b border-dashed border-border">
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <h2 className="text-2xl font-bold text-text-base">
+                                My Subjects
+                            </h2>
 
-                        <p className="text-sm text-text-muted mt-1">
-                            View and manage the subjects assigned to you.
-                        </p>
-                    </div>
+                            <p className="text-sm text-text-muted mt-1">
+                                View and manage the subjects assigned to you.
+                            </p>
+                        </div>
 
-                    <div
-                        className="
+                        <div
+                            className="
                         h-12 w-12
                         rounded-xl
                         bg-primary/10
                         flex items-center justify-center
                         "
-                    >
-                        <BookOpenCheck
-                            className="text-primary"
-                            size={22}
-                        />
+                        >
+                            <BookOpenCheck
+                                className="text-primary"
+                                size={22}
+                            />
+                        </div>
                     </div>
                 </div>
-            </div>
 
 
-            <div
-                className="
+                <div
+                    className="
                     p-6
                     grid
                     grid-cols-1
@@ -86,11 +89,11 @@ const InstructorSubjects = () => {
                     xl:grid-cols-3
                     gap-5
                     "
-            >
-                {data?.data?.map((item: any) => (
-                    <div
-                        key={item._id}
-                        className="
+                >
+                    {data?.data?.map((item: any) => (
+                        <div
+                            key={item._id}
+                            className="
                             border border-border
                             rounded-xl
                             p-5
@@ -101,70 +104,71 @@ const InstructorSubjects = () => {
                             transition-all
                             duration-300
                             "
-                    >
-                        <div className="flex justify-between items-start">
-                            <div>
-                                <h3
-                                    className="
+                        >
+                            <div className="flex justify-between items-start">
+                                <div>
+                                    <h3
+                                        className="
                                         text-lg
                                         font-semibold
                                         text-text-base
                                         "
-                                >
-                                    {item.subject.name}
-                                </h3>
+                                    >
+                                        {item.subject.name}
+                                    </h3>
 
-                                <p className="text-sm text-text-secondary">
-                                    {item.subject.code}
-                                </p>
+                                    <p className="text-sm text-text-secondary">
+                                        {item.subject.code}
+                                    </p>
+                                </div>
+
+                                <Layers
+                                    className="text-primary"
+                                    size={22}
+                                />
                             </div>
 
-                            <Layers
-                                className="text-primary"
-                                size={22}
-                            />
-                        </div>
-
-                        <div className="mt-5 space-y-3 text-text-secondary">
-                            <div className="flex items-center justify-between">
-                                <span className="text-sm">
-                                    Class
-                                </span>
-
-                                <span className="font-medium text-sm">
-                                    {item.class.name}
-                                </span>
-                            </div>
-
-                            <div className="flex items-center justify-between">
-                                <span className="text-sm">
-                                    Department
-                                </span>
-
-                                <span className="font-medium text-sm">
-                                    {item.department.name}
-                                </span>
-                            </div>
-
-                            {item.subject.creditHours && (
+                            <div className="mt-5 space-y-3 text-text-secondary">
                                 <div className="flex items-center justify-between">
                                     <span className="text-sm">
-                                        Credit Hours
+                                        Class
                                     </span>
 
                                     <span className="font-medium text-sm">
-                                        {item.subject.creditHours}
+                                        {item.class.name}
                                     </span>
                                 </div>
-                            )}
+
+                                <div className="flex items-center justify-between">
+                                    <span className="text-sm">
+                                        Department
+                                    </span>
+
+                                    <span className="font-medium text-sm">
+                                        {item.department.name}
+                                    </span>
+                                </div>
+
+                                {item.subject.creditHours && (
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-sm">
+                                            Credit Hours
+                                        </span>
+
+                                        <span className="font-medium text-sm">
+                                            {item.subject.creditHours}
+                                        </span>
+                                    </div>
+                                )}
+                            </div>
+
+
                         </div>
+                    ))}
+                </div>
 
-
-                    </div>
-                ))}
-            </div>
-
-        </section>
+            </section>
+        </>
     );
 };
 

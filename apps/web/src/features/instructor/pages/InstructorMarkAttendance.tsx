@@ -24,6 +24,7 @@ import FormButton from "@/components/common/FormButton";
 import { useUpdateAttendance } from "@/features/attendance/hooks/useAttendanceMutation";
 import { toast } from "sonner";
 import { formatSessionTime } from "@/lib/date";
+import { SEO } from '@/shared/components/SEO';
 
 const InstructorMarkAttendance = () => {
     const { id } = useParams();
@@ -144,8 +145,10 @@ const InstructorMarkAttendance = () => {
 
     if (!id) {
         return (
-            <section
-                className="
+            <>
+                <SEO title="Instructor Mark Attendance | Attendix" description="Manage instructor mark attendance in Attendix with attendance and academic workflows." noindex />
+                <section
+                    className="
                 bg-bg-card
                 border border-border
                 rounded-md
@@ -156,11 +159,12 @@ const InstructorMarkAttendance = () => {
                 justify-center
                 min-h-max
                 "
-            >
-                <p className="text-text-base font-semibold">
-                    Invalid Session Id or Session not found.
-                </p>
-            </section>
+                >
+                    <p className="text-text-base font-semibold">
+                        Invalid Session Id or Session not found.
+                    </p>
+                </section>
+            </>
         );
     }
 
@@ -190,6 +194,7 @@ const InstructorMarkAttendance = () => {
 
 
     return (
+
         <section
             className="
             bg-bg-card

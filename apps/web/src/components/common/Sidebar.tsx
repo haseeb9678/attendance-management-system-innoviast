@@ -131,7 +131,7 @@ const Sidebar = ({ sidebarItems = [] }) => {
                                 exit="hidden"
                                 layout="position"
                             >
-                                <h2 className="font-bold text-lg tracking-wider">AMS WEBSITE</h2>
+                                <h2 className="font-bold text-lg tracking-wider">Attendix</h2>
                             </motion.div>
                         )}
                     </AnimatePresence>

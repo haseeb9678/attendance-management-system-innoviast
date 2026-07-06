@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 
 import { useMyClass } from "@/features/student/hooks/useStudent";
+import { SEO } from '@/shared/components/SEO';
 
 interface StudentClass {
     _id: string;
@@ -83,8 +84,10 @@ const MyClass = () => {
     const classInfo = data?.data as StudentClass | undefined;
 
     return (
-        <div
-            className="
+        <>
+            <SEO title="My Class | Attendix" description="View your class information, assigned subjects, and attendance summary." noindex />
+            <div
+                className="
                 flex
                 flex-col
                 gap-6
@@ -92,12 +95,12 @@ const MyClass = () => {
                 h-max
                 min-w-0
             "
-        >
-            <motion.section
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.35, ease: "easeOut" }}
-                className="
+            >
+                <motion.section
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.35, ease: "easeOut" }}
+                    className="
                     bg-bg-card
                     border
                     border-border
@@ -105,29 +108,29 @@ const MyClass = () => {
                     shadow-sm
                     p-6
                 "
-            >
-                <div>
-                    <h2 className="text-2xl font-bold text-text-base">
-                        My Class
-                    </h2>
+                >
+                    <div>
+                        <h2 className="text-2xl font-bold text-text-base">
+                            My Class
+                        </h2>
 
-                    <p className="mt-1 text-text-secondary">
-                        View your class information and department details.
-                    </p>
-                </div>
+                        <p className="mt-1 text-text-secondary">
+                            View your class information and department details.
+                        </p>
+                    </div>
 
-                {isPending ? (
-                    <div className="mt-8 text-sm text-text-secondary">
-                        Loading class information...
-                    </div>
-                ) : !classInfo ? (
-                    <div className="mt-8 text-sm text-text-secondary">
-                        No class information found.
-                    </div>
-                ) : (
-                    <>
-                        <div
-                            className="
+                    {isPending ? (
+                        <div className="mt-8 text-sm text-text-secondary">
+                            Loading class information...
+                        </div>
+                    ) : !classInfo ? (
+                        <div className="mt-8 text-sm text-text-secondary">
+                            No class information found.
+                        </div>
+                    ) : (
+                        <>
+                            <div
+                                className="
                                 grid
                                 grid-cols-1
                                 sm:grid-cols-2
@@ -135,53 +138,53 @@ const MyClass = () => {
                                 gap-5
                                 mt-8
                             "
-                        >
-                            <InfoCard
-                                title="Class Name"
-                                value={classInfo.name || "--"}
-                                Icon={GraduationCap}
-                                color="bg-success/20 text-success"
-                            />
+                            >
+                                <InfoCard
+                                    title="Class Name"
+                                    value={classInfo.name || "--"}
+                                    Icon={GraduationCap}
+                                    color="bg-success/20 text-success"
+                                />
 
-                            <InfoCard
-                                title="Class Code"
-                                value={classInfo.code || "--"}
-                                Icon={Hash}
-                                color="bg-primary/20 text-primary"
-                            />
+                                <InfoCard
+                                    title="Class Code"
+                                    value={classInfo.code || "--"}
+                                    Icon={Hash}
+                                    color="bg-primary/20 text-primary"
+                                />
 
-                            <InfoCard
-                                title="Department"
-                                value={
-                                    classInfo.department?.name ||
-                                    "--"
-                                }
-                                Icon={Building2}
-                                color="bg-warning/20 text-warning"
-                            />
+                                <InfoCard
+                                    title="Department"
+                                    value={
+                                        classInfo.department?.name ||
+                                        "--"
+                                    }
+                                    Icon={Building2}
+                                    color="bg-warning/20 text-warning"
+                                />
 
-                            <InfoCard
-                                title="Status"
-                                value={classInfo.status || "--"}
-                                Icon={ShieldCheck}
-                                color="bg-error/20 text-error"
-                            />
-                        </div>
+                                <InfoCard
+                                    title="Status"
+                                    value={classInfo.status || "--"}
+                                    Icon={ShieldCheck}
+                                    color="bg-error/20 text-error"
+                                />
+                            </div>
 
-                        <div className="mt-8 border-t border-dashed border-border" />
+                            <div className="mt-8 border-t border-dashed border-border" />
 
-                        <div className="mt-8">
-                            <div
-                                className="
+                            <div className="mt-8">
+                                <div
+                                    className="
                                     border border-border
                                     rounded-2xl
                                     bg-bg
                                     p-5
                                 "
-                            >
-                                <div className="flex items-center gap-3">
-                                    <div
-                                        className="
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <div
+                                            className="
                                             h-11
                                             w-11
                                             rounded-xl
@@ -192,34 +195,35 @@ const MyClass = () => {
                                             justify-center
                                             shrink-0
                                         "
-                                    >
-                                        <FileText className="h-5 w-5" />
+                                        >
+                                            <FileText className="h-5 w-5" />
+                                        </div>
+
+                                        <div>
+                                            <h3 className="text-lg font-semibold text-text-base">
+                                                Class Description
+                                            </h3>
+
+                                            <p className="text-sm text-text-secondary">
+                                                Additional information about your class.
+                                            </p>
+                                        </div>
                                     </div>
 
-                                    <div>
-                                        <h3 className="text-lg font-semibold text-text-base">
-                                            Class Description
-                                        </h3>
-
-                                        <p className="text-sm text-text-secondary">
-                                            Additional information about your class.
+                                    <div className="mt-5">
+                                        <p className="text-sm leading-7 text-text-secondary">
+                                            {classInfo.description?.trim()
+                                                ? classInfo.description
+                                                : "No class description available."}
                                         </p>
                                     </div>
                                 </div>
-
-                                <div className="mt-5">
-                                    <p className="text-sm leading-7 text-text-secondary">
-                                        {classInfo.description?.trim()
-                                            ? classInfo.description
-                                            : "No class description available."}
-                                    </p>
-                                </div>
                             </div>
-                        </div>
-                    </>
-                )}
-            </motion.section>
-        </div>
+                        </>
+                    )}
+                </motion.section>
+            </div>
+        </>
     );
 };
 

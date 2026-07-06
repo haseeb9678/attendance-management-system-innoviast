@@ -19,6 +19,7 @@ import { LucidePlus, LucideUpload } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { SEO } from '@/shared/components/SEO';
 
 const Classes = () => {
     const [status, setStatus] = useState(statusOptions[0]);
@@ -112,6 +113,7 @@ const Classes = () => {
 
     return (
         <>
+            <SEO title="Classes | Attendix" description="Manage classes in Attendix with attendance and academic workflows." noindex />
 
 
             <section

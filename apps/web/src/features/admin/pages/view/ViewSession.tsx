@@ -18,6 +18,7 @@ import { sessionStatusOptions } from "@/features/session/constants/filters";
 import { useSession } from "@/features/session/hooks/useSession";
 import { Spinner } from "@/components/ui/spinner";
 import { useEffect } from "react";
+import { SEO } from '@/shared/components/SEO';
 
 const ViewSession = () => {
     const navigate = useNavigate();
@@ -109,120 +110,125 @@ const ViewSession = () => {
         </section>
 
     return (
-        <section
-            className="
+        <>
+
+            <SEO title="View Session | Attendix" description="Review session details within Attendix." noindex />
+            <section
+                className="
                 bg-bg-card border border-border rounded-md
                 flex flex-col gap-3 shadow-sm flex-1 min-w-0 h-max
             "
-        >
-            <div className="p-4 flex items-center gap-2">
-                <button
-                    onClick={() => navigate(-1)}
-                    className="
+            >
+                <div className="p-4 flex items-center gap-2">
+                    <button
+                        onClick={() => navigate(-1)}
+                        className="
                         p-2 rounded-full cursor-pointer
                         hover:bg-surface transition-all text-text-base
                     "
-                >
-                    <ArrowLeft
-                        size={20}
+                    >
+                        <ArrowLeft
+                            size={20}
 
-                    />
-                </button>
+                        />
+                    </button>
 
-                <h2 className="text-text-base text-2xl font-bold">
-                    Session Info
-                </h2>
-            </div>
+                    <h2 className="text-text-base text-2xl font-bold">
+                        Session Info
+                    </h2>
+                </div>
 
-            <div className="border-t border-dashed border-border" />
+                <div className="border-t border-dashed border-border" />
 
-            <div className="p-6">
-                <form
+                <div className="p-6">
+                    <form
 
-                    className="flex flex-col gap-8"
-                >
-                    <div
-                        className="
+                        className="flex flex-col gap-8"
+                    >
+                        <div
+                            className="
                             grid grid-cols-1 xl:grid-cols-2
                             gap-8
                         "
-                    >
-                        {viewSessionFields.map((field) => {
-                            if (
-                                field.component ===
-                                "input"
-                            ) {
-                                return (
-                                    <FormInput
-                                        key={field.id}
-                                        register={register}
-                                        errors={errors}
-                                        name={field.name}
-                                        label={field.label
-                                        }
-                                        placeholder={field.placeholder}
-                                        type={
-                                            field.type as string
-                                        }
-                                        Icon={field.Icon}
-                                        disabled={true}
-                                    />
-                                );
-                            }
+                        >
+                            {viewSessionFields.map((field) => {
+                                if (
+                                    field.component ===
+                                    "input"
+                                ) {
+                                    return (
+                                        <FormInput
+                                            key={field.id}
+                                            register={register}
+                                            errors={errors}
+                                            name={field.name}
+                                            label={field.label
+                                            }
+                                            placeholder={field.placeholder}
+                                            type={
+                                                field.type as string
+                                            }
+                                            Icon={field.Icon}
+                                            disabled={true}
+                                        />
+                                    );
+                                }
 
-                            if (
-                                field.component ===
-                                "select"
-                            ) {
-                                return (
-                                    <Controller
-                                        key={field.id}
-                                        control={control}
-                                        name={field.name}
-                                        render={({
-                                            field:
-                                            controllerField,
-                                        }) => (
-                                            <Combobox
-                                                showTopLabel
-                                                label={
-                                                    field.label
-                                                }
-                                                option={
-                                                    controllerField.value
-                                                }
-                                                setOption={
-                                                    controllerField.onChange
-                                                }
-                                                options={
-                                                    field.isApi
-                                                        ? getOptions(
-                                                            field.name
-                                                        )
-                                                        : field.options
-                                                }
-                                                error={
-                                                    errors[
-                                                        field
-                                                            .name
-                                                    ]
-                                                        ?.message
-                                                }
-                                                className="h-12! rounded-3xl!"
-                                                disabled={true}
-                                            />
-                                        )}
-                                    />
-                                );
-                            }
+                                if (
+                                    field.component ===
+                                    "select"
+                                ) {
+                                    return (
 
-                            return null;
-                        })}
-                    </div>
+                                        <Controller
+                                            key={field.id}
+                                            control={control}
+                                            name={field.name}
+                                            render={({
+                                                field:
+                                                controllerField,
+                                            }) => (
+                                                <Combobox
+                                                    showTopLabel
+                                                    label={
+                                                        field.label
+                                                    }
+                                                    option={
+                                                        controllerField.value
+                                                    }
+                                                    setOption={
+                                                        controllerField.onChange
+                                                    }
+                                                    options={
+                                                        field.isApi
+                                                            ? getOptions(
+                                                                field.name
+                                                            )
+                                                            : field.options
+                                                    }
+                                                    error={
+                                                        errors[
+                                                            field
+                                                                .name
+                                                        ]
+                                                            ?.message
+                                                    }
+                                                    className="h-12! rounded-3xl!"
+                                                    disabled={true}
+                                                />
+                                            )}
+                                        />
+                                    );
+                                }
 
-                </form>
-            </div>
-        </section>
+                                return null;
+                            })}
+                        </div>
+
+                    </form>
+                </div>
+            </section>
+        </>
     );
 };
 

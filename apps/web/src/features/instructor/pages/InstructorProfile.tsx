@@ -33,6 +33,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { SEO } from '@/shared/components/SEO';
 
 const InstructorProfile = () => {
     const { data, isPending, isError, error } = useMe();
@@ -74,6 +75,9 @@ const InstructorProfile = () => {
 
     return (
         <>
+
+            <SEO title="Instructor Profile | Attendix" description="View and manage your profile and account settings in Attendix." noindex />
+
             <motion.section
                 initial={{
                     opacity: 0,
@@ -871,6 +875,7 @@ const BadgePill = ({
     className?: string;
 }) => {
     return (
+
         <span
             className={`px-3 py-1 rounded-full text-xs font-medium capitalize ${className}`}
         >
