@@ -8,6 +8,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import { useSidebarStore } from "../../shared/store/sidebar.store";
 import DisableUI from "@/components/common/DisableUI";
 import { motion, AnimatePresence } from "framer-motion";
+import Icon from "/icon_attendix.png"
 
 const sidebarVariants = {
     expanded: (isMobile: boolean) => ({
@@ -130,8 +131,16 @@ const Sidebar = ({ sidebarItems = [] }) => {
                                 animate="visible"
                                 exit="hidden"
                                 layout="position"
+                                className="flex gap-1.5 items-center"
                             >
-                                <h2 className="font-bold text-lg tracking-wider">Attendix</h2>
+                                <div
+                                    className='h-8 w-max overflow-hidden'
+                                >
+                                    <img
+                                        className='h-full w-full'
+                                        src={Icon} alt="icon" />
+                                </div>
+                                <h2 className="font-bold text-xl tracking-wider">Attendix</h2>
                             </motion.div>
                         )}
                     </AnimatePresence>

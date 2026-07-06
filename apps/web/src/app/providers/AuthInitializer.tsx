@@ -4,7 +4,9 @@ import { refresh } from "@/features/auth/api/auth.api";
 
 import { useAuthStore } from "@/features/auth/store/auth.store";
 import { Spinner } from "@/components/ui/spinner";
-import { useThemeStore } from "@/shared/store/theme.store";
+
+import Icon from "/icon_attendix.png"
+
 
 interface Props {
     children: React.ReactNode;
@@ -39,12 +41,22 @@ const AuthInitializer = ({
 
     if (auth.isInitializing) {
         return (
-            <div className="h-screen flex items-center gap-1.5 justify-center text-lg
+            <div className="h-screen flex flex-col items-center gap-2 justify-center text-lg
              bg-bg text-text-secondary font-semibold">
-                <Spinner
-                    className="size-6"
-                />
-                <p>Authenticating...</p>
+                <div
+                    className='h-10 w-max overflow-hidden animate-pulse'
+                >
+                    <img
+                        className='h-full w-full'
+                        src={Icon} alt="icon" />
+                </div>
+                <div className="flex gap-1.5 items-center">
+                    <Spinner
+                        className="size-6"
+                    />
+                    <p>Authenticating...</p>
+                </div>
+
             </div>
         );
     }

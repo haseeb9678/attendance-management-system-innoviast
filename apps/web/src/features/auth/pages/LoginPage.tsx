@@ -19,8 +19,8 @@ const LoginPage = () => {
                 <div
                     className="
                     flex w-full mx-auto overflow-hidden
-                    rounded-2xl lg:border border-border bg-bg-card
-                    shadow-md lg:shadow-xl
+                    rounded-2xl lg:border lg:border-border lg:bg-bg-card
+                     lg:shadow-xl
                     h-[73vh] max-h-300
                 "
                 >

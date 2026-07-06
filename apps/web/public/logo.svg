@@ -1,0 +1,31 @@
+<svg width="600" height="160" viewBox="0 0 600 160" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="markGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3B82F6"/>
+      <stop offset="100%" stop-color="#2563EB"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Icon mark: rounded square with calendar + checkmark motif -->
+  <g>
+    <rect x="8" y="8" width="144" height="144" rx="32" fill="url(#markGrad)"/>
+
+    <!-- Calendar top tabs -->
+    <rect x="46" y="30" width="10" height="22" rx="5" fill="#F8FAFC"/>
+    <rect x="104" y="30" width="10" height="22" rx="5" fill="#F8FAFC"/>
+
+    <!-- Calendar body -->
+    <rect x="34" y="46" width="92" height="76" rx="14" fill="none" stroke="#F8FAFC" stroke-width="8"/>
+
+    <!-- Calendar header divider -->
+    <rect x="34" y="46" width="92" height="22" rx="10" fill="#F8FAFC" opacity="0.9"/>
+
+    <!-- Checkmark -->
+    <path d="M56 96 L74 114 L104 78" fill="none" stroke="#F8FAFC" stroke-width="10"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Wordmark -->
+  <text x="176" y="102" font-family="'Poppins', 'Segoe UI', Arial, sans-serif"
+        font-size="64" font-weight="700" fill="#3B82F6" letter-spacing="1">Attendix</text>
+</svg>

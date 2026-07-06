@@ -1,6 +1,6 @@
 import { useThemeStore } from '@/shared/store/theme.store';
 import { Moon, Sun } from 'lucide-react';
-import Logo from "/logo.png"
+import Logo from "/logo.svg"
 
 
 const Header = () => {
@@ -18,7 +18,7 @@ const Header = () => {
                 className='flex items-center justify-between px-5 flex-1 h-full'
             >
                 <div
-                    className='h-12 w-max overflow-hidden'
+                    className='h-10 w-max overflow-hidden'
                 >
                     <img
                         className='h-full w-full'
