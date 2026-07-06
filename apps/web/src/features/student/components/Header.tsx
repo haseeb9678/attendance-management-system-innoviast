@@ -4,7 +4,7 @@ import { useSidebarStore } from '../../../shared/store/sidebar.store'
 import { useThemeStore } from '../../../shared/store/theme.store'
 import { useAuthStore } from '@/features/auth/store/auth.store'
 import HeaderMenu from '@/components/common/HeaderMenu'
-import { instructorHeaderMenuItems } from '@/shared/constants/menu'
+import { studentHeaderMenuItems } from '@/shared/constants/menu'
 import DisableUI from '@/components/common/DisableUI'
 
 const Header = () => {
@@ -88,7 +88,7 @@ const Header = () => {
                                     }
                                 </div>
                                 <HeaderMenu
-                                    menu={instructorHeaderMenuItems}
+                                    menu={studentHeaderMenuItems}
                                     isOpen={showMenu}
                                 />
 

@@ -1,7 +1,7 @@
 import {
+    CalendarClock,
     LayoutDashboard,
     LogOut,
-    Settings,
     User,
 } from "lucide-react";
 
@@ -20,10 +20,12 @@ export const adminHeaderMenuItems = [
     },
     {
         id: 3,
-        label: "Settings",
-        href: "/admin/settings",
-        Icon: Settings,
+        label: "Sessions",
+        href: "/admin/sessions",
+        Icon: CalendarClock,
+
     },
+
     {
         id: 4,
         label: "Logout",
@@ -47,12 +49,47 @@ export const instructorHeaderMenuItems = [
         href: "/instructor/profile",
         Icon: User,
     },
+
     {
         id: 3,
-        label: "Settings",
-        href: "/instructor/settings",
-        Icon: Settings,
+        label: "Sessions",
+        href: "/instructor/sessions",
+        Icon: CalendarClock,
+
     },
+
+    {
+        id: 4,
+        label: "Logout",
+        Icon: LogOut,
+        type: "action",
+        action: "logout",
+        danger: true,
+    },
+] as const;
+
+export const studentHeaderMenuItems = [
+    {
+        id: 1,
+        label: "Dashboard",
+        href: "/student/dashboard",
+        Icon: LayoutDashboard,
+    },
+    {
+        id: 2,
+        label: "Profile",
+        href: "/student/profile",
+        Icon: User,
+    },
+
+    {
+        id: 3,
+        label: "Sessions",
+        href: "/student/sessions",
+        Icon: CalendarClock,
+
+    },
+
     {
         id: 4,
         label: "Logout",
