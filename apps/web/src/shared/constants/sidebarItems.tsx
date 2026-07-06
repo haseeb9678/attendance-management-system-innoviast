@@ -100,21 +100,6 @@ export const adminSidebarItems = [
             },
         ],
     },
-
-    {
-        id: 4,
-        label: "Reports",
-        items: [
-            {
-                id: 7,
-                label: "Analytics",
-                Icon: BarChart3,
-                href: "/admin/reports",
-                children: [],
-            },
-        ],
-    },
-
     {
         id: 5,
         label: "Administration",
@@ -125,14 +110,7 @@ export const adminSidebarItems = [
                 Icon: UserCog,
                 href: "/admin/profile",
                 children: [],
-            },
-            {
-                id: 10,
-                label: "Settings",
-                Icon: Settings,
-                href: "/admin/settings",
-                children: [],
-            },
+            }
         ],
     },
 ];

@@ -17,6 +17,7 @@ import instructorRouter from "./modules/instructor/instructor.routes.js";
 import attendanceRouter from "./modules/attendance/attendance.routes.js";
 import { startSessionStatusCron } from "./modules/session/session.cron.js";
 import studentRouter from "./modules/student/student.routes.js";
+import adminRouter from "./modules/admin/admin.route.js";
 
 
 
@@ -50,6 +51,7 @@ app.use(`${api}/sessions`, sessionRouter)
 app.use(`${api}/attendance`, attendanceRouter)
 
 //RBAC Routes
+app.use(`${api}/admin`, adminRouter)
 app.use(`${api}/instructor`, instructorRouter)
 app.use(`${api}/student`, studentRouter)
 

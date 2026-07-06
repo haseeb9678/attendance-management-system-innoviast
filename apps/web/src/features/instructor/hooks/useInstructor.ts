@@ -15,6 +15,10 @@ export const useInstructorDashboard = () => {
     return useQuery({
         queryKey: ["instructor-dashboard"],
         queryFn: getInstructorDashboard,
+           refetchOnWindowFocus: true,
+        refetchOnMount: true,
+        refetchOnReconnect: true,
+        refetchInterval: 5000,
     });
 };
 

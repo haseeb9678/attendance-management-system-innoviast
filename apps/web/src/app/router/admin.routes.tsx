@@ -22,6 +22,7 @@ import UpdateTeacherAssignment from "@/features/admin/pages/update/UpdateTeacher
 import ViewTeacherAssignment from "@/features/admin/pages/view/ViewTeacherAsignment";
 import UpdateSession from "@/features/admin/pages/update/UpdateSession";
 import ViewSession from "@/features/admin/pages/view/ViewSession";
+import Profile from "@/features/admin/pages/Profile";
 
 export const adminRoutes = [
     {
@@ -125,4 +126,9 @@ export const adminRoutes = [
         path: "sessions/add",
         element: <AddSession />,
     },
+    {
+        path: "profile",
+        element: <Profile />,
+
+    }
 ];
