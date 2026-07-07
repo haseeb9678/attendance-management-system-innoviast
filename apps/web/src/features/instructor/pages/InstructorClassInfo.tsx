@@ -85,6 +85,10 @@ const InstructorClassInfo = () => {
     const students =
         data?.data?.students ?? [];
 
+    useEffect(() => {
+        setPage(1);
+    }, [debouncedSearch, sort, limit]);
+
     if (isPending)
         return <section
             className="flex justify-center items-center gap-2 flex-1 text-primary-hover"

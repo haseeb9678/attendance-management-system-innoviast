@@ -177,6 +177,10 @@ const InstructorAttendanceHistory = () => {
             }),
         []
     );
+
+    useEffect(() => {
+        setPage(1);
+    }, [debouncedSearch, status, sort, limit]);
     return (
         <>
             <SEO title="Instructor Attendance History | Attendix" description="Review past attendance records and historical session details." noindex />

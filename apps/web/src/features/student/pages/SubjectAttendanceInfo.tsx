@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
     ArrowLeft,
     BookOpen,
@@ -277,6 +277,10 @@ const SubjectAttendanceInfo = () => {
             ],
             []
         );
+
+    useEffect(() => {
+        setPage(1);
+    }, [debouncedSearch, sort, limit]);
 
     return (
         <>
