@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { SEO } from "@/shared/components/SEO";
 import AuthShowcase from "../components/AuthShowcase";
 import LoginForm from "../components/LoginForm";
@@ -16,7 +17,10 @@ const LoginPage = () => {
                  px-4 py-8 flex-1 max-w-7xl mx-auto 
             "
             >
-                <div
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
                     className="
                     flex w-full mx-auto overflow-hidden
                     rounded-2xl lg:border lg:border-border lg:bg-bg-card
@@ -36,7 +40,7 @@ const LoginPage = () => {
                     >
                         <LoginForm />
                     </div>
-                </div>
+                </motion.div>
             </section>
         </>
     );

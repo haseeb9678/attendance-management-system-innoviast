@@ -1,5 +1,29 @@
+import { motion } from "framer-motion";
 import { LucideSchool } from "lucide-react";
 import School from "/school.jpg";
+
+const containerVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: {
+            duration: 0.5,
+            ease: "easeOut",
+            when: "beforeChildren",
+            staggerChildren: 0.08,
+        },
+    },
+};
+
+const itemVariants = {
+    hidden: { opacity: 0, y: 12 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.35, ease: "easeOut" },
+    },
+};
 
 const AuthShowcase = () => {
     return (
@@ -37,11 +61,17 @@ const AuthShowcase = () => {
             <div className="absolute -bottom-20 -right-20 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
 
             {/* Content */}
-            <div className="relative z-10 flex flex-col justify-between">
+            <motion.div
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+                className="relative z-10 flex flex-col justify-between"
+            >
                 {/* Top */}
                 <div className="space-y-10">
                     {/* Badge */}
-                    <div
+                    <motion.div
+                        variants={itemVariants}
                         className="
               inline-flex items-center gap-3
               rounded-full
@@ -58,24 +88,30 @@ const AuthShowcase = () => {
                         <span className="text-sm font-medium">
                             Attendance Management System
                         </span>
-                    </div>
+                    </motion.div>
 
                     {/* Heading */}
                     <div className="space-y-5">
-                        <h1 className="max-w-lg text-4xl font-bold leading-tight">
+                        <motion.h1
+                            variants={itemVariants}
+                            className="max-w-lg text-4xl font-bold leading-tight"
+                        >
                             Smart attendance management for modern institutions.
-                        </h1>
+                        </motion.h1>
 
-                        <p className="max-w-lg text-base leading-8 text-white/90">
+                        <motion.p
+                            variants={itemVariants}
+                            className="max-w-lg text-base leading-8 text-white/90"
+                        >
                             Streamline attendance tracking, manage students and staff,
                             generate insightful reports, and simplify administration—all
                             from one powerful dashboard.
-                        </p>
+                        </motion.p>
                     </div>
                 </div>
 
 
-            </div>
+            </motion.div>
         </aside>
     );
 };
