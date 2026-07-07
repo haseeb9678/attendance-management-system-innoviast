@@ -25,6 +25,8 @@ import { useClassOptions } from "@/features/class/hooks/useClassOptions";
 import { useSubjectOptions } from "@/features/subject/hooks/useSubjectOptions";
 import AttendanceStats from "@/features/attendance/components/AttendanceStats";
 import { SEO } from '@/shared/components/SEO';
+import ExportButton from "@/components/common/ExportButton";
+import { attendanceHistoryExportColumns } from "@/features/attendance/constants/attendanceHistoryExportColumns";
 
 const InstructorAttendanceHistory = () => {
     const navigate = useNavigate();
@@ -169,6 +171,7 @@ const InstructorAttendanceHistory = () => {
             `/instructor/sessions/${row._id}/attendance`
         );
     };
+    const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
 
     const columns = useMemo(
         () =>
@@ -232,18 +235,14 @@ const InstructorAttendanceHistory = () => {
                         </p>
                     </div>
 
-                    <FormButton
-                        type="button"
-                        text="Export"
-                        Icon={LucideUpload}
-                        className="
-                        max-w-40
-                        h-10!
-                        px-5
-                        text-sm
-                        bg-warning
-                        hover:bg-warning-hover
-                    "
+
+                    <ExportButton
+                        data={data?.data ?? []}
+                        selectedRowIds={selectedRowIds}
+                        getRowId={(row) => row._id}
+                        fileName="attendance history"
+                        columns={attendanceHistoryExportColumns}
+                        className="w-max"
                     />
                 </div>
 
@@ -321,6 +320,11 @@ const InstructorAttendanceHistory = () => {
                         columns={columns}
                         data={data?.data}
                         loading={isLoading}
+                        getRowId={(row) => row._id}
+                        selectedRowIds={selectedRowIds}
+                        onSelectedRowIdsChange={(ids) =>
+                            setSelectedRowIds(ids as string[])
+                        }
                     />
                 </div>
 
