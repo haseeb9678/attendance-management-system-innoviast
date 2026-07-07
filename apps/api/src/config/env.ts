@@ -17,6 +17,11 @@ const envSchema = z.object({
     ACCESS_COOKIE_MAX_AGE: z.coerce.number(),
     REFRESH_COOKIE_MAX_AGE: z.coerce.number(),
     CRON_SECRET: z.string().min(1),
+    RESEND_API_KEY: z.string().min(1),
+    RESEND_FROM_EMAIL: z.string().min(1),
+    FORGOT_PASSWORD_LIMIT: z.coerce.number(),
+    FORGOT_PASSWORD_WINDOW_MS: z.coerce.number(),
+    RESET_PASSWORD_TOKEN_EXPIRES_MS: z.coerce.number(),
 });
 
 const env = envSchema.parse(process.env);
@@ -33,6 +38,11 @@ export const {
     ACCESS_COOKIE_MAX_AGE,
     REFRESH_COOKIE_MAX_AGE,
     CRON_SECRET,
+    RESEND_API_KEY,
+    RESEND_FROM_EMAIL,
+    FORGOT_PASSWORD_LIMIT,
+    FORGOT_PASSWORD_WINDOW_MS,
+    RESET_PASSWORD_TOKEN_EXPIRES_MS,
 
 
 } = env;

@@ -283,13 +283,11 @@ export const deleteSessionService = async (sessionId: string) => {
 
 export const updateSessionStatusesService = async () => {
     const now = new Date();
-    console.log("[Cron Debug] Current time (UTC):", now.toISOString());
 
     const sessions = await SessionModel.find({
         status: { $ne: "cancelled" },
     });
 
-    console.log("[Cron Debug] Sessions found:", sessions.length);
 
     if (!sessions.length) {
         return { totalChecked: 0, updatedCount: 0 };
@@ -316,16 +314,6 @@ export const updateSessionStatusesService = async () => {
             nextStatus = "scheduled";
         }
 
-        console.log("[Cron Debug]", {
-            sessionId: session._id.toString(),
-            currentStatus: session.status,
-            sessionStart: sessionStart.toISOString(),
-            sessionEnd: sessionEnd.toISOString(),
-            now: now.toISOString(),
-            nextStatus,
-            willUpdate: session.status !== nextStatus,
-        });
-
         if (session.status !== nextStatus) {
             bulkOperations.push({
                 updateOne: {
@@ -336,11 +324,11 @@ export const updateSessionStatusesService = async () => {
         }
     }
 
-    console.log("[Cron Debug] Bulk operations to run:", bulkOperations.length);
+
 
     if (bulkOperations.length > 0) {
         const result = await SessionModel.bulkWrite(bulkOperations);
-        console.log("[Cron Debug] bulkWrite result:", JSON.stringify(result));
+
     }
 
     return { totalChecked: sessions.length, updatedCount: bulkOperations.length };

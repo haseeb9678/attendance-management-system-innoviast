@@ -1,5 +1,3 @@
-// src/features/auth/api/auth.api.ts
-
 import { api } from "@/lib/axios";
 
 export interface LoginBody {
@@ -13,6 +11,20 @@ export interface RegisterBody {
     password: string;
 }
 
+export interface ForgotPasswordBody {
+    email: string;
+}
+
+export interface VerifyResetTokenBody {
+    token: string;
+}
+
+export interface ResetPasswordBody {
+    token: string;
+    password: string;
+    confirmPassword: string;
+}
+
 export interface User {
     id: string;
     name: string;
@@ -24,6 +36,10 @@ export interface AuthResponse {
     user: User;
     accessToken: string;
     refreshToken: string;
+}
+
+export interface MessageResponse {
+    message: string;
 }
 
 export const login = async (
@@ -59,8 +75,7 @@ export const getMe = async () => {
     return data;
 };
 
-export const refresh = async (
-) => {
+export const refresh = async () => {
     const { data } =
         await api.post<AuthResponse>(
             "/auth/refresh"
@@ -71,8 +86,44 @@ export const refresh = async (
 
 export const logout = async () => {
     const { data } =
-        await api.post(
+        await api.post<MessageResponse>(
             "/auth/logout"
+        );
+
+    return data;
+};
+
+export const forgotPassword = async (
+    body: ForgotPasswordBody
+) => {
+    const { data } =
+        await api.post<MessageResponse>(
+            "/auth/forgot-password",
+            body
+        );
+
+    return data;
+};
+
+export const verifyResetToken = async (
+    body: VerifyResetTokenBody
+) => {
+    const { data } =
+        await api.post<MessageResponse>(
+            "/auth/verify-reset-token",
+            body
+        );
+
+    return data;
+};
+
+export const resetPassword = async (
+    body: ResetPasswordBody
+) => {
+    const { data } =
+        await api.post<MessageResponse>(
+            "/auth/reset-password",
+            body
         );
 
     return data;

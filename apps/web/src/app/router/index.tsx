@@ -15,6 +15,9 @@ import ProtectedRoute from "../providers/ProtectedRoute";
 import PublicRoute from "../providers/PublicRoute";
 import ErrorPage from "../providers/ErrorPage";
 
+import ForgotPasswordPage from "@/features/auth/pages/ForgotPasswordPage";
+import ResetPasswordPage from "@/features/auth/pages/ResetPasswordPage";
+
 const router = createBrowserRouter([
     /**
      * Public / Auth Routes
@@ -40,6 +43,15 @@ const router = createBrowserRouter([
                     {
                         path: "login",
                         element: <LoginPage />,
+                    },
+
+                    {
+                        path: "/forgot-password",
+                        element: <ForgotPasswordPage />,
+                    },
+                    {
+                        path: "/reset-password",
+                        element: <ResetPasswordPage />,
                     },
                 ],
             },

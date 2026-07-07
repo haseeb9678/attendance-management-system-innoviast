@@ -88,6 +88,7 @@ const LoginForm = () => {
                     </div>
                     <div className='flex justify-end'>
                         <button
+                            onClick={() => navigate("/forgot-password")}
                             type='button'
                             className='text-primary
                         hover:cursor-pointer transition-all duration-200

@@ -11,8 +11,6 @@ const errorMiddleware: ErrorRequestHandler = (
 
     let error = err;
 
-    console.error(err);
-
     // Invalid Mongo ObjectId
     if (err.name === "CastError") {
         error = new ApiError(

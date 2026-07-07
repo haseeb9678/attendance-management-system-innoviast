@@ -3,7 +3,7 @@ import ApiResponse from "../../shared/utils/ApiResponse.js";
 import { asyncHandler } from "../../shared/utils/AsyncHandler.js";
 
 import { clearAuthCookies, setAccessTokenCookie, setRefreshTokenCookie } from "../../shared/utils/cookie.js";
-import { getMeService, loginService, logoutService, refreshTokenService, registerService } from "./auth.service.js";
+import { forgotPasswordService, getMeService, loginService, logoutService, refreshTokenService, registerService, resetPasswordService, verifyResetTokenService } from "./auth.service.js";
 
 export const register = asyncHandler(async (req, res) => {
 
@@ -123,6 +123,81 @@ export const refreshToken = asyncHandler(
                 {
                     accessToken,
                 }
+            )
+        );
+    }
+);
+
+export const verifyResetToken = asyncHandler(
+    async (req, res) => {
+        const { token } = req.body;
+
+        if (!token) {
+            throw new ApiError(
+                400,
+                "Reset token is required"
+            );
+        }
+
+        const result =
+            await verifyResetTokenService(token);
+
+        return res.status(200).json(
+            new ApiResponse(
+                200,
+                result.message,
+                null
+            )
+        );
+    }
+);
+
+export const forgotPassword = asyncHandler(
+    async (req, res) => {
+        const { email } = req.body;
+
+        if (!email) {
+            throw new ApiError(
+                400,
+                "Email is required"
+            );
+        }
+
+        const result =
+            await forgotPasswordService(email);
+
+        return res.status(200).json(
+            new ApiResponse(
+                200,
+                result.message,
+                null
+            )
+        );
+    }
+);
+
+export const resetPassword = asyncHandler(
+    async (req, res) => {
+        const { token, password } = req.body;
+
+        if (!token || !password) {
+            throw new ApiError(
+                400,
+                "Token and password are required"
+            );
+        }
+
+        const result =
+            await resetPasswordService({
+                token,
+                password,
+            });
+
+        return res.status(200).json(
+            new ApiResponse(
+                200,
+                result.message,
+                null
             )
         );
     }

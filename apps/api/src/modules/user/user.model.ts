@@ -45,13 +45,17 @@ export interface User {
     lastLoginAt?: Date;
     currentLoginAt?: Date;
 
-
     lastLoginIp?: string;
     currentLoginIp?: string;
 
-
     lastUserAgent?: string;
     currentUserAgent?: string;
+
+    resetPasswordToken?: string;
+    resetPasswordExpires?: Date | null;
+
+    forgotPasswordAttempts: number;
+    forgotPasswordWindowExpires: Date | null;
 }
 
 interface UserMethods {
@@ -175,6 +179,19 @@ const userSchema = new Schema<User, UserModel, UserMethods>(
 
         lastUserAgent: String,
         currentUserAgent: String,
+
+
+        resetPasswordToken: String,
+        resetPasswordExpires: Date,
+
+        forgotPasswordAttempts: {
+            type: Number,
+            default: 0,
+        },
+        forgotPasswordWindowExpires: {
+            type: Date,
+            default: null,
+        },
     },
     {
         timestamps: true,

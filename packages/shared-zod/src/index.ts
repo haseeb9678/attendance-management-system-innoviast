@@ -1,5 +1,6 @@
 export * from "./auth/login.schema.js";
 export * from "./auth/register.schema.js";
+export * from "./auth/password.schema.js";
 
 export * from "./user/userForm.schema.js";
 export * from "./user/createUser.schema.js";

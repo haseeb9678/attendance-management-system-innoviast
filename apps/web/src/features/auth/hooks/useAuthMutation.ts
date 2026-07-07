@@ -1,9 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
 
 import {
+    forgotPassword,
     login,
     logout,
     register,
+    resetPassword,
+    verifyResetToken,
 } from "../api/auth.api";
 
 import { authKeys } from "../api/auth.keys";
@@ -27,7 +30,7 @@ export const useLogin = () => {
                 authKeys.me(),
                 response.data
             );
-        }
+        },
     });
 };
 
@@ -54,3 +57,21 @@ export const useLogout = () => {
         },
     });
 };
+
+export const useForgotPassword = () => {
+    return useMutation({
+        mutationFn: forgotPassword,
+    });
+};
+
+export const useResetPassword = () => {
+    return useMutation({
+        mutationFn: resetPassword,
+    });
+};
+
+export const useVerifyResetToken = () => {
+    return useMutation({
+        mutationFn: verifyResetToken
+    })
+}
