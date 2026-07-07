@@ -9,7 +9,7 @@ import {
     LogIn,
 } from "lucide-react";
 
-import { useAuthStore } from "@/features/auth/store/auth.store";
+import { useAuthStore } from "@/features/auth/store/auth.store.js";
 import { SEO } from "@/shared/components/SEO";
 import { getRedirectPathByRole } from "@/lib/redirectpath";
 
@@ -27,7 +27,7 @@ const ErrorPage = ({
     description = "The page you’re looking for is unavailable or an unexpected error occurred.",
     statusCode = 404,
     autoRedirect = true,
-    redirectDelay = 4000,
+    redirectDelay = 3000,
     showRefreshButton = true,
 }: ErrorPageProps) => {
     const navigate = useNavigate();
