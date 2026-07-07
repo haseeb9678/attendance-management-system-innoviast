@@ -111,6 +111,11 @@ const Classes = () => {
     }, [allDepartmentOptions, department]);
 
 
+    useEffect(() => {
+        setPage(1);
+    }, [debouncedSearch, status, sort, department, limit]);
+
+
     return (
         <>
             <SEO title="Classes | Attendix" description="Manage classes in Attendix with attendance and academic workflows." noindex />

@@ -169,6 +169,16 @@ const TeacherAssignments = () => {
     }, [allSubjectOptions, selectedSubject]);
 
 
+    useEffect(() => {
+        setPage(1);
+    }, [debouncedSearch,
+        status, sort,
+        selectedDepartment,
+        selectedclass,
+        selectedSubject,
+        limit]);
+
+
 
     return (
         <>

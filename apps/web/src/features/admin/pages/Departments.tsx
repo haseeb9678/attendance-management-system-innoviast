@@ -14,7 +14,7 @@ import type { Department } from '@/features/department/types/department.types'
 import { limitOptions, sortOptions, statusOptions } from '@/shared/constants/filters'
 import useDebounce from '@/shared/hooks/useDebounce'
 import { LucidePlus, LucideUpload } from 'lucide-react'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { SEO } from '@/shared/components/SEO';
@@ -90,6 +90,11 @@ const Departments = () => {
             }),
         []
     );
+
+
+    useEffect(() => {
+        setPage(1);
+    }, [debouncedSearch, status, sort, limit]);
 
 
     return (

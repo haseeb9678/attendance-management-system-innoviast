@@ -105,9 +105,6 @@ interface RecentTeacherAssignment {
 interface AdminDashboardData {
     overview: {
         totalUsers: number;
-        totalStudents: number;
-        totalInstructors: number;
-        totalAdmins: number;
         totalDepartments: number;
         totalClasses: number;
         totalSubjects: number;
@@ -545,7 +542,7 @@ const AdminDashboard = () => {
                         mt-8
                         grid grid-cols-1 gap-5
                         sm:grid-cols-2
-                        xl:grid-cols-4
+                        xl:grid-cols-5
                     "
                     >
                         <DashboardCard
@@ -559,38 +556,6 @@ const AdminDashboard = () => {
                             color="bg-primary/20 text-primary"
                         />
 
-                        <DashboardCard
-                            title="Students"
-                            value={
-                                dashboard?.overview
-                                    .totalStudents ??
-                                0
-                            }
-                            Icon={GraduationCap}
-                            color="bg-success/20 text-success"
-                        />
-
-                        <DashboardCard
-                            title="Instructors"
-                            value={
-                                dashboard?.overview
-                                    .totalInstructors ??
-                                0
-                            }
-                            Icon={UserCog}
-                            color="bg-warning/20 text-warning"
-                        />
-
-                        <DashboardCard
-                            title="Admins"
-                            value={
-                                dashboard?.overview
-                                    .totalAdmins ??
-                                0
-                            }
-                            Icon={ShieldCheck}
-                            color="bg-error/20 text-error"
-                        />
 
                         <DashboardCard
                             title="Departments"
@@ -600,7 +565,7 @@ const AdminDashboard = () => {
                                 0
                             }
                             Icon={School}
-                            color="bg-primary/20 text-primary"
+                            color="bg-pink-600/20 text-pink-700"
                         />
 
                         <DashboardCard

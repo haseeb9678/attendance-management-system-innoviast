@@ -118,6 +118,10 @@ const Users = () => {
         setDepartment(allDepartmentOptions[0]);
     }, [allDepartmentOptions, department]);
 
+    useEffect(() => {
+        setPage(1);
+    }, [debouncedSearch, role, status, sort, department, limit]);
+
     return (
         <>
             <SEO title="Users | Attendix" description="Manage users in Attendix with attendance and academic workflows." noindex />

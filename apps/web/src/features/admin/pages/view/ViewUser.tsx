@@ -240,22 +240,24 @@ const ViewUser = () => {
                         className="flex flex-col gap-8"
                     >
                         <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
-                            {divisions.map((division) => (
-                                <ParentBox
-                                    key={division.id}
-                                    label={division.label}
-                                >
-                                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
-                                        {renderFields(
-                                            formFields.filter(
-                                                (field) =>
-                                                    field.division ===
-                                                    division.division
-                                            )
-                                        )}
-                                    </div>
-                                </ParentBox>
-                            ))}
+                            {divisions
+                                .filter((division) => division.label !== "Account Information")
+                                .map((division) => (
+                                    <ParentBox
+                                        key={division.id}
+                                        label={division.label}
+                                    >
+                                        <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
+                                            {renderFields(
+                                                formFields.filter(
+                                                    (field) =>
+                                                        field.division ===
+                                                        division.division
+                                                )
+                                            )}
+                                        </div>
+                                    </ParentBox>
+                                ))}
 
                             {currentRole && (
                                 <ParentBox

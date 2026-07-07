@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { LucidePlus, LucideUpload } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -95,6 +95,11 @@ const Sessions = () => {
             }),
         []
     );
+
+
+    useEffect(() => {
+        setPage(1);
+    }, [debouncedSearch, status, sort, limit]);
 
     return (
         <>

@@ -112,6 +112,11 @@ const Subjects = () => {
     }, [allDepartmentOptions, department]);
 
 
+    useEffect(() => {
+        setPage(1);
+    }, [debouncedSearch, status, sort, department, limit]);
+
+
     return (
         <>
             <SEO title="Subjects | Attendix" description="Browse your subjects, instructors, and course details in Attendix." noindex />
