@@ -76,6 +76,13 @@ export const loginService = async (
         );
     }
 
+    if (user.status === "suspended") {
+        throw new ApiError(
+            403,
+            "Your account has been suspended."
+        );
+    }
+
     const payload: JwtPayload = {
         userId: user._id.toString(),
         role: user.role,

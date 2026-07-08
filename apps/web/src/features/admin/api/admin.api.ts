@@ -11,6 +11,26 @@ export const updateAdminProfile = async (data: any) => {
 };
 
 /**
+ * Update any user by admin
+ */
+export const updateUser = async (data: {
+    id: string;
+    name: string;
+    phoneNumber: string;
+    status: {
+        label: string;
+        value: string;
+    };
+}) => {
+    const res = await api.put(
+        "/admin/users/update",
+        data
+    );
+
+    return res;
+};
+
+/**
  * Fixed attendance history stats + charts
  * This should NOT change with table pagination
  */

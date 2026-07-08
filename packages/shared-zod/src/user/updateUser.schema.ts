@@ -46,11 +46,6 @@ export const adminUpdateUserFormSchema = z.object({
         ),
 
     status: selectOptionSchema("Status"),
-
-
-    currentPassword: z
-        .string()
-        .min(1, "Current password is required"),
 });
 
 export type AdminUpdateUserFormInput = z.infer<
@@ -80,11 +75,6 @@ export const adminUpdateUserSchema = z.object({
     status: z.enum(["active", "inactive", "suspended"], {
         error: "Please provide a valid status.",
     }),
-
-
-    currentPassword: z
-        .string()
-        .min(1, "Current password is required"),
 });
 
 export type AdminUpdateUserInput = z.infer<
