@@ -359,7 +359,7 @@ const AttendanceSessionDetails = () => {
                         <p className="text-sm text-text-secondary mt-3">
                             View full session information,
                             attendance summary, and
-                            student attendance records.
+                            student attendance records
                         </p>
                     </div>
 

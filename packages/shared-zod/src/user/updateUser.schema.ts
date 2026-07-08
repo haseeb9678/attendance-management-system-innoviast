@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { selectOptionSchema } from "../utils/selectOption.schema";
+import { selectOptionSchema } from "../utils/selectOption.schema.js";
 
 export const updateUserSchema = z.object({
     name: z
