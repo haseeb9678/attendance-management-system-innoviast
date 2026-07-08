@@ -29,7 +29,7 @@ export const createUserSchema = z
             error: "Please provide a valid role.",
         }),
 
-        status: z.enum(["active", "inactive"], {
+        status: z.enum(["active", "inactive", "suspended"], {
             error: "Please provide a valid status.",
         }),
 

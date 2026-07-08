@@ -23,6 +23,8 @@ import ViewTeacherAssignment from "@/features/admin/pages/view/ViewTeacherAsignm
 import UpdateSession from "@/features/admin/pages/update/UpdateSession";
 import ViewSession from "@/features/admin/pages/view/ViewSession";
 import Profile from "@/features/admin/pages/Profile";
+import AttendanceHistory from "@/features/admin/pages/AttendanceHistory";
+import AttendanceSessionDetails from "@/features/admin/pages/AttendanceSessionDetails";
 
 export const adminRoutes = [
     {
@@ -125,6 +127,14 @@ export const adminRoutes = [
     {
         path: "sessions/add",
         element: <AddSession />,
+    },
+    {
+        path: "attendance/report",
+        element: <AttendanceHistory />,
+    },
+    {
+        path: "attendance/report/:sessionId",
+        element: <AttendanceSessionDetails />
     },
     {
         path: "profile",

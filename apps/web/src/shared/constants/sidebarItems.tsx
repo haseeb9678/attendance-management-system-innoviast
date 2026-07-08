@@ -92,8 +92,8 @@ export const adminSidebarItems = [
 
                     {
                         id: 1,
-                        label: "Attendance History",
-                        href: "/admin/attendance/history",
+                        label: "Attendance Report",
+                        href: "/admin/attendance/report",
                     },
 
                 ],

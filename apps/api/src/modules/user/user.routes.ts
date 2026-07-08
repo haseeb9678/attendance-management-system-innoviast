@@ -11,6 +11,7 @@ import {
     updateUser,
 } from "./user.controller.js";
 import { auth } from "../../middleware/auth.middleware.js";
+import { authorize } from "../../middleware/authorize.middleware.js";
 
 const userRouter = Router();
 
@@ -19,6 +20,8 @@ userRouter.get("/:id", getUser);
 
 userRouter.post(
     "/",
+    auth,
+    authorize("admin"),
     validate(createUserSchema),
     addUser
 );

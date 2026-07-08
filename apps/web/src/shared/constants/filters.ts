@@ -32,6 +32,10 @@ export const statusOptions = [
     {
         label: "Inactive",
         value: "inactive"
+    },
+    {
+        label: "Suspended",
+        value: "suspended"
     }
 ];
 

@@ -14,7 +14,6 @@ import {
     updateInstructorProfileService,
 } from "./instructor.service.js";
 import { asyncHandler } from "../../shared/utils/AsyncHandler.js";
-import { log } from "console";
 
 
 export const getInstructorDashboard = asyncHandler(

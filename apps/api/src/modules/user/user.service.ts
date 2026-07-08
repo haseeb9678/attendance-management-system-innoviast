@@ -131,7 +131,7 @@ interface GetAllUsersOptions {
     role?: "admin" | "instructor" | "student";
     department?: string;
     class?: string;
-    status?: "active" | "inactive";
+    status?: "active" | "inactive" | "suspended";
     sort?: "newest" | "oldest";
 }
 

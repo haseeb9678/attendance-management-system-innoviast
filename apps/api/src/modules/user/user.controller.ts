@@ -100,7 +100,8 @@ export const getAllUsers = asyncHandler(async (req, res) => {
 
     const status =
         req.query.status === "active" ||
-            req.query.status === "inactive"
+            req.query.status === "inactive" ||
+            req.query.status === "suspended"
             ? req.query.status
             : undefined;
 
