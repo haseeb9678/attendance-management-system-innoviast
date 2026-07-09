@@ -44,14 +44,14 @@ export const attendanceColumns = ({
                     render={({ field }) => (
                         <Combobox
                             label=""
-                            options={attendanceStatusOptions}
+                            options={attendanceStatusOptions.slice(1)}
                             option={
                                 attendanceStatusOptions.find(
                                     (option) =>
                                         option.value ===
                                         field.value
                                 ) ??
-                                attendanceStatusOptions[0]
+                                attendanceStatusOptions[1]
                             }
                             setOption={(option) =>
                                 field.onChange(option.value)

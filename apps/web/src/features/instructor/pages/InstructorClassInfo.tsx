@@ -283,7 +283,7 @@ const InstructorClassInfo = () => {
                         "
                             onClick={() =>
                                 navigate(
-                                    `/instructor/attendance-history?class=${id}`
+                                    `/instructor/attendance/history`
                                 )
                             }
                         />
