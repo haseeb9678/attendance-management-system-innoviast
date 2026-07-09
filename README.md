@@ -239,13 +239,15 @@ Attendix's schema follows a **Department → Class / Subject → TeacherAssignme
 
 ## 🔑 Demo Accounts
 
-Use these seeded credentials to explore each role.
+Use the following seeded credentials to explore the platform from each role's perspective.
 
 | Role | Email | Password |
 |---|---|---|
 | 🛡️ Admin | `admin@attendix.dev` | `Admin@123` |
 | 🎓 Instructor | `instructor@attendix.dev` | `Instructor@123` |
 | 🧑‍🎓 Student | `student@attendix.dev` | `Student@123` |
+
+**Note:** For demo purposes, the Admin account has full CRUD access to Sessions only. Other modules, such as Users and Departments, are restricted to read-only access to keep the demo data safe and consistent.
 
 ---
 
