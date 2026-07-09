@@ -1,6 +1,6 @@
 import { api } from "@/lib/axios";
 
-import type { AttendanceHistoryFilters, CreateAttendanceInput } from "../types/attendance.types";
+import type { CreateAttendanceInput } from "../types/attendance.types";
 
 
 

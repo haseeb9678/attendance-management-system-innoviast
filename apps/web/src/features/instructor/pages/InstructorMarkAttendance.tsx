@@ -35,13 +35,12 @@ const InstructorMarkAttendance = () => {
     } = useSessionAttendance(id as string);
 
     const {
-        data: sessionResponse,
+        data: session,
         isPending: isSessionLoading,
         error: sessionError,
         isError: isSessionError,
     } = useSession(id as string);
 
-    const session = sessionResponse?.data;
 
     const { data: studentsData, isPending: isStudentsLoading } = useMyStudents(
         session?.teacherAssignment?.class?._id
@@ -146,29 +145,34 @@ const InstructorMarkAttendance = () => {
     if (!id) {
         return (
             <>
-                <SEO title="Instructor Mark Attendance | Attendix" description="Manage instructor mark attendance in Attendix with attendance and academic workflows." noindex />
+                <SEO
+                    title="Instructor Mark Attendance | Attendix"
+                    description="Manage instructor mark attendance in Attendix with attendance and academic workflows."
+                    noindex
+                />
                 <section
                     className="
-                bg-bg-card
-                border border-border
-                rounded-md
-                shadow-sm
-                flex-1
-                flex
-                items-center
-                justify-center
-                min-h-max
+                    bg-bg-card
+                    border border-border
+                    rounded-md
+                    shadow-sm
+                    flex-1
+                    flex
+                    items-center
+                    justify-center
+                    min-h-max
+                    p-5
                 "
                 >
                     <p className="text-text-base font-semibold">
-                        Invalid Session Id or Session not found.
+                        Invalid session ID.
                     </p>
                 </section>
             </>
         );
     }
 
-    if (sessionError || isSessionError || (!loading && session?.status !== "ongoing")) {
+    if (sessionError || isSessionError) {
         return (
             <section
                 className="
@@ -182,12 +186,57 @@ const InstructorMarkAttendance = () => {
                 justify-center
                 min-h-max
                 p-5
-                "
+            "
             >
                 <p className="text-text-secondary text-center font-semibold text-lg">
-                    {"Invalid Session Id or Session not found."}
+                    Session not found or could not be loaded.
                 </p>
+            </section>
+        );
+    }
 
+    if (!loading && !session) {
+        return (
+            <section
+                className="
+                bg-bg-card
+                border border-border
+                rounded-md
+                shadow-sm
+                flex-1
+                flex
+                items-center
+                justify-center
+                min-h-max
+                p-5
+            "
+            >
+                <p className="text-text-secondary text-center font-semibold text-lg">
+                    Session data is unavailable.
+                </p>
+            </section>
+        );
+    }
+
+    if (!loading && session?.status !== "ongoing") {
+        return (
+            <section
+                className="
+                bg-bg-card
+                border border-border
+                rounded-md
+                shadow-sm
+                flex-1
+                flex
+                items-center
+                justify-center
+                min-h-max
+                p-5
+            "
+            >
+                <p className="text-text-secondary text-center font-semibold text-lg">
+                    Attendance can only be marked for ongoing sessions.
+                </p>
             </section>
         );
     }
