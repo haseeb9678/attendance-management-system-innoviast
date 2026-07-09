@@ -11,6 +11,7 @@ import {
 } from "./admin.controller.js";
 import validate from "../../middleware/validate.middleware.js";
 import { adminUpdateUserSchema } from "@attendance/shared-zod";
+import { blockDemoAccount } from "../../middleware/demo.middleware.js";
 
 const adminRouter = Router();
 
@@ -25,6 +26,7 @@ adminRouter.put(
     "/profile",
     auth,
     authorize("admin"),
+    blockDemoAccount,
     updateAdminProfile
 );
 
@@ -35,6 +37,7 @@ adminRouter.put(
     "/users/update",
     auth,
     authorize("admin"),
+    blockDemoAccount,
     validate(adminUpdateUserSchema),
     updateUser
 );

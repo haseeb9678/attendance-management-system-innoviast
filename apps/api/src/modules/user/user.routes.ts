@@ -12,6 +12,7 @@ import {
 } from "./user.controller.js";
 import { auth } from "../../middleware/auth.middleware.js";
 import { authorize } from "../../middleware/authorize.middleware.js";
+import { blockDemoAccount } from "../../middleware/demo.middleware.js";
 
 const userRouter = Router();
 
@@ -22,12 +23,15 @@ userRouter.post(
     "/",
     auth,
     authorize("admin"),
+    blockDemoAccount,
     validate(createUserSchema),
     addUser
 );
 
 userRouter.put(
     "/:id",
+    auth,
+    blockDemoAccount,
     validate(createUserSchema),
     updateUser
 );
@@ -35,9 +39,14 @@ userRouter.put(
 userRouter.patch(
     "/change-password",
     auth,
+    blockDemoAccount,
     updatePassword
 );
 
-userRouter.delete("/:id", deleteUser);
+userRouter.delete("/:id",
+    auth,
+    authorize("admin"),
+    blockDemoAccount,
+    deleteUser);
 
 export default userRouter;

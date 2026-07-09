@@ -8,7 +8,8 @@ interface StatusBadgeProps {
     | "ongoing"
     | "marked"
     | "completed"
-    | "cancelled";
+    | "cancelled"
+    | "demo";
 }
 
 const statusStyles = {
@@ -16,6 +17,8 @@ const statusStyles = {
     inactive: "bg-warning-bg text-warning",
     pending: "bg-warning-bg text-warning",
     suspended: "bg-error/10 text-error",
+
+    demo: "bg-primary/10 text-primary",
 
     scheduled: "bg-primary/10 text-primary",
     ongoing: "bg-warning/10 text-warning",

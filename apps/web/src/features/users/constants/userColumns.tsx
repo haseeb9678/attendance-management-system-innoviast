@@ -20,6 +20,16 @@ export const getUserColumns = ({
         {
             key: "name",
             label: "Name",
+            render: (row) => {
+                return (
+                    <div className="flex items-center gap-2">
+                        <span>{row.name}</span>
+                        {
+                            row?.isDemo && <StatusBadge status={"demo"} />
+                        }
+                    </div>
+                )
+            }
         },
         {
             key: "email",

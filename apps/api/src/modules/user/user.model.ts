@@ -56,6 +56,8 @@ export interface User {
 
     forgotPasswordAttempts: number;
     forgotPasswordWindowExpires: Date | null;
+
+    isDemo: boolean;
 }
 
 interface UserMethods {
@@ -192,6 +194,11 @@ const userSchema = new Schema<User, UserModel, UserMethods>(
             type: Date,
             default: null,
         },
+
+        isDemo: {
+            type: Boolean,
+            default: false,
+        }
     },
     {
         timestamps: true,

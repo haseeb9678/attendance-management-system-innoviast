@@ -12,6 +12,7 @@ import {
     getStudentAttendanceSubjectDetails,
     updateStudentProfile,
 } from "./student.controller.js";
+import { blockDemoAccount } from "../../middleware/demo.middleware.js";
 
 const studentRouter = Router();
 
@@ -67,6 +68,7 @@ studentRouter.put(
     "/profile",
     auth,
     authorize("student"),
+    blockDemoAccount,
     updateStudentProfile
 );
 

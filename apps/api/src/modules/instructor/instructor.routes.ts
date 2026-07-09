@@ -14,6 +14,7 @@ import {
     getMySubjects,
     updateInstructorProfile,
 } from "./instructor.controller.js";
+import { blockDemoAccount } from "../../middleware/demo.middleware.js";
 
 const instructorRouter = Router();
 
@@ -78,6 +79,7 @@ instructorRouter.put(
     "/profile",
     auth,
     authorize("instructor"),
+    blockDemoAccount,
     updateInstructorProfile
 );
 

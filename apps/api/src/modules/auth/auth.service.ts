@@ -86,6 +86,7 @@ export const loginService = async (
     const payload: JwtPayload = {
         userId: user._id.toString(),
         role: user.role,
+        isDemo: user.isDemo ?? false
     };
 
     const accessToken =
@@ -117,6 +118,7 @@ export const loginService = async (
             name: user.name,
             email: user.email,
             role: user.role,
+            isDemo: user.isDemo ?? false
         },
 
         accessToken,
@@ -199,6 +201,7 @@ export const refreshTokenService = async (
     const newPayload: JwtPayload = {
         userId: user._id.toString(),
         role: user.role,
+        isDemo: user.isDemo ?? false
     };
 
     const accessToken = generateAccessToken(newPayload);
@@ -216,6 +219,7 @@ export const refreshTokenService = async (
             name: user.name,
             email: user.email,
             role: user.role,
+            isDemo: user.isDemo ?? false
         },
 
         accessToken,

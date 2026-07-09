@@ -21,6 +21,7 @@ import {
     resetPassword,
     verifyResetToken,
 } from "./auth.controller.js";
+import { blockDemoAccount } from "../../middleware/demo.middleware.js";
 
 const authRouter = Router();
 
@@ -33,6 +34,7 @@ authRouter.get(
 authRouter.post(
     "/register",
     validate(registerSchema),
+    blockDemoAccount,
     register
 );
 

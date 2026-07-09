@@ -6,6 +6,7 @@ import { useAuthStore } from '@/features/auth/store/auth.store'
 import HeaderMenu from '@/components/common/HeaderMenu'
 import { adminHeaderMenuItems } from '@/shared/constants/menu'
 import DisableUI from '@/components/common/DisableUI'
+import StatusBadge from '@/shared/components/StatusBadge'
 
 const Header = () => {
 
@@ -35,7 +36,10 @@ const Header = () => {
                         />
                     }
                 </div>
-                <div>
+                <div className='flex items-center gap-2'>
+                    {
+                        user?.isDemo && <StatusBadge status='demo' />
+                    }
                     <div className='flex items-center'>
                         <button
                             onClick={toggleTheme}

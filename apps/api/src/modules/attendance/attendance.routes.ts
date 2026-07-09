@@ -15,6 +15,7 @@ import {
     getStudentAttendance,
     updateAttendance,
 } from "./attendance.controller.js";
+import { blockDemoAccount } from "../../middleware/demo.middleware.js";
 
 const attendanceRouter = Router();
 
@@ -52,6 +53,7 @@ attendanceRouter.delete(
     "/session/:sessionId",
     auth,
     authorize("instructor"),
+    blockDemoAccount,
     deleteAttendance
 );
 
