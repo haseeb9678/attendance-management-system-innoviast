@@ -239,15 +239,13 @@ Attendix's schema follows a **Department → Class / Subject → TeacherAssignme
 
 ## 🔑 Demo Accounts
 
-Use these seeded credentials to explore each role. If your database doesn't have them yet, seed your own test users with these emails/passwords (or swap in your real seed script output).
+Use these seeded credentials to explore each role.
 
 | Role | Email | Password |
 |---|---|---|
 | 🛡️ Admin | `admin@attendix.dev` | `Admin@123` |
 | 🎓 Instructor | `instructor@attendix.dev` | `Instructor@123` |
 | 🧑‍🎓 Student | `student@attendix.dev` | `Student@123` |
-
-> 📌 **How to add your own:** replace the table above with your actual seeded accounts (or a link to your seed script, e.g. `apps/api/src/scripts/seed.ts`). Never put real/production credentials here — only demo data meant for reviewers to try the live app.
 
 ---
 
@@ -333,8 +331,12 @@ Attendix is **feature-complete** and deployed. All core modules — auth, academ
 | Admin, Instructor, and Student dashboards | ✅ Done |
 | Attendance analytics aggregation | ✅ Done |
 | UI polish: Framer Motion, SEO metadata, branded assets | ✅ Done |
+| Dark mode across all panels | ✅ Done |
+| Centralized error handling (frontend & backend) | ✅ Done |
+| Email notifications | ✅ Done |
+| CSV/Excel export | ✅ Done |
 
-**Possible future enhancements:** CSV/Excel export, email notifications, dark mode — not required for the current release.
+**Planned for future releases:** Soft delete accross all modules, Quiz conduction module (instructor-created quizzes with auto-grading and student results tied into attendance analytics), and further advanced reporting.
 
 ---
 
