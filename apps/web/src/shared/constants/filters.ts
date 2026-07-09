@@ -32,6 +32,20 @@ export const statusOptions = [
     {
         label: "Inactive",
         value: "inactive"
+    }
+];
+export const userStatusOptions = [
+    {
+        label: "All Status",
+        value: ""
+    },
+    {
+        label: "Active",
+        value: "active"
+    },
+    {
+        label: "Inactive",
+        value: "inactive"
     },
     {
         label: "Suspended",

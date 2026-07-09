@@ -23,7 +23,7 @@ export interface User {
     role: UserRole;
     status: UserStatus;
 
-    phone?: string;
+    phoneNumber?: string;
 
 
     createdAt: Date;

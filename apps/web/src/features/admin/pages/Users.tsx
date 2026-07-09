@@ -27,7 +27,7 @@ import {
     limitOptions,
     roleOptions,
     sortOptions,
-    statusOptions,
+    userStatusOptions,
 } from "@/shared/constants/filters";
 import useDebounce from "@/shared/hooks/useDebounce";
 import { useDepartmentOptions } from "@/features/department/hooks/useDepartmentOptions";
@@ -36,7 +36,7 @@ import { SEO } from "@/shared/components/SEO";
 import { useUpdateUser } from "../hooks/useAdminMutation";
 import {
     adminUpdateUserFormSchema,
-    adminUpdateUserSchema,
+
     type AdminUpdateUserFormInput,
     type AdminUpdateUserInput,
 } from "@attendance/shared-zod";
@@ -46,7 +46,7 @@ const Users = () => {
     const navigate = useNavigate();
 
     const [role, setRole] = useState(roleOptions[0]);
-    const [status, setStatus] = useState(statusOptions[0]);
+    const [status, setStatus] = useState(userStatusOptions[0]);
     const [department, setDepartment] = useState<
         { label: string; value: string } | undefined | null
     >(undefined);
@@ -255,7 +255,7 @@ const Users = () => {
                         label="Status"
                         option={status}
                         setOption={setStatus}
-                        options={statusOptions}
+                        options={userStatusOptions}
                     />
 
                     <SelectBox
@@ -371,7 +371,6 @@ const UpdateUserModal = ({
         handleSubmit,
         reset,
         control,
-        watch,
         formState: { errors },
     } = useForm<AdminUpdateUserFormInput>({
         resolver: zodResolver(
@@ -382,20 +381,13 @@ const UpdateUserModal = ({
     const { mutate, isPending } =
         useUpdateUser();
 
-    const selectedStatus = watch(
-        "status"
-    );
-
-    console.log(errors);
-
-
     useEffect(() => {
         reset({
             id: user._id,
             name: user.name,
             phoneNumber: user.phoneNumber || "",
             status:
-                statusOptions.find(
+                userStatusOptions.find(
                     (option) =>
                         option.value === user.status
                 ) ??
@@ -486,7 +478,7 @@ const UpdateUserModal = ({
                                 label="Status"
                                 option={controllerField.value}
                                 setOption={controllerField.onChange}
-                                options={statusOptions.slice(1)}
+                                options={userStatusOptions.slice(1)}
                                 error={errors.status?.message}
                             />
                         )}
